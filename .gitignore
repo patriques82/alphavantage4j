@@ -1,2 +1,5 @@
 .gradle/
-gradle/
+.idea
+.DS_Store*
+target/
+out/

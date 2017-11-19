@@ -3,10 +3,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import jdk.internal.jline.internal.Nullable;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import javax.annotation.Nullable;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
