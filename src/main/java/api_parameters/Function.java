@@ -1,3 +1,5 @@
+package api_parameters;
+
 public enum Function {
   INTRADAY("TIME_SERIES_INTRADAY"),
   DAILY("TIME_SERIES_DAILY"),
@@ -9,7 +11,7 @@ public enum Function {
 
   private final String urlParameter;
 
-  Function(String urlParameter) {
+  private Function(String urlParameter) {
     this.urlParameter = urlParameter;
   }
 

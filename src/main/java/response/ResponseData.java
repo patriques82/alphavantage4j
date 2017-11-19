@@ -1,3 +1,5 @@
+package response;
+
 import java.util.List;
 
 public class ResponseData {

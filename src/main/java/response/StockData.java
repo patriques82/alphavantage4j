@@ -1,3 +1,5 @@
+package response;
+
 import org.joda.time.DateTime;
 
 public class StockData {
