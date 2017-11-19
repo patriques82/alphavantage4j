@@ -12,3 +12,17 @@ calls available in their documentation http://www.alphavantage.co/documentation
 ```java
 String message = "TODO"
 ```
+
+## Note on Patches/Pull Requests
+
+  * Fork the project.
+  * Make your feature addition or bug fix.
+  * Add tests for it.
+  * Commit, do not mess with buildfile, version, or history.
+  * Send a pull request. Bonus points for topic branches.
+
+If you want to work on the code in an IDE instead of a text editor you can
+easily create project files with gradle:
+
+    $ gradle idea     # Intellij IDEA
+    $ gradle eclipse  # Eclipse
