@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/alphavantage4j.iml" filepath="$PROJECT_DIR$/.idea/modules/alphavantage4j.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/alphavantage4j_main.iml" filepath="$PROJECT_DIR$/.idea/modules/alphavantage4j_main.iml" group="alphavantage4j" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/alphavantage4j_test.iml" filepath="$PROJECT_DIR$/.idea/modules/alphavantage4j_test.iml" group="alphavantage4j" />
+    </modules>
+  </component>
+</project>
