@@ -1,4 +1,4 @@
-package response;
+package api_response;
 
 import org.joda.time.DateTime;
 
@@ -17,5 +17,29 @@ public class StockData {
     this.low = low;
     this.close = close;
     this.volume = volume;
+  }
+
+  public DateTime getDateTime() {
+    return dateTime;
+  }
+
+  public double getOpen() {
+    return open;
+  }
+
+  public double getHigh() {
+    return high;
+  }
+
+  public double getLow() {
+    return low;
+  }
+
+  public double getClose() {
+    return close;
+  }
+
+  public long getVolume() {
+    return volume;
   }
 }

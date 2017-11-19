@@ -1,6 +1,6 @@
 package api_parameters;
 
-public enum Interval {
+public enum Interval implements UrlParameter {
   ONE_MIN("1min"),
   FIVE_MIN("5min"),
   TEN_MIN("10min"),
@@ -14,8 +14,13 @@ public enum Interval {
     this.urlParameter = urlParameter;
   }
 
-  String getUrlParameter() {
-    return urlParameter;
+  @Override
+  public String getUrlParameterKey() {
+    return "interval";
   }
 
+  @Override
+  public String getUrlParameterValue() {
+    return urlParameter;
+  }
 }

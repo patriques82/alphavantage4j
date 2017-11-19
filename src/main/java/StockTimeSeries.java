@@ -3,29 +3,26 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import jdk.internal.jline.internal.Nullable;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import api_parameters.*;
-import response.MetaData;
-import response.ResponseData;
-import response.StockData;
+import api_response.MetaData;
+import api_response.ResponseData;
+import api_response.StockData;
 
 public class StockTimeSeries {
   private final Gson gson;
   private final JsonParser parser;
   private final Settings settings;
+  private final ApiConnector apiConnector;
 
   // Meta data
   private static final String INFORMATION = "1. Information";
@@ -40,75 +37,63 @@ public class StockTimeSeries {
   private static final String CLOSE = "4. close";
   private static final String VOLUME = "5. volume";
 
-  private static final String BASE_URL = "https://www.alphavantage.co/query";
   private static final String DATE_PATTERN = "YYYY-MM-DD";
   private static final DateTimeFormatter DATETIME_FORMAT = DateTimeFormat.forPattern(DATE_PATTERN);
 
-  public StockTimeSeries(Settings settings) {
+  public StockTimeSeries(Settings settings, ApiConnector apiConnector) {
     gson = new Gson();
     parser = new JsonParser();
     this.settings = settings;
+    this.apiConnector = apiConnector;
   }
 
-  public Try<ResponseData> intraDay(String symbol, Interval interval) {
-    return fetch(symbol, Function.INTRADAY);
+  public Try<ResponseData> intraDay(String symbol, Interval interval, @Nullable OutputSize outputSize) {
+    return fetch(symbol, Function.INTRADAY, outputSize);
   }
 
-  public Try<ResponseData> daily(String symbol) {
-    return fetch(symbol, Function.DAILY);
+  public Try<ResponseData> daily(String symbol, @Nullable OutputSize outputSize) {
+    return fetch(symbol, Function.DAILY, outputSize);
   }
 
-  public Try<ResponseData> dailyAdjusted(String symbol) {
-    return fetch(symbol, Function.DAILY_ADJUSTED);
+  public Try<ResponseData> dailyAdjusted(String symbol, @Nullable OutputSize outputSize) {
+    return fetch(symbol, Function.DAILY_ADJUSTED, outputSize);
   }
 
   public Try<ResponseData> weekly(String symbol) {
-    return fetch(symbol, Function.WEEKLY);
+    return fetch(symbol, Function.WEEKLY, null);
   }
 
   public Try<ResponseData> weeklyAdjusted(String symbol) {
-    return fetch(symbol, Function.WEEKLY_ADJUSTED);
+    return fetch(symbol, Function.WEEKLY_ADJUSTED, null);
   }
 
   public Try<ResponseData> monthly(String symbol) {
-    return fetch(symbol, Function.MONTHLY);
+    return fetch(symbol, Function.MONTHLY, null);
   }
 
   public Try<ResponseData> monthlyAdjusted(String symbol) {
-    return fetch(symbol, Function.MONTHLY_ADJUSTED);
+    return fetch(symbol, Function.MONTHLY_ADJUSTED, null);
   }
 
-  private Try<ResponseData> fetch(String symbol, Function func) {
-    String url = BASE_URL + "?" + getParameters(symbol, func);
+  private Try<ResponseData> fetch(String symbol, Function func, @Nullable OutputSize outputSize) {
+    String params = getParameters(symbol, func, outputSize);
     try {
-      URL request = new URL(url);
-
-      URLConnection connection = request.openConnection();
-      connection.setConnectTimeout(settings.getTimeout());
-      connection.setReadTimeout(settings.getTimeout());
-
-      InputStreamReader inputStream = new InputStreamReader(connection.getInputStream(), "UTF-8");
-      BufferedReader bufferedReader = new BufferedReader(inputStream);
-      StringBuilder responseBuilder = new StringBuilder();
-
-      String line;
-      while ((line = bufferedReader.readLine()) != null) {
-        responseBuilder.append(line);
-      }
-      bufferedReader.close();
-      String json = responseBuilder.toString();
-
+      String json = apiConnector.sendRequest(params, settings.getTimeout());
       return parseJson(json);
     } catch (IOException e) {
       return Try.failure(e.getMessage());
     }
   }
 
-  private String getParameters(String stockName, Function func) {
-    final String query = "function=%s&outputsize=compact&symbol=%s&apikey=%s";
-    final String function = func.getUrlParameter();
-    final String apiKey = settings.getApiKey();
-    return String.format(query, function, stockName, apiKey);
+  private String getParameters(String symbol, Function func, @Nullable OutputSize outputSize) {
+    UrlParameterBuilder urlBuilder = new UrlParameterBuilder();
+    urlBuilder.append(func);
+    if (outputSize != null) {
+      urlBuilder.append(outputSize);
+    }
+    urlBuilder.append("symbol", symbol);
+    urlBuilder.append("apikey", settings.getApiKey());
+    return urlBuilder.getUrl();
   }
 
   private Try<ResponseData> parseJson(String json) {

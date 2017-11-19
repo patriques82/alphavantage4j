@@ -1,4 +1,4 @@
-package response;
+package api_response;
 
 import java.util.List;
 
@@ -13,5 +13,9 @@ public class ResponseData {
 
   public MetaData getMetaData() {
     return metaData;
+  }
+
+  public List<StockData> getStockData() {
+    return stockData;
   }
 }

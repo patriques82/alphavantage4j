@@ -1,6 +1,6 @@
 package api_parameters;
 
-public enum OutputSize {
+public enum OutputSize implements UrlParameter {
   COMPACT("compact"),
   FULL("full");
 
@@ -10,8 +10,13 @@ public enum OutputSize {
     this.urlParameter = urlParameter;
   }
 
-  String getUrlParameter() {
-    return urlParameter;
+  @Override
+  public String getUrlParameterKey() {
+    return "outputsize";
   }
 
+  @Override
+  public String getUrlParameterValue() {
+    return urlParameter;
+  }
 }
