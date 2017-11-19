@@ -48,36 +48,48 @@ public class StockTimeSeries {
     this.apiConnector = apiConnector;
   }
 
-  public Try<ResponseData> intraDay(String symbol, Interval interval, @Nullable OutputSize outputSize) {
-    return fetch(symbol, Function.INTRADAY, outputSize);
+  public Try<ResponseData> intraDay(String symbol, Interval interval, OutputSize outputSize) {
+    return getRequest(symbol, Function.INTRADAY, outputSize, interval);
   }
 
-  public Try<ResponseData> daily(String symbol, @Nullable OutputSize outputSize) {
-    return fetch(symbol, Function.DAILY, outputSize);
+  public Try<ResponseData> intraDay(String symbol, Interval interval) {
+    return getRequest(symbol, Function.INTRADAY, interval);
   }
 
-  public Try<ResponseData> dailyAdjusted(String symbol, @Nullable OutputSize outputSize) {
-    return fetch(symbol, Function.DAILY_ADJUSTED, outputSize);
+  public Try<ResponseData> daily(String symbol, OutputSize outputSize) {
+    return getRequest(symbol, Function.DAILY, outputSize);
+  }
+
+  public Try<ResponseData> daily(String symbol) {
+    return getRequest(symbol, Function.DAILY);
+  }
+
+  public Try<ResponseData> dailyAdjusted(String symbol, OutputSize outputSize) {
+    return getRequest(symbol, Function.DAILY_ADJUSTED, outputSize);
+  }
+
+  public Try<ResponseData> dailyAdjusted(String symbol) {
+    return getRequest(symbol, Function.DAILY_ADJUSTED);
   }
 
   public Try<ResponseData> weekly(String symbol) {
-    return fetch(symbol, Function.WEEKLY, null);
+    return getRequest(symbol, Function.WEEKLY);
   }
 
   public Try<ResponseData> weeklyAdjusted(String symbol) {
-    return fetch(symbol, Function.WEEKLY_ADJUSTED, null);
+    return getRequest(symbol, Function.WEEKLY_ADJUSTED);
   }
 
   public Try<ResponseData> monthly(String symbol) {
-    return fetch(symbol, Function.MONTHLY, null);
+    return getRequest(symbol, Function.MONTHLY);
   }
 
   public Try<ResponseData> monthlyAdjusted(String symbol) {
-    return fetch(symbol, Function.MONTHLY_ADJUSTED, null);
+    return getRequest(symbol, Function.MONTHLY_ADJUSTED);
   }
 
-  private Try<ResponseData> fetch(String symbol, Function func, @Nullable OutputSize outputSize) {
-    String params = getParameters(symbol, func, outputSize);
+  private Try<ResponseData> getRequest(String symbol, UrlParameter ...urlParameters) {
+    String params = getParameters(symbol, urlParameters);
     try {
       String json = apiConnector.sendRequest(params, settings.getTimeout());
       return parseJson(json);
@@ -86,17 +98,17 @@ public class StockTimeSeries {
     }
   }
 
-  private String getParameters(String symbol, Function func, @Nullable OutputSize outputSize) {
+  private String getParameters(String symbol, UrlParameter ...urlParameters) {
     UrlParameterBuilder urlBuilder = new UrlParameterBuilder();
-    urlBuilder.append(func);
-    if (outputSize != null) {
-      urlBuilder.append(outputSize);
+    for (UrlParameter parameter : urlParameters) {
+      urlBuilder.append(parameter);
     }
     urlBuilder.append("symbol", symbol);
     urlBuilder.append("apikey", settings.getApiKey());
     return urlBuilder.getUrl();
   }
 
+  // TODO: move to separate class (JSONParser)
   private Try<ResponseData> parseJson(String json) {
     JsonElement jsonElement = parser.parse(json);
     JsonObject rootObject = jsonElement.getAsJsonObject();
@@ -136,6 +148,7 @@ public class StockTimeSeries {
   }
 
   private MetaData convertToMetaData(Map<String, String> metaDataPrototype) {
+    // TODO metaDataPrototype varies.
     return new MetaData(
             metaDataPrototype.get(INFORMATION),
             metaDataPrototype.get(SYMBOL),
