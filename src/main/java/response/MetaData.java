@@ -1,4 +1,4 @@
-package api_response;
+package response;
 
 import org.joda.time.DateTime;
 

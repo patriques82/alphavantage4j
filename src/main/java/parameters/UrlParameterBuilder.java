@@ -1,4 +1,4 @@
-package api_parameters;
+package parameters;
 
 public class UrlParameterBuilder {
   private StringBuilder urlBuilder;

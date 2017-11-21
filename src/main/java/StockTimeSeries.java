@@ -3,10 +3,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import common.Try;
+import net.AlphaVantageConnector;
+import net.ApiConnector;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import javax.annotation.Nullable;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -14,10 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import api_parameters.*;
-import api_response.MetaData;
-import api_response.ResponseData;
-import api_response.StockData;
+import parameters.*;
+import response.MetaData;
+import response.ResponseData;
+import response.StockData;
 
 public class StockTimeSeries {
   private final Gson gson;
@@ -39,60 +41,66 @@ public class StockTimeSeries {
   private static final String VOLUME = "5. volume";
 
   private static final String DATE_PATTERN = "YYYY-MM-DD";
-  private static final DateTimeFormatter DATETIME_FORMAT = DateTimeFormat.forPattern(DATE_PATTERN);
+  private static final String DATE_WITH_TIME_PATTERN = "YYYY-MM-DD HH:mm:ss";
+  private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern(DATE_PATTERN);
+  private static final DateTimeFormatter DATE_WITH_TIME_FORMAT = DateTimeFormat.forPattern(DATE_WITH_TIME_PATTERN);
 
-  public StockTimeSeries(Settings settings, ApiConnector apiConnector) {
+  StockTimeSeries(Settings settings, ApiConnector apiConnector) {
     gson = new Gson();
     parser = new JsonParser();
     this.settings = settings;
     this.apiConnector = apiConnector;
   }
 
+  public StockTimeSeries get(Settings settings) {
+    return new StockTimeSeries(settings, new AlphaVantageConnector());
+  }
+
   public Try<ResponseData> intraDay(String symbol, Interval interval, OutputSize outputSize) {
-    return getRequest(symbol, Function.INTRADAY, outputSize, interval);
+    return getRequest(symbol, DATE_WITH_TIME_FORMAT, Function.INTRADAY, outputSize, interval);
   }
 
   public Try<ResponseData> intraDay(String symbol, Interval interval) {
-    return getRequest(symbol, Function.INTRADAY, interval);
+    return getRequest(symbol, DATE_WITH_TIME_FORMAT, Function.INTRADAY, interval);
   }
 
   public Try<ResponseData> daily(String symbol, OutputSize outputSize) {
-    return getRequest(symbol, Function.DAILY, outputSize);
+    return getRequest(symbol, DATE_FORMAT, Function.DAILY, outputSize);
   }
 
   public Try<ResponseData> daily(String symbol) {
-    return getRequest(symbol, Function.DAILY);
+    return getRequest(symbol, DATE_FORMAT, Function.DAILY);
   }
 
   public Try<ResponseData> dailyAdjusted(String symbol, OutputSize outputSize) {
-    return getRequest(symbol, Function.DAILY_ADJUSTED, outputSize);
+    return getRequest(symbol, DATE_FORMAT, Function.DAILY_ADJUSTED, outputSize);
   }
 
   public Try<ResponseData> dailyAdjusted(String symbol) {
-    return getRequest(symbol, Function.DAILY_ADJUSTED);
+    return getRequest(symbol, DATE_FORMAT, Function.DAILY_ADJUSTED);
   }
 
   public Try<ResponseData> weekly(String symbol) {
-    return getRequest(symbol, Function.WEEKLY);
+    return getRequest(symbol, DATE_FORMAT, Function.WEEKLY);
   }
 
   public Try<ResponseData> weeklyAdjusted(String symbol) {
-    return getRequest(symbol, Function.WEEKLY_ADJUSTED);
+    return getRequest(symbol, DATE_FORMAT, Function.WEEKLY_ADJUSTED);
   }
 
   public Try<ResponseData> monthly(String symbol) {
-    return getRequest(symbol, Function.MONTHLY);
+    return getRequest(symbol, DATE_FORMAT, Function.MONTHLY);
   }
 
   public Try<ResponseData> monthlyAdjusted(String symbol) {
-    return getRequest(symbol, Function.MONTHLY_ADJUSTED);
+    return getRequest(symbol, DATE_FORMAT, Function.MONTHLY_ADJUSTED);
   }
 
-  private Try<ResponseData> getRequest(String symbol, UrlParameter ...urlParameters) {
+  private Try<ResponseData> getRequest(String symbol, DateTimeFormatter timeFormat, UrlParameter ...urlParameters) {
     String params = getParameters(symbol, urlParameters);
     try {
       String json = apiConnector.sendRequest(params, settings.getTimeout());
-      return parseJson(json);
+      return parseJson(json, timeFormat);
     } catch (IOException e) {
       return Try.failure(e.getMessage());
     }
@@ -109,7 +117,7 @@ public class StockTimeSeries {
   }
 
   // TODO: move to separate class (JSONParser)
-  private Try<ResponseData> parseJson(String json) {
+  private Try<ResponseData> parseJson(String json, DateTimeFormatter timeFormat) {
     JsonElement jsonElement = parser.parse(json);
     JsonObject rootObject = jsonElement.getAsJsonObject();
 
@@ -118,25 +126,23 @@ public class StockTimeSeries {
       return Try.failure(errorMessage.getAsString());
     }
 
-    Type metaDataType = new TypeToken<Map<String, String>>() {
-    }.getType();
+    Type metaDataType = new TypeToken<Map<String, String>>() {}.getType();
     Map<String, String> metaDataPrototype = gson.fromJson(rootObject.get("Meta Data"), metaDataType);
     MetaData metaData = convertToMetaData(metaDataPrototype);
 
-    Type stockDataType = new TypeToken<Map<String, Map<String, String>>>() {
-    }.getType();
+    Type stockDataType = new TypeToken<Map<String, Map<String, String>>>() {}.getType();
     Map<String, Map<String, String>> stockDataPrototype = gson.fromJson(rootObject.get("Time Series (Daily)"), stockDataType);
-    List<StockData> stockData = convertToStockData(stockDataPrototype);
+    List<StockData> stockData = convertToStockData(stockDataPrototype, timeFormat);
 
     return Try.success(new ResponseData(metaData, stockData));
   }
 
-  private List<StockData> convertToStockData(Map<String, Map<String, String>> stockDataPrototype) {
+  private List<StockData> convertToStockData(Map<String, Map<String, String>> stockDataPrototype, DateTimeFormatter timeFormat) {
     return stockDataPrototype.entrySet().stream()
             .map(e -> {
               Map<String, String> valueMap = e.getValue();
               return new StockData(
-                      parseDate(e.getKey()),
+                      parseDate(e.getKey(), timeFormat),
                       Double.parseDouble(valueMap.get(OPEN)),
                       Double.parseDouble(valueMap.get(HIGH)),
                       Double.parseDouble(valueMap.get(LOW)),
@@ -152,13 +158,13 @@ public class StockTimeSeries {
     return new MetaData(
             metaDataPrototype.get(INFORMATION),
             metaDataPrototype.get(SYMBOL),
-            parseDate(metaDataPrototype.get(LAST_REFRESH)),
+            parseDate(metaDataPrototype.get(LAST_REFRESH), DATE_WITH_TIME_FORMAT),
             metaDataPrototype.get(TIME_ZONE)
     );
   }
 
-  private DateTime parseDate(String dateString) {
-    return DateTime.parse(dateString, DATETIME_FORMAT);
+  private DateTime parseDate(String dateString, DateTimeFormatter format) {
+    return DateTime.parse(dateString, format);
   }
 
 }

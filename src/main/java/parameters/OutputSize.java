@@ -1,4 +1,4 @@
-package api_parameters;
+package parameters;
 
 public enum OutputSize implements UrlParameter {
   COMPACT("compact"),

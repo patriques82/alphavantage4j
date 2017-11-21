@@ -1,4 +1,4 @@
-package api_parameters;
+package parameters;
 
 public interface UrlParameter {
   String getUrlParameterValue();

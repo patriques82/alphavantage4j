@@ -1,4 +1,4 @@
-package api_parameters;
+package parameters;
 
 public enum Function implements UrlParameter {
   INTRADAY("TIME_SERIES_INTRADAY"),

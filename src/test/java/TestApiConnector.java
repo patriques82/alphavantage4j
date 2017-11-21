@@ -1,3 +1,5 @@
+import net.ApiConnector;
+
 import java.io.IOException;
 
 public class TestApiConnector implements ApiConnector {

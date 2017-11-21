@@ -1,3 +1,5 @@
+package common;
+
 public abstract class Try<V> {
 
   private Try() {
@@ -11,11 +13,11 @@ public abstract class Try<V> {
 
   public abstract V getValue();
 
-  static <V> Try<V> failure(String message) {
+  public static <V> Try<V> failure(String message) {
     return new Failure<>(message);
   }
 
-  static <V> Try<V> success(V value) {
+  public static <V> Try<V> success(V value) {
     return new Success<>(value);
   }
 

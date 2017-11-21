@@ -1,4 +1,4 @@
-package api_parameters;
+package parameters;
 
 public enum Interval implements UrlParameter {
   ONE_MIN("1min"),
