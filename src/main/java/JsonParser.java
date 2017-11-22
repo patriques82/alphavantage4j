@@ -17,14 +17,14 @@ class JsonParser {
   private static final Gson GSON = new Gson();
   private static final com.google.gson.JsonParser PARSER = new com.google.gson.JsonParser();
 
-  static Either<ResponseData, String> parseJson(String json, ResponseModel responseModel) {
+  static Either<ResponseData, Exception> parseJson(String json, ResponseModel responseModel) {
     try {
       JsonElement jsonElement = PARSER.parse(json);
       JsonObject rootObject = jsonElement.getAsJsonObject();
 
       JsonElement errorMessage = rootObject.get("Error Message");
       if (errorMessage != null) {
-        return Either.right(errorMessage.getAsString());
+        return Either.right(new RuntimeException(errorMessage.getAsString()));
       }
 
       Type metaDataType = new TypeToken<Map<String, String>>() {
@@ -39,7 +39,7 @@ class JsonParser {
       return Either.left(new ResponseData(metaData, stockData));
 
     } catch (JsonSyntaxException e) {
-      return Either.right(e.getMessage());
+      return Either.right(e);
     }
   }
 }

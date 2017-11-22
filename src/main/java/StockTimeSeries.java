@@ -20,7 +20,7 @@ public class StockTimeSeries {
     return new StockTimeSeries(new AlphaVantageConnector(settings));
   }
 
-  public Either<ResponseData, String> intraDay(String symbol, Interval interval, OutputSize outputSize) {
+  public Either<ResponseData, Exception> intraDay(String symbol, Interval interval, OutputSize outputSize) {
     ResponseModel responseModel = new IntraDayModel(ResponseModel.DATE_WITH_TIME_FORMAT, interval);
     return getRequest(symbol, Function.INTRADAY, interval, outputSize)
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, responseModel));
@@ -62,12 +62,12 @@ public class StockTimeSeries {
 //    return getRequest(symbol, DATE_FORMAT, Function.MONTHLY_ADJUSTED);
 //  }
 
-  private Either<String, String> getRequest(String symbol, UrlParameter... urlParameters) {
+  private Either<String, Exception> getRequest(String symbol, UrlParameter... urlParameters) {
     try {
       String json = apiConnector.sendRequest(symbol, urlParameters);
       return Either.left(json);
     } catch (IOException e) {
-      return Either.right(e.getMessage());
+      return Either.right(e);
     }
   }
 }

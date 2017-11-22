@@ -53,7 +53,7 @@ public class StockTimeSeriesTest {
             "    }\n" +
             "}";
     stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
-    Either<ResponseData, String> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     MetaData metaData = resp.getLeft().getMetaData();
@@ -95,7 +95,7 @@ public class StockTimeSeriesTest {
             "    }\n" +
             "}";
     stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
-    Either<ResponseData, String> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(false)));
   }
 
@@ -103,7 +103,7 @@ public class StockTimeSeriesTest {
   public void nonExistingSymbol() {
     String json = "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_INTRADAY.\"}";
     stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
-    Either<ResponseData, String> resp = stockTimeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(false)));
   }
 
