@@ -19,6 +19,8 @@ public class StockData {
     this.volume = volume;
   }
 
+
+
   public DateTime getDateTime() {
     return dateTime;
   }
