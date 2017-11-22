@@ -1,8 +1,8 @@
-import common.Try;
+import com.msiops.ground.either.Either;
+import org.junit.Test;
 import parameters.Interval;
 import parameters.OutputSize;
 import response.data.ResponseData;
-import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -49,8 +49,8 @@ public class StockTimeSeriesTest {
             "    }\n" +
             "}";
     stockTimeSeries = new StockTimeSeries(DUMMY_SETTINGS, (params, timeout) -> json);
-    Try<ResponseData> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
-    assertThat(resp.isSuccess(), is(equalTo(true)));
+    Either<ResponseData, String> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
+    assertThat(resp.isLeft(), is(equalTo(true)));
   }
 
 

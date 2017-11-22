@@ -1,5 +1,4 @@
-import common.Try;
-import net.ApiConnector;
+import com.msiops.ground.either.Either;
 import parameters.*;
 import response.data.ResponseData;
 import response.models.IntraDayModel;
@@ -20,12 +19,10 @@ public class StockTimeSeries {
     return new StockTimeSeries(settings, new AlphaVantageConnector());
   }
 
-  public Try<ResponseData> intraDay(String symbol, Interval interval, OutputSize outputSize) {
-    Try<String> jsonString = getRequest(symbol, Function.INTRADAY, interval, outputSize);
-    if (jsonString.isFailure())
-      return Try.failure(jsonString.getError());
+  public Either<ResponseData, String> intraDay(String symbol, Interval interval, OutputSize outputSize) {
     ResponseModel responseModel = new IntraDayModel(ResponseModel.DATE_WITH_TIME_FORMAT, interval);
-    return JsonParser.parseJson(jsonString.getValue(), responseModel);
+    return getRequest(symbol, Function.INTRADAY, interval, outputSize)
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, responseModel));
   }
 
 //  public Try<ResponseData> intraDay(String symbol, Interval interval) {
@@ -64,13 +61,13 @@ public class StockTimeSeries {
 //    return getRequest(symbol, DATE_FORMAT, Function.MONTHLY_ADJUSTED);
 //  }
 
-  private Try<String> getRequest(String symbol, UrlParameter... urlParameters) {
+  private Either<String, String> getRequest(String symbol, UrlParameter... urlParameters) {
     String params = getParameters(symbol, urlParameters);
     try {
       String json = apiConnector.sendRequest(params, settings.getTimeout());
-      return Try.success(json);
+      return Either.left(json);
     } catch (IOException e) {
-      return Try.failure(e.getMessage());
+      return Either.right(e.getMessage());
     }
   }
 

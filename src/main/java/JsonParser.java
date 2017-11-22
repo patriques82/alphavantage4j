@@ -1,28 +1,28 @@
-import java.util.List;
-import java.util.Map;
-import java.lang.reflect.Type;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import common.Try;
+import com.msiops.ground.either.Either;
 import response.data.MetaData;
 import response.data.ResponseData;
 import response.data.StockData;
 import response.models.ResponseModel;
 
-public class JsonParser {
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
+
+class JsonParser {
   private static final Gson GSON = new Gson();
   private static final com.google.gson.JsonParser PARSER = new com.google.gson.JsonParser();;
 
-  public static Try<ResponseData> parseJson(String json, ResponseModel responseModel) {
+  static Either<ResponseData, String> parseJson(String json, ResponseModel responseModel) {
     JsonElement jsonElement = PARSER.parse(json);
     JsonObject rootObject = jsonElement.getAsJsonObject();
 
     JsonElement errorMessage = rootObject.get("Error Message");
     if (errorMessage != null) {
-      return Try.failure(errorMessage.getAsString());
+      return Either.right(errorMessage.getAsString());
     }
 
     Type metaDataType = new TypeToken<Map<String, String>>() {
@@ -37,6 +37,6 @@ public class JsonParser {
             GSON.fromJson(rootObject.get(responseModel.getStocksKey()), stockDataType);
     List<StockData> stockData = responseModel.resolveStockData(stockDataResponse);
 
-    return Try.success(new ResponseData(metaData, stockData));
+    return Either.left(new ResponseData(metaData, stockData));
   }
 }

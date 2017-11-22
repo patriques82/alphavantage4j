@@ -1,5 +1,3 @@
-package net;
-
 import java.io.IOException;
 
 @FunctionalInterface
