@@ -1,5 +1,8 @@
 import com.msiops.ground.either.Either;
-import parameters.*;
+import parameters.Function;
+import parameters.Interval;
+import parameters.OutputSize;
+import parameters.UrlParameter;
 import response.data.ResponseData;
 import response.models.IntraDayModel;
 import response.models.ResponseModel;
@@ -7,16 +10,14 @@ import response.models.ResponseModel;
 import java.io.IOException;
 
 public class StockTimeSeries {
-  private final Settings settings;
   private final ApiConnector apiConnector;
 
-  public StockTimeSeries(Settings settings, ApiConnector apiConnector) {
-    this.settings = settings;
+  StockTimeSeries(ApiConnector apiConnector) {
     this.apiConnector = apiConnector;
   }
 
-  public StockTimeSeries get(Settings settings) {
-    return new StockTimeSeries(settings, new AlphaVantageConnector());
+  public static StockTimeSeries get(Settings settings) {
+    return new StockTimeSeries(new AlphaVantageConnector(settings));
   }
 
   public Either<ResponseData, String> intraDay(String symbol, Interval interval, OutputSize outputSize) {
@@ -62,23 +63,12 @@ public class StockTimeSeries {
 //  }
 
   private Either<String, String> getRequest(String symbol, UrlParameter... urlParameters) {
-    String params = getParameters(symbol, urlParameters);
     try {
-      String json = apiConnector.sendRequest(params, settings.getTimeout());
+      String json = apiConnector.sendRequest(symbol, urlParameters);
       return Either.left(json);
     } catch (IOException e) {
       return Either.right(e.getMessage());
     }
-  }
-
-  private String getParameters(String symbol, UrlParameter... urlParameters) {
-    UrlParameterBuilder urlBuilder = new UrlParameterBuilder();
-    for (UrlParameter parameter : urlParameters) {
-      urlBuilder.append(parameter);
-    }
-    urlBuilder.append("symbol", symbol);
-    urlBuilder.append("apikey", settings.getApiKey());
-    return urlBuilder.getUrl();
   }
 }
 

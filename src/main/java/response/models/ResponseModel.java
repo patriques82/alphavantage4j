@@ -1,13 +1,14 @@
 package response.models;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import response.data.MetaData;
 import response.data.StockData;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public abstract class ResponseModel {
   private static final String OPEN = "1. open";
@@ -16,8 +17,8 @@ public abstract class ResponseModel {
   private static final String CLOSE = "4. close";
   private static final String VOLUME = "5. volume";
 
-  public static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("YYYY-MM-DD");
-  public static final DateTimeFormatter DATE_WITH_TIME_FORMAT = DateTimeFormat.forPattern("YYYY-MM-DD HH:mm:ss");
+  public static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd");
+  public static final DateTimeFormatter DATE_WITH_TIME_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
   private final DateTimeFormatter dateTimeFormatter;
 
