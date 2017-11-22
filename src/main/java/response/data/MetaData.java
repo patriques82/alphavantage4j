@@ -1,4 +1,4 @@
-package response;
+package response.data;
 
 public class MetaData {
   private final String info;
@@ -45,5 +45,4 @@ public class MetaData {
   public String getTimeZone() {
     return timeZone;
   }
-
 }

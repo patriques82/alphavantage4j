@@ -1,4 +1,4 @@
-package response;
+package response.data;
 
 import java.util.List;
 

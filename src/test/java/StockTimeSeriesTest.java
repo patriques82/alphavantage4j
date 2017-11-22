@@ -1,7 +1,7 @@
 import common.Try;
 import parameters.Interval;
 import parameters.OutputSize;
-import response.ResponseData;
+import response.data.ResponseData;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -17,7 +17,7 @@ public class StockTimeSeriesTest {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
-            "        \"1. Information\": \"Intraday (1min) prices and volumes\",\n" +
+            "        \"1. Information\": \"IntraDayModel (1min) prices and volumes\",\n" +
             "        \"2. Symbol\": \"DUMMY\",\n" +
             "        \"3. Last Refreshed\": \"2017-11-17 16:00:00\",\n" +
             "        \"4. Interval\": \"1min\",\n" +
@@ -51,7 +51,6 @@ public class StockTimeSeriesTest {
     stockTimeSeries = new StockTimeSeries(DUMMY_SETTINGS, (params, timeout) -> json);
     Try<ResponseData> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isSuccess(), is(equalTo(true)));
-
   }
 
 

@@ -1,4 +1,4 @@
-package response;
+package response.data;
 
 import org.joda.time.DateTime;
 
@@ -18,8 +18,6 @@ public class StockData {
     this.close = close;
     this.volume = volume;
   }
-
-
 
   public DateTime getDateTime() {
     return dateTime;
