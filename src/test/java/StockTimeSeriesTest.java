@@ -1,3 +1,5 @@
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.MalformedJsonException;
 import com.msiops.ground.either.Either;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -9,12 +11,48 @@ import response.data.StockData;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class StockTimeSeriesTest {
   private StockTimeSeries stockTimeSeries;
+
+  @Test
+  public void changeOfAPI() {
+    String unexpectedJson = "" +
+            "{\n" +
+            "    \"Meta Data\": {\n" +
+            "        \"Information\": \"new api\"" +
+            "        \"Symbol\": \"DUMMY\",\n" +
+            "    },\n" +
+            "    \"Time Series (1min)\": {\n" +
+            "        \"2017-11-17 16:00:00\": {\n" +
+            "            \"open\": \"82.3900\",\n" +
+            "            \"high\": \"82.4200\",\n" +
+            "            \"low\": \"82.3600\",\n" +
+            "            \"close\": \"82.4000\",\n" +
+            "            \"volume\": \"2285396\"\n" +
+            "        },\n" +
+            "    }\n" +
+            "}";
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> unexpectedJson);
+
+    Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
+    assertThat(resp.isLeft(), is(equalTo(false)));
+    assertThat(resp.getRight(), is(instanceOf(JsonSyntaxException.class)));
+    assertThat(resp.getRight().getCause(), is(instanceOf(MalformedJsonException.class)));
+  }
+
+  @Test
+  public void nonExistingSymbol() {
+    String json = "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_INTRADAY.\"}";
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+
+    Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
+    assertThat(resp.isLeft(), is(equalTo(false)));
+    assertThat(resp.getRight(), is(instanceOf(RuntimeException.class)));
+    assertThat(resp.getRight().getMessage(), containsString("Invalid API call"));
+  }
 
   @Test
   public void intraDay() {
@@ -53,6 +91,7 @@ public class StockTimeSeriesTest {
             "    }\n" +
             "}";
     stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+
     Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
@@ -60,8 +99,8 @@ public class StockTimeSeriesTest {
     assertThat(metaData.getInfo(), is(equalTo("IntraDayModel (1min) prices and volumes")));
     assertThat(metaData.getSymbol(), is(equalTo("DUMMY")));
     assertThat(metaData.getLastRefresh(), is(equalTo("2017-11-17 16:00:00")));
-    assertThat(metaData.getInterval(), is(equalTo("1min")));
-    assertThat(metaData.getOutputSize(), is(equalTo("Compact")));
+    assertThat(metaData.getInterval().orElse(""), is(equalTo("1min")));
+    assertThat(metaData.getOutputSize().orElse(""), is(equalTo("Compact")));
     assertThat(metaData.getTimeZone(), is(equalTo("US/Eastern")));
 
     List<StockData> stockData = resp.getLeft().getStockData();
@@ -74,37 +113,6 @@ public class StockTimeSeriesTest {
     assertThat(stock.getLow(), is(equalTo(82.36)));
     assertThat(stock.getClose(), is(equalTo(82.40)));
     assertThat(stock.getVolume(), is(equalTo(2285396L)));
-  }
-
-  @Test
-  public void changeOfAPI() {
-    String json = "" +
-            "{\n" +
-            "    \"Meta Data\": {\n" +
-            "        \"Information\": \"new api\"" +
-            "        \"Symbol\": \"DUMMY\",\n" +
-            "    },\n" +
-            "    \"Time Series (1min)\": {\n" +
-            "        \"2017-11-17 16:00:00\": {\n" +
-            "            \"open\": \"82.3900\",\n" +
-            "            \"high\": \"82.4200\",\n" +
-            "            \"low\": \"82.3600\",\n" +
-            "            \"close\": \"82.4000\",\n" +
-            "            \"volume\": \"2285396\"\n" +
-            "        },\n" +
-            "    }\n" +
-            "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
-    Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
-    assertThat(resp.isLeft(), is(equalTo(false)));
-  }
-
-  @Test
-  public void nonExistingSymbol() {
-    String json = "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_INTRADAY.\"}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
-    Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
-    assertThat(resp.isLeft(), is(equalTo(false)));
   }
 
 }

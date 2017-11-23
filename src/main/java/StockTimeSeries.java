@@ -4,6 +4,7 @@ import parameters.Interval;
 import parameters.OutputSize;
 import parameters.UrlParameter;
 import response.data.ResponseData;
+import response.models.DailyModel;
 import response.models.IntraDayModel;
 import response.models.ResponseModel;
 
@@ -26,17 +27,22 @@ public class StockTimeSeries {
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, responseModel));
   }
 
-//  public Try<ResponseData> intraDay(String symbol, Interval interval) {
-//    return getRequest(symbol, DATE_WITH_TIME_FORMAT, Function.INTRADAY, interval);
-//  }
-//
-//  public Try<ResponseData> daily(String symbol, OutputSize outputSize) {
-//    return getRequest(symbol, DATE_FORMAT, Function.DAILY, outputSize);
-//  }
-//
-//  public Try<ResponseData> daily(String symbol) {
-//    return getRequest(symbol, DATE_FORMAT, Function.DAILY);
-//  }
+  public Either<ResponseData, Exception> intraDay(String symbol, Interval interval) {
+    ResponseModel responseModel = new IntraDayModel(ResponseModel.DATE_WITH_TIME_FORMAT, interval);
+    return getRequest(symbol, Function.INTRADAY, interval)
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, responseModel));
+  }
+
+  public Either<ResponseData, Exception> daily(String symbol, OutputSize outputSize) {
+    ResponseModel responseModel = new DailyModel(ResponseModel.DATE_FORMAT);
+    return getRequest(symbol, Function.DAILY, outputSize)
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, responseModel));
+  }
+
+  public Either<ResponseData, Exception> daily(String symbol) {
+    ResponseModel responseModel = new DailyModel(ResponseModel.DATE_FORMAT);
+    return getRequest(symbol, Function.DAILY)
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, responseModel));  }
 //
 //  public Try<ResponseData> dailyAdjusted(String symbol, OutputSize outputSize) {
 //    return getRequest(symbol, DATE_FORMAT, Function.DAILY_ADJUSTED, outputSize);
@@ -62,7 +68,7 @@ public class StockTimeSeries {
 //    return getRequest(symbol, DATE_FORMAT, Function.MONTHLY_ADJUSTED);
 //  }
 
-  private Either<String, Exception> getRequest(String symbol, UrlParameter... urlParameters) {
+  private Either<String, Exception> getRequest(String symbol, UrlParameter ...urlParameters) {
     try {
       String json = apiConnector.sendRequest(symbol, urlParameters);
       return Either.left(json);

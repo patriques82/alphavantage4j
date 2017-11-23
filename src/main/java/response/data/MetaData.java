@@ -1,18 +1,21 @@
 package response.data;
 
+import javax.annotation.Nullable;
+import java.util.Optional;
+
 public class MetaData {
   private final String info;
   private final String symbol;
   private final String lastRefresh;
-  private final String interval;
-  private final String outputSize;
+  @Nullable private final String interval;
+  @Nullable private final String outputSize;
   private final String timeZone;
 
   public MetaData(String info,
                   String symbol,
                   String lastRefresh,
-                  String interval,
-                  String outputSize,
+                  @Nullable String interval,
+                  @Nullable String outputSize,
                   String timeZone) {
     this.info = info;
     this.symbol = symbol;
@@ -34,12 +37,12 @@ public class MetaData {
     return lastRefresh;
   }
 
-  public String getInterval() {
-    return interval;
+  public Optional<String> getInterval() {
+    return Optional.ofNullable(interval);
   }
 
-  public String getOutputSize() {
-    return outputSize;
+  public Optional<String> getOutputSize() {
+    return Optional.ofNullable(outputSize);
   }
 
   public String getTimeZone() {
