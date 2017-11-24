@@ -18,23 +18,6 @@ public class StockData {
                    double high,
                    double low,
                    double close,
-                   long volume) {
-    this.dateTime = dateTime;
-    this.open = open;
-    this.high = high;
-    this.low = low;
-    this.close = close;
-    this.adjustedClose = 0;
-    this.volume = volume;
-    this.dividendAmount = 0;
-    this.splitCoefficient = 0;
-  }
-
-  public StockData(DateTime dateTime,
-                   double open,
-                   double high,
-                   double low,
-                   double close,
                    double adjustedClose,
                    long volume,
                    double dividendAmount,
@@ -48,6 +31,42 @@ public class StockData {
     this.volume = volume;
     this.dividendAmount = dividendAmount;
     this.splitCoefficient = splitCoefficient;
+  }
+
+  public StockData(DateTime dateTime,
+                   double open,
+                   double high,
+                   double low,
+                   double close,
+                   double adjustedClose,
+                   long volume,
+                   double dividendAmount) {
+    this.dateTime = dateTime;
+    this.open = open;
+    this.high = high;
+    this.low = low;
+    this.close = close;
+    this.adjustedClose = adjustedClose;
+    this.volume = volume;
+    this.dividendAmount = dividendAmount;
+    this.splitCoefficient = 0;
+  }
+
+  public StockData(DateTime dateTime,
+                   double open,
+                   double high,
+                   double low,
+                   double close,
+                   long volume) {
+    this.dateTime = dateTime;
+    this.open = open;
+    this.high = high;
+    this.low = low;
+    this.close = close;
+    this.adjustedClose = 0;
+    this.volume = volume;
+    this.dividendAmount = 0;
+    this.splitCoefficient = 0;
   }
 
   public DateTime getDateTime() {

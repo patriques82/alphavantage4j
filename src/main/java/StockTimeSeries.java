@@ -4,10 +4,7 @@ import parameters.Interval;
 import parameters.OutputSize;
 import parameters.UrlParameter;
 import response.data.ResponseData;
-import response.models.DailyAdjustedModel;
-import response.models.DailyModel;
-import response.models.IntraDayModel;
-import response.models.WeeklyModel;
+import response.models.*;
 
 import java.io.IOException;
 
@@ -52,17 +49,20 @@ public class StockTimeSeries {
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, new WeeklyModel()));
   }
 
-//  public Try<ResponseData> weeklyAdjusted(String symbol) {
-//    return getRequest(symbol, DATE_FORMAT, Function.WEEKLY_ADJUSTED);
-//  }
+  public Either<ResponseData, Exception> weeklyAdjusted(String symbol) {
+    return getRequest(symbol, Function.WEEKLY_ADJUSTED)
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, new WeeklyAdjustedModel()));
+  }
 
-//  public Try<ResponseData> monthly(String symbol) {
-//    return getRequest(symbol, DATE_FORMAT, Function.MONTHLY);
-//  }
-//
-//  public Try<ResponseData> monthlyAdjusted(String symbol) {
-//    return getRequest(symbol, DATE_FORMAT, Function.MONTHLY_ADJUSTED);
-//  }
+  public Either<ResponseData, Exception> monthly(String symbol) {
+    return getRequest(symbol, Function.MONTHLY)
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, new MonthlyModel()));
+  }
+
+  public Either<ResponseData, Exception> monthlyAdjusted(String symbol) {
+    return getRequest(symbol, Function.MONTHLY_ADJUSTED)
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, new MonthlyAdjustedModel()));
+  }
 
   private Either<String, Exception> getRequest(String symbol, UrlParameter ...urlParameters) {
     try {
