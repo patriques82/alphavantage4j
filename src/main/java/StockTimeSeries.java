@@ -13,12 +13,8 @@ import java.io.IOException;
 public class StockTimeSeries {
   private final ApiConnector apiConnector;
 
-  StockTimeSeries(ApiConnector apiConnector) {
+  public StockTimeSeries(ApiConnector apiConnector) {
     this.apiConnector = apiConnector;
-  }
-
-  public static StockTimeSeries get(Settings settings) {
-    return new StockTimeSeries(new AlphaVantageConnector(settings));
   }
 
   public Either<ResponseData, Exception> intraDay(String symbol, Interval interval, OutputSize outputSize) {

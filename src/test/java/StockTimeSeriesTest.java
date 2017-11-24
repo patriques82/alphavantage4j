@@ -24,6 +24,7 @@ public class StockTimeSeriesTest {
             "    \"Meta Data\": {\n" +
             "        \"Information\": \"new api\"" +
             "        \"Symbol\": \"DUMMY\",\n" +
+            "        \"New key\": \"new value\",\n" +
             "    },\n" +
             "    \"Time Series (1min)\": {\n" +
             "        \"2017-11-17 16:00:00\": {\n" +
@@ -115,4 +116,63 @@ public class StockTimeSeriesTest {
     assertThat(stock.getVolume(), is(equalTo(2285396L)));
   }
 
+  @Test
+  public void daily() {
+    String json = "" +
+            "{\n" +
+            "    \"Meta Data\": {\n" +
+            "        \"1. Information\": \"Daily Prices (open, high, low, close) and Volumes\",\n" +
+            "        \"2. Symbol\": \"DUMMY\",\n" +
+            "        \"3. Last Refreshed\": \"2017-11-24 12:47:32\",\n" +
+            "        \"4. Output Size\": \"Compact\",\n" +
+            "        \"5. Time Zone\": \"US/Eastern\"\n" +
+            "    },\n" +
+            "    \"Time Series (Daily)\": {\n" +
+            "        \"2017-11-24\": {\n" +
+            "            \"1. open\": \"83.0100\",\n" +
+            "            \"2. high\": \"83.3700\",\n" +
+            "            \"3. low\": \"82.7800\",\n" +
+            "            \"4. close\": \"83.3200\",\n" +
+            "            \"5. volume\": \"4612054\"\n" +
+            "        },\n" +
+            "        \"2017-11-22\": {\n" +
+            "            \"1. open\": \"83.8300\",\n" +
+            "            \"2. high\": \"83.9000\",\n" +
+            "            \"3. low\": \"83.0400\",\n" +
+            "            \"4. close\": \"83.1100\",\n" +
+            "            \"5. volume\": \"20213704\"\n" +
+            "        },\n" +
+            "        \"2017-07-06\": {\n" +
+            "            \"1. open\": \"68.2700\",\n" +
+            "            \"2. high\": \"68.7800\",\n" +
+            "            \"3. low\": \"68.1200\",\n" +
+            "            \"4. close\": \"68.5700\",\n" +
+            "            \"5. volume\": \"20776555\"\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+
+    Either<ResponseData, Exception> resp = stockTimeSeries.daily("DUMMY", OutputSize.COMPACT);
+    assertThat(resp.isLeft(), is(equalTo(true)));
+
+    MetaData metaData = resp.getLeft().getMetaData();
+    assertThat(metaData.getInfo(), is(equalTo("Daily Prices (open, high, low, close) and Volumes")));
+    assertThat(metaData.getSymbol(), is(equalTo("DUMMY")));
+    assertThat(metaData.getLastRefresh(), is(equalTo("2017-11-24 12:47:32")));
+    assertThat(metaData.getInterval().orElse(""), is(equalTo("")));
+    assertThat(metaData.getOutputSize().orElse(""), is(equalTo("Compact")));
+    assertThat(metaData.getTimeZone(), is(equalTo("US/Eastern")));
+
+    List<StockData> stockData = resp.getLeft().getStockData();
+    assertThat(stockData.size(), is(equalTo(3)));
+
+    StockData stock = stockData.get(0);
+    assertThat(stock.getDateTime(), is(equalTo(new DateTime(2017, 11, 24, 0, 0, 0))));
+    assertThat(stock.getOpen(), is(equalTo(83.01)));
+    assertThat(stock.getHigh(), is(equalTo(83.37)));
+    assertThat(stock.getLow(), is(equalTo(82.78)));
+    assertThat(stock.getClose(), is(equalTo(83.32)));
+    assertThat(stock.getVolume(), is(equalTo(4612054L)));
+  }
 }

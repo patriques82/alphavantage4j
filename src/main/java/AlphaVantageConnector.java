@@ -9,10 +9,12 @@ import java.net.URLConnection;
 
 public class AlphaVantageConnector implements ApiConnector {
   private static final String BASE_URL = "https://www.alphavantage.co/query?";
-  private final Settings settings;
+  private final String apiKey;
+  private final int timeOut;
 
-  public AlphaVantageConnector(Settings settings) {
-    this.settings = settings;
+  public AlphaVantageConnector(String apiKey, int timeOut) {
+    this.apiKey = apiKey;
+    this.timeOut = timeOut;
   }
 
   @Override
@@ -21,8 +23,8 @@ public class AlphaVantageConnector implements ApiConnector {
     URL request = new URL(BASE_URL + params);
 
     URLConnection connection = request.openConnection();
-    connection.setConnectTimeout(settings.getTimeout());
-    connection.setReadTimeout(settings.getTimeout());
+    connection.setConnectTimeout(timeOut);
+    connection.setReadTimeout(timeOut);
 
     InputStreamReader inputStream = new InputStreamReader(connection.getInputStream(), "UTF-8");
     BufferedReader bufferedReader = new BufferedReader(inputStream);
@@ -42,7 +44,7 @@ public class AlphaVantageConnector implements ApiConnector {
       urlBuilder.append(parameter);
     }
     urlBuilder.append("symbol", symbol);
-    urlBuilder.append("apikey", settings.getApiKey());
+    urlBuilder.append("apikey", apiKey);
     return urlBuilder.getUrl();
   }
 }
