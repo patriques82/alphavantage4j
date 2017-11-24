@@ -4,9 +4,10 @@ import parameters.Interval;
 import parameters.OutputSize;
 import parameters.UrlParameter;
 import response.data.ResponseData;
+import response.models.DailyAdjustedModel;
 import response.models.DailyModel;
 import response.models.IntraDayModel;
-import response.models.ResponseModel;
+import response.models.WeeklyModel;
 
 import java.io.IOException;
 
@@ -18,44 +19,43 @@ public class StockTimeSeries {
   }
 
   public Either<ResponseData, Exception> intraDay(String symbol, Interval interval, OutputSize outputSize) {
-    ResponseModel responseModel = new IntraDayModel(ResponseModel.DATE_WITH_TIME_FORMAT, interval);
     return getRequest(symbol, Function.INTRADAY, interval, outputSize)
-            .flatMap(jsonString -> JsonParser.parseJson(jsonString, responseModel));
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, new IntraDayModel(interval)));
   }
 
   public Either<ResponseData, Exception> intraDay(String symbol, Interval interval) {
-    ResponseModel responseModel = new IntraDayModel(ResponseModel.DATE_WITH_TIME_FORMAT, interval);
     return getRequest(symbol, Function.INTRADAY, interval)
-            .flatMap(jsonString -> JsonParser.parseJson(jsonString, responseModel));
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, new IntraDayModel(interval)));
   }
 
   public Either<ResponseData, Exception> daily(String symbol, OutputSize outputSize) {
-    ResponseModel responseModel = new DailyModel(ResponseModel.DATE_FORMAT);
     return getRequest(symbol, Function.DAILY, outputSize)
-            .flatMap(jsonString -> JsonParser.parseJson(jsonString, responseModel));
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, new DailyModel()));
   }
 
   public Either<ResponseData, Exception> daily(String symbol) {
-    ResponseModel responseModel = new DailyModel(ResponseModel.DATE_FORMAT);
     return getRequest(symbol, Function.DAILY)
-            .flatMap(jsonString -> JsonParser.parseJson(jsonString, responseModel));  }
-//
-//  public Try<ResponseData> dailyAdjusted(String symbol, OutputSize outputSize) {
-//    return getRequest(symbol, DATE_FORMAT, Function.DAILY_ADJUSTED, outputSize);
-//  }
-//
-//  public Try<ResponseData> dailyAdjusted(String symbol) {
-//    return getRequest(symbol, DATE_FORMAT, Function.DAILY_ADJUSTED);
-//  }
-//
-//  public Try<ResponseData> weekly(String symbol) {
-//    return getRequest(symbol, DATE_FORMAT, Function.WEEKLY);
-//  }
-//
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, new DailyModel()));  }
+
+  public Either<ResponseData, Exception> dailyAdjusted(String symbol, OutputSize outputSize) {
+    return getRequest(symbol, Function.DAILY_ADJUSTED, outputSize)
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, new DailyAdjustedModel()));
+  }
+
+  public Either<ResponseData, Exception> dailyAdjusted(String symbol) {
+    return getRequest(symbol, Function.DAILY_ADJUSTED)
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, new DailyAdjustedModel()));
+  }
+
+  public Either<ResponseData, Exception> weekly(String symbol) {
+    return getRequest(symbol, Function.WEEKLY)
+            .flatMap(jsonString -> JsonParser.parseJson(jsonString, new WeeklyModel()));
+  }
+
 //  public Try<ResponseData> weeklyAdjusted(String symbol) {
 //    return getRequest(symbol, DATE_FORMAT, Function.WEEKLY_ADJUSTED);
 //  }
-//
+
 //  public Try<ResponseData> monthly(String symbol) {
 //    return getRequest(symbol, DATE_FORMAT, Function.MONTHLY);
 //  }

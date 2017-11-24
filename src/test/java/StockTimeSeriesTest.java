@@ -175,4 +175,135 @@ public class StockTimeSeriesTest {
     assertThat(stock.getClose(), is(equalTo(83.32)));
     assertThat(stock.getVolume(), is(equalTo(4612054L)));
   }
+
+  @Test
+  public void dailyAdjusted() {
+    String json = "" +
+            "{\n" +
+            "    \"Meta Data\": {\n" +
+            "        \"1. Information\": \"Daily Time Series with Splits and Dividend Events\",\n" +
+            "        \"2. Symbol\": \"DUMMY\",\n" +
+            "        \"3. Last Refreshed\": \"2017-11-24 12:47:32\",\n" +
+            "        \"4. Output Size\": \"Compact\",\n" +
+            "        \"5. Time Zone\": \"US/Eastern\"\n" +
+            "    },\n" +
+            "    \"Time Series (Daily)\": {\n" +
+            "        \"2017-11-24\": {\n" +
+            "            \"1. open\": \"83.0100\",\n" +
+            "            \"2. high\": \"83.4300\",\n" +
+            "            \"3. low\": \"82.7800\",\n" +
+            "            \"4. close\": \"83.2600\",\n" +
+            "            \"5. adjusted close\": \"83.2600\",\n" +
+            "            \"6. volume\": \"7425503\",\n" +
+            "            \"7. dividend amount\": \"0.0000\",\n" +
+            "            \"8. split coefficient\": \"1.0000\"\n" +
+            "        },\n" +
+            "        \"2017-11-22\": {\n" +
+            "            \"1. open\": \"83.8300\",\n" +
+            "            \"2. high\": \"83.9000\",\n" +
+            "            \"3. low\": \"83.0400\",\n" +
+            "            \"4. close\": \"83.1100\",\n" +
+            "            \"5. adjusted close\": \"83.1100\",\n" +
+            "            \"6. volume\": \"20213704\",\n" +
+            "            \"7. dividend amount\": \"0.0000\",\n" +
+            "            \"8. split coefficient\": \"1.0000\"\n" +
+            "        }," +
+            "       \"2017-07-06\": {\n" +
+            "            \"1. open\": \"68.2700\",\n" +
+            "            \"2. high\": \"68.7800\",\n" +
+            "            \"3. low\": \"68.1200\",\n" +
+            "            \"4. close\": \"68.5700\",\n" +
+            "            \"5. adjusted close\": \"67.8632\",\n" +
+            "            \"6. volume\": \"20776555\",\n" +
+            "            \"7. dividend amount\": \"0.0000\",\n" +
+            "            \"8. split coefficient\": \"1.0000\"\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+
+    Either<ResponseData, Exception> resp = stockTimeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
+    assertThat(resp.isLeft(), is(equalTo(true)));
+
+    MetaData metaData = resp.getLeft().getMetaData();
+    assertThat(metaData.getInfo(), is(equalTo("Daily Time Series with Splits and Dividend Events")));
+    assertThat(metaData.getSymbol(), is(equalTo("DUMMY")));
+    assertThat(metaData.getLastRefresh(), is(equalTo("2017-11-24 12:47:32")));
+    assertThat(metaData.getInterval().orElse(""), is(equalTo("")));
+    assertThat(metaData.getOutputSize().orElse(""), is(equalTo("Compact")));
+    assertThat(metaData.getTimeZone(), is(equalTo("US/Eastern")));
+
+    List<StockData> stockData = resp.getLeft().getStockData();
+    assertThat(stockData.size(), is(equalTo(3)));
+
+    StockData stock = stockData.get(0);
+    assertThat(stock.getDateTime(), is(equalTo(new DateTime(2017, 11, 24, 0, 0, 0))));
+    assertThat(stock.getOpen(), is(equalTo(83.01)));
+    assertThat(stock.getHigh(), is(equalTo(83.43)));
+    assertThat(stock.getLow(), is(equalTo(82.78)));
+    assertThat(stock.getClose(), is(equalTo(83.26)));
+    assertThat(stock.getAdjustedClose(), is(equalTo(83.26)));
+    assertThat(stock.getVolume(), is(equalTo(7425503L)));
+    assertThat(stock.getDividendAmount(), is(equalTo(0.0)));
+    assertThat(stock.getSplitCoefficient(), is(equalTo(1.0)));
+  }
+
+  @Test
+  public void weekly() {
+    String json = "" +
+            "{\n" +
+            "    \"Meta Data\": {\n" +
+            "        \"1. Information\": \"Weekly Prices (open, high, low, close) and Volumes\",\n" +
+            "        \"2. Symbol\": \"DUMMY\",\n" +
+            "        \"3. Last Refreshed\": \"2017-11-24\",\n" +
+            "        \"4. Time Zone\": \"US/Eastern\"\n" +
+            "    },\n" +
+            "    \"Weekly Time Series\": {\n" +
+            "        \"2017-11-24\": {\n" +
+            "            \"1. open\": \"82.4000\",\n" +
+            "            \"2. high\": \"83.9000\",\n" +
+            "            \"3. low\": \"82.2500\",\n" +
+            "            \"4. close\": \"83.2600\",\n" +
+            "            \"5. volume\": \"64949156\"\n" +
+            "        },\n" +
+            "        \"2017-11-17\": {\n" +
+            "            \"1. open\": \"83.6600\",\n" +
+            "            \"2. high\": \"84.1000\",\n" +
+            "            \"3. low\": \"82.2400\",\n" +
+            "            \"4. close\": \"82.4000\",\n" +
+            "            \"5. volume\": \"94156894\"\n" +
+            "        },\n" +
+            "        \"2000-01-14\": {\n" +
+            "            \"1. open\": \"113.4400\",\n" +
+            "            \"2. high\": \"114.2500\",\n" +
+            "            \"3. low\": \"101.5000\",\n" +
+            "            \"4. close\": \"112.2500\",\n" +
+            "            \"5. volume\": \"157400000\"\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+
+    Either<ResponseData, Exception> resp = stockTimeSeries.weekly("DUMMY");
+    assertThat(resp.isLeft(), is(equalTo(true)));
+
+    MetaData metaData = resp.getLeft().getMetaData();
+    assertThat(metaData.getInfo(), is(equalTo("Weekly Prices (open, high, low, close) and Volumes")));
+    assertThat(metaData.getSymbol(), is(equalTo("DUMMY")));
+    assertThat(metaData.getLastRefresh(), is(equalTo("2017-11-24")));
+    assertThat(metaData.getInterval().orElse(""), is(equalTo("")));
+    assertThat(metaData.getOutputSize().orElse(""), is(equalTo("")));
+    assertThat(metaData.getTimeZone(), is(equalTo("US/Eastern")));
+
+    List<StockData> stockData = resp.getLeft().getStockData();
+    assertThat(stockData.size(), is(equalTo(3)));
+
+    StockData stock = stockData.get(0);
+    assertThat(stock.getDateTime(), is(equalTo(new DateTime(2017, 11, 24, 0, 0, 0))));
+    assertThat(stock.getOpen(), is(equalTo(82.40)));
+    assertThat(stock.getHigh(), is(equalTo(83.90)));
+    assertThat(stock.getLow(), is(equalTo(82.25)));
+    assertThat(stock.getClose(), is(equalTo(83.26)));
+    assertThat(stock.getVolume(), is(equalTo(64949156L)));
+  }
 }
