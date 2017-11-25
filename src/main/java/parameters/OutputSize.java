@@ -11,12 +11,12 @@ public enum OutputSize implements ApiParameter {
   }
 
   @Override
-  public String getApiParameterKey() {
+  public String getKey() {
     return "outputsize";
   }
 
   @Override
-  public String getApiParameterValue() {
+  public String getValue() {
     return urlParameter;
   }
 }

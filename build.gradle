@@ -1,16 +1,19 @@
 group 'co.alphavantage'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
+apply plugin: 'maven-publish'
 apply plugin: 'java-library'
-apply plugin: 'maven'
 
 repositories {
     mavenCentral()
 }
 
-task myJavadocs(type: Javadoc) {
-    source = sourceSets.main.allJava
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 dependencies {

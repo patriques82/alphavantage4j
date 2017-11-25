@@ -1,20 +1,77 @@
-# alphavantage4j
-
 [![Build Status](https://travis-ci.org/patriques82/alphavantage4j.svg?branch=master)](https://travis-ci.org/patriques82/alphavantage4j)
 
-*A Java wrapper to get stock data and stock indicators from the Alpha Vantage API*
+# alphavantage4j
+
+A Java wrapper to get stock data and stock indicators from the Alpha Vantage API*
+
+## Introduction
 
 Alpha Vantage delivers a free API for real time financial data and most used finance indicators. This library implements a wrapper to the free API provided by Alpha
 Vantage (http://www.alphavantage.co/). It requires an api key, that can be requested on http://www.alphavantage.co/support/#api-key. You can have a look at all the api 
 calls available in their documentation http://www.alphavantage.co/documentation
 
-## Usage
-```java
-String message = "TODO"
+## Installation
+
+```sh
+git clone https://github.com/patriques82/alphavantage4j.git
+cd alphavantage4j
+./gradlew publishToMavenLocal
+```
+Now you have the artifact in your local maven repository and can be included in your build.gradle file
+
+### Including in Gradle project
+
+```groovy
+repositories {
+  mavenLocal()
+}
+
+dependencies {
+  compile group: 'co.alphavantage', name: 'alphavantage4j', version: '1.0-SNAPSHOT'
+}
 ```
 
-## Note on Patches/Pull Requests
+### Including in Maven project
+```xml
+<dependency>
+    <groupId>co.alphavantage</groupId>
+    <artifactId>alphavantage4j</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+```
 
+## Usage
+
+```java
+public class App {
+  public static void main(String[] args) {
+    String apiKey = "50M3AP1K3Y"
+    AlphaVantageConnector apiConnector = new AlphaVantageConnector(apiKey, 30000);
+    StockTimeSeries stockTimeSeries = new StockTimeSeries(apiConnector);
+    Either<ResponseData, Exception> response = stockTimeSeries.intraDay("MSFT", Interval.ONE_MIN, OutputSize.COMPACT);
+    if (response.isLeft()) {
+      List<StockData> stockData = response.getLeft().getStockData();
+      MetaData metaData = response.getLeft().getMetaData();
+      System.out.println("Stock: " + metaData.getSymbol());
+      stockData.forEach(stock -> {
+        System.out.println("*****************************");
+        System.out.println("date:   " + stock.getDateTime());
+        System.out.println("open:   " + stock.getOpen());
+        System.out.println("high:   " + stock.getHigh());
+        System.out.println("low:    " + stock.getLow());
+        System.out.println("close:  " + stock.getClose());
+        System.out.println("volume: " + stock.getVolume());
+        System.out.println("*****************************");
+      });
+    } else {
+      response.getRight().printStackTrace();
+    }
+  }
+}
+```
+
+## Contributing
+   
   * Fork the project.
   * Make your feature addition or bug fix.
   * Add tests for it.
