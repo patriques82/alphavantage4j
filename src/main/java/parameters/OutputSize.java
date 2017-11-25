@@ -1,6 +1,6 @@
 package parameters;
 
-public enum OutputSize implements UrlParameter {
+public enum OutputSize implements ApiParameter {
   COMPACT("compact"),
   FULL("full");
 
@@ -11,12 +11,12 @@ public enum OutputSize implements UrlParameter {
   }
 
   @Override
-  public String getUrlParameterKey() {
+  public String getApiParameterKey() {
     return "outputsize";
   }
 
   @Override
-  public String getUrlParameterValue() {
+  public String getApiParameterValue() {
     return urlParameter;
   }
 }

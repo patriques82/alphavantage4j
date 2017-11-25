@@ -13,10 +13,19 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Helper class to parse Json response from ApiConnector
+ */
 class JsonParser {
   private static final Gson GSON = new Gson();
   private static final com.google.gson.JsonParser PARSER = new com.google.gson.JsonParser();
 
+  /**
+   * Parse json according to response model
+   * @param json the string to parse
+   * @param responseModel the model that describes the response.
+   * @return either a successful response (left) or an exception (right)
+   */
   static Either<ResponseData, Exception> parseJson(String json, ResponseModel responseModel) {
     try {
       JsonElement jsonElement = PARSER.parse(json);

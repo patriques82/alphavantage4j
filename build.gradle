@@ -1,11 +1,16 @@
 group 'co.alphavantage'
 version '1.0-SNAPSHOT'
 
+apply plugin: 'java'
 apply plugin: 'java-library'
 apply plugin: 'maven'
 
 repositories {
     mavenCentral()
+}
+
+task myJavadocs(type: Javadoc) {
+    source = sourceSets.main.allJava
 }
 
 dependencies {

@@ -1,4 +1,4 @@
-import parameters.UrlParameter;
+import parameters.ApiParameter;
 import parameters.UrlParameterBuilder;
 
 import java.io.BufferedReader;
@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+ * Connection to Alpha Vantage.
+ */
 public class AlphaVantageConnector implements ApiConnector {
   private static final String BASE_URL = "https://www.alphavantage.co/query?";
   private final String apiKey;
@@ -18,8 +21,8 @@ public class AlphaVantageConnector implements ApiConnector {
   }
 
   @Override
-  public String sendRequest(String symbol, UrlParameter ...urlParameters) throws IOException {
-    String params = getParameters(symbol, urlParameters);
+  public String sendRequest(String symbol, ApiParameter... apiParameters) throws IOException {
+    String params = getParameters(symbol, apiParameters);
     URL request = new URL(BASE_URL + params);
 
     URLConnection connection = request.openConnection();
@@ -38,9 +41,9 @@ public class AlphaVantageConnector implements ApiConnector {
     return responseBuilder.toString();
   }
 
-  private String getParameters(String symbol, UrlParameter... urlParameters) {
+  private String getParameters(String symbol, ApiParameter... apiParameters) {
     UrlParameterBuilder urlBuilder = new UrlParameterBuilder();
-    for (UrlParameter parameter : urlParameters) {
+    for (ApiParameter parameter : apiParameters) {
       urlBuilder.append(parameter);
     }
     urlBuilder.append("symbol", symbol);

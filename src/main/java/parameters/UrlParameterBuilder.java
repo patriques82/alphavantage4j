@@ -7,8 +7,8 @@ public class UrlParameterBuilder {
     this.urlBuilder = new StringBuilder();
   }
 
-  public UrlParameterBuilder append(UrlParameter urlParameter) {
-    return this.append(urlParameter.getUrlParameterKey(), urlParameter.getUrlParameterValue());
+  public UrlParameterBuilder append(ApiParameter apiParameter) {
+    return this.append(apiParameter.getApiParameterKey(), apiParameter.getApiParameterValue());
   }
 
   public UrlParameterBuilder append(String key, String value) {

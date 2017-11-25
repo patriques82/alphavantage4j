@@ -1,6 +1,6 @@
 package parameters;
 
-public enum Function implements UrlParameter {
+public enum Function implements ApiParameter {
   INTRADAY("TIME_SERIES_INTRADAY"),
   DAILY("TIME_SERIES_DAILY"),
   DAILY_ADJUSTED("TIME_SERIES_DAILY_ADJUSTED"),
@@ -16,12 +16,12 @@ public enum Function implements UrlParameter {
   }
 
   @Override
-  public String getUrlParameterKey() {
+  public String getApiParameterKey() {
     return "function";
   }
 
   @Override
-  public String getUrlParameterValue() {
+  public String getApiParameterValue() {
     return this.urlParameter;
   }
 }
