@@ -15,12 +15,12 @@ public enum Interval implements ApiParameter {
   }
 
   @Override
-  public String getApiParameterKey() {
+  public String getKey() {
     return "interval";
   }
 
   @Override
-  public String getApiParameterValue() {
+  public String getValue() {
     return urlParameter;
   }
 }

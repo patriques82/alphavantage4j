@@ -8,7 +8,7 @@ public class UrlParameterBuilder {
   }
 
   public UrlParameterBuilder append(ApiParameter apiParameter) {
-    return this.append(apiParameter.getApiParameterKey(), apiParameter.getApiParameterValue());
+    return this.append(apiParameter.getKey(), apiParameter.getValue());
   }
 
   public UrlParameterBuilder append(String key, String value) {

@@ -23,7 +23,7 @@ public class IntraDay implements ResponseModel {
 
   @Override
   public String getStocksKey() {
-    return "Time Series (" + interval.getApiParameterValue() + ")";
+    return "Time Series (" + interval.getValue() + ")";
   }
 
   @Override
