@@ -8,19 +8,19 @@ import response.data.StockData;
 import java.util.List;
 import java.util.Map;
 
-public interface ResponseModel {
+public abstract class ResponseModel {
 
-  DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd");
-  DateTimeFormatter DATE_WITH_TIME_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+  static DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd");
+  static DateTimeFormatter DATE_WITH_TIME_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
-  default String getMetaDataKey() {
+  public String getMetaDataKey() {
     return "Meta Data";
   }
 
-  MetaData resolveMetaData(Map<String, String> metaDataResponse);
+  public abstract MetaData resolveMetaData(Map<String, String> metaDataResponse);
 
-  String getStocksKey();
+  public abstract String getStocksKey();
 
-  List<StockData> resolveStockData(Map<String, Map<String, String>> stockDataResponse);
+  public abstract List<StockData> resolveStockData(Map<String, Map<String, String>> stockDataResponse);
 
 }

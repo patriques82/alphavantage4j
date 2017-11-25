@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class IntraDayModel implements ResponseModel {
+public class IntraDayModel extends ResponseModel {
   private final Interval interval;
 
   public IntraDayModel(Interval interval) {

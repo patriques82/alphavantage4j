@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class WeeklyModel implements ResponseModel {
+public class WeeklyModel extends ResponseModel {
 
   @Override
   public MetaData resolveMetaData(Map<String, String> metaDataResponse) {
