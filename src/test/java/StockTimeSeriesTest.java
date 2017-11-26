@@ -36,7 +36,7 @@ public class StockTimeSeriesTest {
             "        },\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> unexpectedJson);
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(unexpectedJson));
 
     Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(false)));
@@ -47,7 +47,7 @@ public class StockTimeSeriesTest {
   @Test
   public void nonExistingSymbol() {
     String json = "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_INTRADAY.\"}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
 
     Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(false)));
@@ -91,7 +91,7 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
 
     Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
@@ -151,7 +151,7 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
 
     Either<ResponseData, Exception> resp = stockTimeSeries.daily("DUMMY", OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
@@ -220,7 +220,7 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
 
     Either<ResponseData, Exception> resp = stockTimeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
@@ -282,7 +282,7 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
 
     Either<ResponseData, Exception> resp = stockTimeSeries.weekly("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
@@ -347,7 +347,7 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
 
     Either<ResponseData, Exception> resp = stockTimeSeries.weeklyAdjusted("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
@@ -408,7 +408,7 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
 
     Either<ResponseData, Exception> resp = stockTimeSeries.monthly("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
@@ -473,7 +473,7 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> json);
+    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
 
     Either<ResponseData, Exception> resp = stockTimeSeries.monthlyAdjusted("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));

@@ -1,6 +1,5 @@
+import com.msiops.ground.either.Either;
 import parameters.ApiParameter;
-
-import java.io.IOException;
 
 /**
  * Connection to api endpoint.
@@ -11,8 +10,7 @@ public interface ApiConnector {
    * Sends request to api
    * @param symbol the stock symbol to lookup
    * @param apiParameters the api parameters (required/optional) to the api call
-   * @return the raw Json string
-   * @throws IOException
+   * @return Either the raw Json string or IOExcpetion
    */
-  String sendRequest(String symbol, ApiParameter... apiParameters) throws IOException;
+  Either<String, Exception> getRequest(String symbol, ApiParameter... apiParameters);
 }

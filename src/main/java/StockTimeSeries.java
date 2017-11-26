@@ -1,12 +1,9 @@
 import com.msiops.ground.either.Either;
-import parameters.ApiParameter;
 import parameters.Function;
 import parameters.Interval;
 import parameters.OutputSize;
 import response.data.ResponseData;
 import response.models.*;
-
-import java.io.IOException;
 
 /**
  * The Stock Time Series Data provides realtime and historical equity data in 4 different temporal resolutions:
@@ -30,7 +27,7 @@ public class StockTimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> intraDay(String symbol, Interval interval, OutputSize outputSize) {
-    return getRequest(symbol, Function.INTRADAY, interval, outputSize)
+    return apiConnector.getRequest(symbol, Function.INTRADAY, interval, outputSize)
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, new IntraDay(interval)));
   }
   /**
@@ -40,7 +37,7 @@ public class StockTimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> intraDay(String symbol, Interval interval) {
-    return getRequest(symbol, Function.INTRADAY, interval)
+    return apiConnector.getRequest(symbol, Function.INTRADAY, interval)
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, new IntraDay(interval)));
   }
   /**
@@ -50,7 +47,7 @@ public class StockTimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> daily(String symbol, OutputSize outputSize) {
-    return getRequest(symbol, Function.DAILY, outputSize)
+    return apiConnector.getRequest(symbol, Function.DAILY, outputSize)
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, new Daily()));
   }
   /**
@@ -59,7 +56,7 @@ public class StockTimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> daily(String symbol) {
-    return getRequest(symbol, Function.DAILY)
+    return apiConnector.getRequest(symbol, Function.DAILY)
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, new Daily()));  }
   /**
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume, daily adjusted close, and split/dividend events)
@@ -68,7 +65,7 @@ public class StockTimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> dailyAdjusted(String symbol, OutputSize outputSize) {
-    return getRequest(symbol, Function.DAILY_ADJUSTED, outputSize)
+    return apiConnector.getRequest(symbol, Function.DAILY_ADJUSTED, outputSize)
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, new DailyAdjusted()));
   }
   /**
@@ -77,7 +74,7 @@ public class StockTimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> dailyAdjusted(String symbol) {
-    return getRequest(symbol, Function.DAILY_ADJUSTED)
+    return apiConnector.getRequest(symbol, Function.DAILY_ADJUSTED)
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, new DailyAdjusted()));
   }
   /**
@@ -86,7 +83,7 @@ public class StockTimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> weekly(String symbol) {
-    return getRequest(symbol, Function.WEEKLY)
+    return apiConnector.getRequest(symbol, Function.WEEKLY)
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, new Weekly()));
   }
   /**
@@ -95,7 +92,7 @@ public class StockTimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> weeklyAdjusted(String symbol) {
-    return getRequest(symbol, Function.WEEKLY_ADJUSTED)
+    return apiConnector.getRequest(symbol, Function.WEEKLY_ADJUSTED)
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, new WeeklyAdjusted()));
   }
   /**
@@ -104,7 +101,7 @@ public class StockTimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> monthly(String symbol) {
-    return getRequest(symbol, Function.MONTHLY)
+    return apiConnector.getRequest(symbol, Function.MONTHLY)
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, new Monthly()));
   }
   /**
@@ -113,17 +110,9 @@ public class StockTimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> monthlyAdjusted(String symbol) {
-    return getRequest(symbol, Function.MONTHLY_ADJUSTED)
+    return apiConnector.getRequest(symbol, Function.MONTHLY_ADJUSTED)
             .flatMap(jsonString -> JsonParser.parseJson(jsonString, new MonthlyAdjusted()));
   }
 
-  private Either<String, Exception> getRequest(String symbol, ApiParameter... apiParameters) {
-    try {
-      String json = apiConnector.sendRequest(symbol, apiParameters);
-      return Either.left(json);
-    } catch (IOException e) {
-      return Either.right(e);
-    }
-  }
 }
 
