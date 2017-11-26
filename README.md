@@ -51,9 +51,10 @@ public class App {
     StockTimeSeries stockTimeSeries = new StockTimeSeries(apiConnector);
     Either<ResponseData, Exception> response = stockTimeSeries.intraDay("MSFT", Interval.ONE_MIN, OutputSize.COMPACT);
     if (response.isLeft()) {
-      List<StockData> stockData = response.getLeft().getStockData();
       MetaData metaData = response.getLeft().getMetaData();
       System.out.println("Stock: " + metaData.getSymbol());
+      
+      List<StockData> stockData = response.getLeft().getStockData();
       stockData.forEach(stock -> {
         System.out.println("*****************************");
         System.out.println("date:   " + stock.getDateTime());
