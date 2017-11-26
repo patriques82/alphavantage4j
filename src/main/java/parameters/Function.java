@@ -1,5 +1,8 @@
 package parameters;
 
+/**
+ * Function parameter, i.e function=TIME_SERIES_INTRADAY
+ */
 public enum Function implements ApiParameter {
   INTRADAY("TIME_SERIES_INTRADAY"),
   DAILY("TIME_SERIES_DAILY"),

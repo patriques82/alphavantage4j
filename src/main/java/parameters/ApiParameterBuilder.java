@@ -1,17 +1,20 @@
 package parameters;
 
-public class UrlParameterBuilder {
+/**
+ * Builder for api parameters
+ */
+public class ApiParameterBuilder {
   private StringBuilder urlBuilder;
 
-  public UrlParameterBuilder() {
+  public ApiParameterBuilder() {
     this.urlBuilder = new StringBuilder();
   }
 
-  public UrlParameterBuilder append(ApiParameter apiParameter) {
+  public ApiParameterBuilder append(ApiParameter apiParameter) {
     return this.append(apiParameter.getKey(), apiParameter.getValue());
   }
 
-  public UrlParameterBuilder append(String key, String value) {
+  public ApiParameterBuilder append(String key, String value) {
     String parameter = "&" + key + "=" + value;
     this.urlBuilder.append(parameter);
     return this;

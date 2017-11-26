@@ -1,5 +1,8 @@
 package parameters;
 
+/**
+ * Outputsize parameter, i.e outputsize=compact
+ */
 public enum OutputSize implements ApiParameter {
   COMPACT("compact"),
   FULL("full");

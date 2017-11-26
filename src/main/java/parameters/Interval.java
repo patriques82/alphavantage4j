@@ -1,5 +1,8 @@
 package parameters;
 
+/**
+ * Interval parameter, i.e interval=15min
+ */
 public enum Interval implements ApiParameter {
   ONE_MIN("1min"),
   FIVE_MIN("5min"),

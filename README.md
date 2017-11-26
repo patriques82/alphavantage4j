@@ -1,5 +1,3 @@
-# alphavantage4j
-
 [![Build Status](https://travis-ci.org/patriques82/alphavantage4j.svg?branch=master)](https://travis-ci.org/patriques82/alphavantage4j)
 
 # alphavantage4j

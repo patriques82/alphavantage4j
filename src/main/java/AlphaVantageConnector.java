@@ -1,5 +1,5 @@
 import parameters.ApiParameter;
-import parameters.UrlParameterBuilder;
+import parameters.ApiParameterBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class AlphaVantageConnector implements ApiConnector {
   }
 
   private String getParameters(String symbol, ApiParameter... apiParameters) {
-    UrlParameterBuilder urlBuilder = new UrlParameterBuilder();
+    ApiParameterBuilder urlBuilder = new ApiParameterBuilder();
     for (ApiParameter parameter : apiParameters) {
       urlBuilder.append(parameter);
     }
