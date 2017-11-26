@@ -1,3 +1,5 @@
+# alphavantage4j
+
 [![Build Status](https://travis-ci.org/patriques82/alphavantage4j.svg?branch=master)](https://travis-ci.org/patriques82/alphavantage4j)
 
 # alphavantage4j
@@ -41,11 +43,10 @@ dependencies {
 ```
 
 ## Usage
-
 ```java
 public class App {
   public static void main(String[] args) {
-    String apiKey = "50M3AP1K3Y"
+    String apiKey = "50M3AP1K3Y";
     AlphaVantageConnector apiConnector = new AlphaVantageConnector(apiKey, 30000);
     StockTimeSeries stockTimeSeries = new StockTimeSeries(apiConnector);
     Either<ResponseData, Exception> response = stockTimeSeries.intraDay("MSFT", Interval.ONE_MIN, OutputSize.COMPACT);
