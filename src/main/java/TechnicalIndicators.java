@@ -1,11 +1,3 @@
-import com.msiops.ground.either.Either;
-import parameters.technical_indicator.Function;
-import parameters.technical_indicator.Interval;
-import parameters.technical_indicator.SeriesType;
-import parameters.technical_indicator.TimePeriod;
-import response.data.technical_indicator.ResponseData;
-import response.models.technical_indicator.SMA;
-
 /**
  * Technical indicator values are updated realtime: the latest data point is derived from the current trading day of a given equity.
  */

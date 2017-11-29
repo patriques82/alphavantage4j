@@ -1,7 +1,7 @@
 package response.models.technical_indicator;
 
 import org.joda.time.DateTime;
-import response.data.technical_indicator.ResponseData;
+import response.data.ResponseData;
 import response.data.technical_indicator.SMAData;
 import response.models.ResponseModel;
 

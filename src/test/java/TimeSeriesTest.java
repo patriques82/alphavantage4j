@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 import parameters.time_series.Interval;
 import parameters.time_series.OutputSize;
-import response.data.time_series.ResponseData;
+import response.data.ResponseData;
 import response.data.time_series.StockData;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(unexpectedJson));
 
-    Either<ResponseData, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<ResponseData<StockData>, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(false)));
     assertThat(resp.getRight(), is(instanceOf(JsonSyntaxException.class)));
     assertThat(resp.getRight().getCause(), is(instanceOf(MalformedJsonException.class)));
@@ -49,7 +49,7 @@ public class TimeSeriesTest {
     String json = "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_INTRADAY.\"}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<ResponseData<StockData>, Exception> resp = timeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(false)));
     assertThat(resp.getRight(), is(instanceOf(RuntimeException.class)));
     assertThat(resp.getRight().getMessage(), containsString("Invalid API call"));
@@ -93,7 +93,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<ResponseData<StockData>, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -104,7 +104,7 @@ public class TimeSeriesTest {
     assertThat(metaData.get("5. Output Size"), is(equalTo("Compact")));
     assertThat(metaData.get("6. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getLeft().getData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -153,7 +153,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.daily("DUMMY", OutputSize.COMPACT);
+    Either<ResponseData<StockData>, Exception> resp = timeSeries.daily("DUMMY", OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -163,7 +163,7 @@ public class TimeSeriesTest {
     assertThat(metaData.get("4. Output Size"), is(equalTo("Compact")));
     assertThat(metaData.get("5. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getLeft().getData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -221,7 +221,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
+    Either<ResponseData<StockData>, Exception> resp = timeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -231,7 +231,7 @@ public class TimeSeriesTest {
     assertThat(metaData.get("4. Output Size"), is(equalTo("Compact")));
     assertThat(metaData.get("5. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getLeft().getData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -282,7 +282,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.weekly("DUMMY");
+    Either<ResponseData<StockData>, Exception> resp = timeSeries.weekly("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -291,7 +291,7 @@ public class TimeSeriesTest {
     assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
     assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getLeft().getData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -345,7 +345,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.weeklyAdjusted("DUMMY");
+    Either<ResponseData<StockData>, Exception> resp = timeSeries.weeklyAdjusted("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -354,7 +354,7 @@ public class TimeSeriesTest {
     assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
     assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getLeft().getData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -404,7 +404,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.monthly("DUMMY");
+    Either<ResponseData<StockData>, Exception> resp = timeSeries.monthly("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -413,7 +413,7 @@ public class TimeSeriesTest {
     assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
     assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getLeft().getData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -467,7 +467,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.monthlyAdjusted("DUMMY");
+    Either<ResponseData<StockData>, Exception> resp = timeSeries.monthlyAdjusted("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -476,7 +476,7 @@ public class TimeSeriesTest {
     assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
     assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getLeft().getData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
