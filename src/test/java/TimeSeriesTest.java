@@ -5,11 +5,11 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 import parameters.time_series.Interval;
 import parameters.time_series.OutputSize;
-import response.data.time_series.MetaData;
 import response.data.time_series.ResponseData;
 import response.data.time_series.StockData;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -96,13 +96,13 @@ public class TimeSeriesTest {
     Either<ResponseData, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
-    MetaData metaData = resp.getLeft().getMetaData();
-    assertThat(metaData.getInfo(), is(equalTo("Intraday (1min) prices and volumes")));
-    assertThat(metaData.getSymbol(), is(equalTo("DUMMY")));
-    assertThat(metaData.getLastRefresh(), is(equalTo("2017-11-17 16:00:00")));
-    assertThat(metaData.getInterval().orElse(""), is(equalTo("1min")));
-    assertThat(metaData.getOutputSize().orElse(""), is(equalTo("Compact")));
-    assertThat(metaData.getTimeZone(), is(equalTo("US/Eastern")));
+    Map<String, String> metaData = resp.getLeft().getMetaData();
+    assertThat(metaData.get("1. Information"), is(equalTo("Intraday (1min) prices and volumes")));
+    assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-17 16:00:00")));
+    assertThat(metaData.get("4. Interval"), is(equalTo("1min")));
+    assertThat(metaData.get("5. Output Size"), is(equalTo("Compact")));
+    assertThat(metaData.get("6. Time Zone"), is(equalTo("US/Eastern")));
 
     List<StockData> stockData = resp.getLeft().getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
@@ -156,13 +156,12 @@ public class TimeSeriesTest {
     Either<ResponseData, Exception> resp = timeSeries.daily("DUMMY", OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
-    MetaData metaData = resp.getLeft().getMetaData();
-    assertThat(metaData.getInfo(), is(equalTo("Daily Prices (open, high, low, close) and Volumes")));
-    assertThat(metaData.getSymbol(), is(equalTo("DUMMY")));
-    assertThat(metaData.getLastRefresh(), is(equalTo("2017-11-24 12:47:32")));
-    assertThat(metaData.getInterval().orElse(""), is(equalTo("")));
-    assertThat(metaData.getOutputSize().orElse(""), is(equalTo("Compact")));
-    assertThat(metaData.getTimeZone(), is(equalTo("US/Eastern")));
+    Map<String, String> metaData = resp.getLeft().getMetaData();
+    assertThat(metaData.get("1. Information"), is(equalTo("Daily Prices (open, high, low, close) and Volumes")));
+    assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24 12:47:32")));
+    assertThat(metaData.get("4. Output Size"), is(equalTo("Compact")));
+    assertThat(metaData.get("5. Time Zone"), is(equalTo("US/Eastern")));
 
     List<StockData> stockData = resp.getLeft().getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
@@ -225,13 +224,12 @@ public class TimeSeriesTest {
     Either<ResponseData, Exception> resp = timeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
-    MetaData metaData = resp.getLeft().getMetaData();
-    assertThat(metaData.getInfo(), is(equalTo("Daily Time Series with Splits and Dividend Events")));
-    assertThat(metaData.getSymbol(), is(equalTo("DUMMY")));
-    assertThat(metaData.getLastRefresh(), is(equalTo("2017-11-24 12:47:32")));
-    assertThat(metaData.getInterval().orElse(""), is(equalTo("")));
-    assertThat(metaData.getOutputSize().orElse(""), is(equalTo("Compact")));
-    assertThat(metaData.getTimeZone(), is(equalTo("US/Eastern")));
+    Map<String, String> metaData = resp.getLeft().getMetaData();
+    assertThat(metaData.get("1. Information"), is(equalTo("Daily Time Series with Splits and Dividend Events")));
+    assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24 12:47:32")));
+    assertThat(metaData.get("4. Output Size"), is(equalTo("Compact")));
+    assertThat(metaData.get("5. Time Zone"), is(equalTo("US/Eastern")));
 
     List<StockData> stockData = resp.getLeft().getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
@@ -287,13 +285,11 @@ public class TimeSeriesTest {
     Either<ResponseData, Exception> resp = timeSeries.weekly("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
-    MetaData metaData = resp.getLeft().getMetaData();
-    assertThat(metaData.getInfo(), is(equalTo("Weekly Prices (open, high, low, close) and Volumes")));
-    assertThat(metaData.getSymbol(), is(equalTo("DUMMY")));
-    assertThat(metaData.getLastRefresh(), is(equalTo("2017-11-24")));
-    assertThat(metaData.getInterval().orElse(""), is(equalTo("")));
-    assertThat(metaData.getOutputSize().orElse(""), is(equalTo("")));
-    assertThat(metaData.getTimeZone(), is(equalTo("US/Eastern")));
+    Map<String, String> metaData = resp.getLeft().getMetaData();
+    assertThat(metaData.get("1. Information"), is(equalTo("Weekly Prices (open, high, low, close) and Volumes")));
+    assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
+    assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
     List<StockData> stockData = resp.getLeft().getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
@@ -352,13 +348,11 @@ public class TimeSeriesTest {
     Either<ResponseData, Exception> resp = timeSeries.weeklyAdjusted("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
-    MetaData metaData = resp.getLeft().getMetaData();
-    assertThat(metaData.getInfo(), is(equalTo("Weekly Adjusted Prices and Volumes")));
-    assertThat(metaData.getSymbol(), is(equalTo("DUMMY")));
-    assertThat(metaData.getLastRefresh(), is(equalTo("2017-11-24")));
-    assertThat(metaData.getInterval().orElse(""), is(equalTo("")));
-    assertThat(metaData.getOutputSize().orElse(""), is(equalTo("")));
-    assertThat(metaData.getTimeZone(), is(equalTo("US/Eastern")));
+    Map<String, String> metaData = resp.getLeft().getMetaData();
+    assertThat(metaData.get("1. Information"), is(equalTo("Weekly Adjusted Prices and Volumes")));
+    assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
+    assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
     List<StockData> stockData = resp.getLeft().getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
@@ -413,13 +407,11 @@ public class TimeSeriesTest {
     Either<ResponseData, Exception> resp = timeSeries.monthly("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
-    MetaData metaData = resp.getLeft().getMetaData();
-    assertThat(metaData.getInfo(), is(equalTo("Monthly Prices (open, high, low, close) and Volumes")));
-    assertThat(metaData.getSymbol(), is(equalTo("DUMMY")));
-    assertThat(metaData.getLastRefresh(), is(equalTo("2017-11-24")));
-    assertThat(metaData.getInterval().orElse(""), is(equalTo("")));
-    assertThat(metaData.getOutputSize().orElse(""), is(equalTo("")));
-    assertThat(metaData.getTimeZone(), is(equalTo("US/Eastern")));
+    Map<String, String> metaData = resp.getLeft().getMetaData();
+    assertThat(metaData.get("1. Information"), is(equalTo("Monthly Prices (open, high, low, close) and Volumes")));
+    assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
+    assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
     List<StockData> stockData = resp.getLeft().getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
@@ -478,13 +470,11 @@ public class TimeSeriesTest {
     Either<ResponseData, Exception> resp = timeSeries.monthlyAdjusted("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
-    MetaData metaData = resp.getLeft().getMetaData();
-    assertThat(metaData.getInfo(), is(equalTo("Monthly Adjusted Prices and Volumes")));
-    assertThat(metaData.getSymbol(), is(equalTo("DUMMY")));
-    assertThat(metaData.getLastRefresh(), is(equalTo("2017-11-24")));
-    assertThat(metaData.getInterval().orElse(""), is(equalTo("")));
-    assertThat(metaData.getOutputSize().orElse(""), is(equalTo("")));
-    assertThat(metaData.getTimeZone(), is(equalTo("US/Eastern")));
+    Map<String, String> metaData = resp.getLeft().getMetaData();
+    assertThat(metaData.get("1. Information"), is(equalTo("Monthly Adjusted Prices and Volumes")));
+    assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
+    assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
     List<StockData> stockData = resp.getLeft().getStockData();
     assertThat(stockData.size(), is(equalTo(3)));

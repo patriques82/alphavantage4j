@@ -1,4 +1,4 @@
-package response.models.time_series.resolvers;
+package response.models.time_series;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
