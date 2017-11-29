@@ -46,7 +46,7 @@ public class App {
   public static void main(String[] args) {
     String apiKey = "50M3AP1K3Y";
     AlphaVantageConnector apiConnector = new AlphaVantageConnector(apiKey, 30000);
-    StockTimeSeries stockTimeSeries = new StockTimeSeries(apiConnector);
+    TimeSeries stockTimeSeries = new TimeSeries(apiConnector);
     Either<ResponseData, Exception> response = stockTimeSeries.intraDay("MSFT", Interval.ONE_MIN, OutputSize.COMPACT);
     if (response.isLeft()) {
       MetaData metaData = response.getLeft().getMetaData();

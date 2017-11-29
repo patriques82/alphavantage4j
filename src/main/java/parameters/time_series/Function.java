@@ -1,4 +1,6 @@
-package parameters;
+package parameters.time_series;
+
+import parameters.ApiParameter;
 
 /**
  * Function parameter, i.e function=TIME_SERIES_INTRADAY

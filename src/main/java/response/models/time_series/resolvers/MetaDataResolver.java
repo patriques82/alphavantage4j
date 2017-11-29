@@ -1,6 +1,6 @@
-package response.models.resolvers;
+package response.models.time_series.resolvers;
 
-import response.data.MetaData;
+import response.data.time_series.MetaData;
 
 import java.util.Map;
 

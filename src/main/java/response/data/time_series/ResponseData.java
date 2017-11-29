@@ -1,4 +1,4 @@
-package response.data;
+package response.data.time_series;
 
 import java.util.List;
 

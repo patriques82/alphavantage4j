@@ -1,4 +1,6 @@
-package parameters;
+package parameters.time_series;
+
+import parameters.ApiParameter;
 
 /**
  * Outputsize parameter, i.e outputsize=compact

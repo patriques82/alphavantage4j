@@ -1,29 +1,29 @@
 import com.msiops.ground.either.Either;
-import parameters.Function;
-import parameters.Interval;
-import parameters.OutputSize;
-import response.data.ResponseData;
-import response.models.*;
+import parameters.time_series.Function;
+import parameters.time_series.Interval;
+import parameters.time_series.OutputSize;
+import response.data.time_series.ResponseData;
+import response.models.time_series.*;
 
 /**
  * The Stock Time Series Data provides realtime and historical equity data in 4 different temporal resolutions:
  * (1) intraday, (2) daily, (3) weekly, and (4) monthly.
  */
-public class StockTimeSeries {
+public class TimeSeries {
   private final ApiConnector apiConnector;
 
   /**
    * Constructs a Time Series Data api endpoint with the help of an {@link ApiConnector}
    * @param apiConnector the connection to the api
    */
-  public StockTimeSeries(ApiConnector apiConnector) {
+  public TimeSeries(ApiConnector apiConnector) {
     this.apiConnector = apiConnector;
   }
   /**
    * This API returns intraday time series (timestamp, open, high, low, close, volume) of the equity specified, updated realtime.
    * @param symbol the stock symbol to lookup
-   * @param interval the interval between two consecutive data points in the time series {@link parameters.Interval}
-   * @param outputSize the specification of the amount of returned data points {@link parameters.OutputSize}
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}
+   * @param outputSize the specification of the amount of returned data points {@link OutputSize}
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> intraDay(String symbol, Interval interval, OutputSize outputSize) {
@@ -33,7 +33,7 @@ public class StockTimeSeries {
   /**
    * This API returns intraday time series (timestamp, open, high, low, close, volume) of the equity specified, updated realtime.
    * @param symbol the stock symbol to lookup
-   * @param interval the interval between two consecutive data points in the time series {@link parameters.Interval}
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> intraDay(String symbol, Interval interval) {
@@ -43,7 +43,7 @@ public class StockTimeSeries {
   /**
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume) of the equity specified.
    * @param symbol the stock symbol to lookup
-   * @param outputSize the specification of the amount of returned data points {@link parameters.OutputSize}
+   * @param outputSize the specification of the amount of returned data points {@link OutputSize}
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> daily(String symbol, OutputSize outputSize) {
@@ -61,7 +61,7 @@ public class StockTimeSeries {
   /**
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume, daily adjusted close, and split/dividend events)
    * @param symbol the stock symbol to lookup
-   * @param outputSize the specification of the amount of returned data points {@link parameters.OutputSize}
+   * @param outputSize the specification of the amount of returned data points {@link OutputSize}
    * @return either a successful response (left) or an exception (right)
    */
   public Either<ResponseData, Exception> dailyAdjusted(String symbol, OutputSize outputSize) {

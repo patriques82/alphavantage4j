@@ -1,15 +1,16 @@
-package parameters;
+package parameters.technical_indicator;
 
-/**
- * Interval parameter, i.e interval=15min
- */
+import parameters.ApiParameter;
+
 public enum Interval implements ApiParameter {
   ONE_MIN("1min"),
   FIVE_MIN("5min"),
-  TEN_MIN("10min"),
   FIFTEEN_MIN("15min"),
   THIRTY_MIN("30min"),
-  SIXTY_MIN("60min");
+  SIXTY_MIN("60min"),
+  DAILY("daily"),
+  WEEKLY("weekly"),
+  MONTHLY("monthly");
 
   private final String urlParameter;
 
@@ -19,11 +20,11 @@ public enum Interval implements ApiParameter {
 
   @Override
   public String getKey() {
-    return "interval";
+    return null;
   }
 
   @Override
   public String getValue() {
-    return urlParameter;
+    return null;
   }
 }

@@ -4,13 +4,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.msiops.ground.either.Either;
-import response.data.MetaData;
-import response.data.ResponseData;
-import response.data.StockData;
 import response.models.ResponseModel;
 
 import java.lang.reflect.Type;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,7 +22,7 @@ class JsonParser {
    * @param responseModel the model that describes the response.
    * @return either a successful response (left) or an exception (right)
    */
-  static Either<ResponseData, Exception> parseJson(String json, ResponseModel responseModel) {
+  static <Data> Either<Data, Exception> parseJson(String json, ResponseModel<Data> responseModel) {
     try {
       JsonElement jsonElement = PARSER.parse(json);
       JsonObject rootObject = jsonElement.getAsJsonObject();
@@ -39,13 +35,11 @@ class JsonParser {
       Type metaDataType = new TypeToken<Map<String, String>>() {
       }.getType();
       Map<String, String> metaDataResponse = GSON.fromJson(rootObject.get(responseModel.getMetaDataKey()), metaDataType);
-      Type stockDataType = new TypeToken<Map<String, Map<String, String>>>() {
+      Type dataType = new TypeToken<Map<String, Map<String, String>>>() {
       }.getType();
-      Map<String, Map<String, String>> stockDataResponse = GSON.fromJson(rootObject.get(responseModel.getStocksKey()), stockDataType);
+      Map<String, Map<String, String>> dataResponse = GSON.fromJson(rootObject.get(responseModel.getDataKey()), dataType);
 
-      MetaData metaData = responseModel.resolveMetaData(metaDataResponse);
-      List<StockData> stockData = responseModel.resolveStockData(stockDataResponse);
-      return Either.left(new ResponseData(metaData, stockData));
+      return Either.left(responseModel.resolve(metaDataResponse, dataResponse));
 
     } catch (JsonSyntaxException e) {
       return Either.right(e);

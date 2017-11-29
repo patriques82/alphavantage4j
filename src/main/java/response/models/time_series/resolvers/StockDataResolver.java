@@ -1,9 +1,9 @@
-package response.models.resolvers;
+package response.models.time_series.resolvers;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import response.data.StockData;
+import response.data.time_series.StockData;
 
 import java.util.ArrayList;
 import java.util.List;

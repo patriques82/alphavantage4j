@@ -3,19 +3,19 @@ import com.google.gson.stream.MalformedJsonException;
 import com.msiops.ground.either.Either;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import parameters.Interval;
-import parameters.OutputSize;
-import response.data.MetaData;
-import response.data.ResponseData;
-import response.data.StockData;
+import parameters.time_series.Interval;
+import parameters.time_series.OutputSize;
+import response.data.time_series.MetaData;
+import response.data.time_series.ResponseData;
+import response.data.time_series.StockData;
 
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class StockTimeSeriesTest {
-  private StockTimeSeries stockTimeSeries;
+public class TimeSeriesTest {
+  private TimeSeries timeSeries;
 
   @Test
   public void changeOfAPI() {
@@ -36,9 +36,9 @@ public class StockTimeSeriesTest {
             "        },\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(unexpectedJson));
+    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(unexpectedJson));
 
-    Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<ResponseData, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(false)));
     assertThat(resp.getRight(), is(instanceOf(JsonSyntaxException.class)));
     assertThat(resp.getRight().getCause(), is(instanceOf(MalformedJsonException.class)));
@@ -47,9 +47,9 @@ public class StockTimeSeriesTest {
   @Test
   public void nonExistingSymbol() {
     String json = "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_INTRADAY.\"}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<ResponseData, Exception> resp = timeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(false)));
     assertThat(resp.getRight(), is(instanceOf(RuntimeException.class)));
     assertThat(resp.getRight().getMessage(), containsString("Invalid API call"));
@@ -91,9 +91,9 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = stockTimeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<ResponseData, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     MetaData metaData = resp.getLeft().getMetaData();
@@ -151,9 +151,9 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = stockTimeSeries.daily("DUMMY", OutputSize.COMPACT);
+    Either<ResponseData, Exception> resp = timeSeries.daily("DUMMY", OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     MetaData metaData = resp.getLeft().getMetaData();
@@ -220,9 +220,9 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = stockTimeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
+    Either<ResponseData, Exception> resp = timeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     MetaData metaData = resp.getLeft().getMetaData();
@@ -282,9 +282,9 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = stockTimeSeries.weekly("DUMMY");
+    Either<ResponseData, Exception> resp = timeSeries.weekly("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     MetaData metaData = resp.getLeft().getMetaData();
@@ -347,9 +347,9 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = stockTimeSeries.weeklyAdjusted("DUMMY");
+    Either<ResponseData, Exception> resp = timeSeries.weeklyAdjusted("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     MetaData metaData = resp.getLeft().getMetaData();
@@ -408,9 +408,9 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = stockTimeSeries.monthly("DUMMY");
+    Either<ResponseData, Exception> resp = timeSeries.monthly("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     MetaData metaData = resp.getLeft().getMetaData();
@@ -473,9 +473,9 @@ public class StockTimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    stockTimeSeries = new StockTimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = stockTimeSeries.monthlyAdjusted("DUMMY");
+    Either<ResponseData, Exception> resp = timeSeries.monthlyAdjusted("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     MetaData metaData = resp.getLeft().getMetaData();
