@@ -1,6 +1,6 @@
 import com.msiops.ground.either.Either;
-import parameters.ApiParameter;
-import parameters.ApiParameterBuilder;
+import input.ApiParameter;
+import input.ApiParameterBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;

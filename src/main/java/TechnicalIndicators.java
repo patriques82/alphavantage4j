@@ -13,6 +13,6 @@ public class TechnicalIndicators {
 
 //  public Either<ResponseData, Exception> sma(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
 //    return apiConnector.getRequest(symbol, Function.SMA, timePeriod, interval, seriesType)
-//            .flatMap(jsonString -> JsonParser.parseJson(jsonString, new SMA()));
+//            .flatMap(jsonString -> response.models.JsonParser.parseJson(jsonString, new SMA()));
 //  }
 }

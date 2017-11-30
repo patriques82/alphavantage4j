@@ -1,5 +1,5 @@
 import com.msiops.ground.either.Either;
-import parameters.ApiParameter;
+import input.ApiParameter;
 
 /**
  * Connection to api endpoint.

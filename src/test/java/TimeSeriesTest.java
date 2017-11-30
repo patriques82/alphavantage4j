@@ -3,10 +3,10 @@ import com.google.gson.stream.MalformedJsonException;
 import com.msiops.ground.either.Either;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import parameters.time_series.Interval;
-import parameters.time_series.OutputSize;
-import response.data.ResponseData;
-import response.data.time_series.StockData;
+import input.time_series.Interval;
+import input.time_series.OutputSize;
+import output.data.ResponseData;
+import output.data.time_series.StockData;
 
 import java.util.List;
 import java.util.Map;
