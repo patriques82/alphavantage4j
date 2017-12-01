@@ -1,18 +1,23 @@
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.List;
+
+import org.joda.time.DateTime;
+import org.junit.Test;
+
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.MalformedJsonException;
 import com.msiops.ground.either.Either;
-import org.joda.time.DateTime;
-import org.junit.Test;
+
 import parameters.Interval;
 import parameters.OutputSize;
 import response.data.MetaData;
 import response.data.ResponseData;
 import response.data.StockData;
-
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class StockTimeSeriesTest {
   private StockTimeSeries stockTimeSeries;

@@ -1,7 +1,8 @@
 import com.msiops.ground.either.Either;
 
+import parameters.FromCurrency;
 import parameters.Function;
-import response.data.ResponseData;
+import parameters.ToCurrency;
 
 /**
  * 
@@ -19,11 +20,8 @@ public class ForeignExchange {
 		    this.apiConnector = apiConnector;
 	  }
 
-	  
-	  
-	public Either<ResponseData, Exception> currencyExchangeRate(String fromCCY, String toCCY){
-	    return apiConnector.getRequest(symbol, Function.CURRENCY_EXCHANGE, interval, outputSize)
-
+	public Either<String, Exception> currencyExchangeRate(FromCurrency fromCCY, ToCurrency toCCY){
+	    return apiConnector.getRequest(null,Function.CURRENCY_EXCHANGE, fromCCY, toCCY);
 	}
 
 }
