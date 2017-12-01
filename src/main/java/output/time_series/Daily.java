@@ -1,28 +1,56 @@
 package output.time_series;
 
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-import output.JsonParser;
-import output.time_series.data.ResponseData;
+import com.msiops.ground.either.Either;
+import org.joda.time.DateTime;
 
-import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-public class Daily extends JsonParser<ResponseData> {
+public class Daily implements Response {
+  private final Map<String, String> metaData;
+  private final List<StockData> stockData;
+
+  public Daily(final Map<String, String> metaData, final List<StockData> stockData) {
+    this.metaData = metaData;
+    this.stockData = stockData;
+  }
 
   @Override
-  public ResponseData resolve(JsonObject rootObject) {
-    Type metaDataType = new TypeToken<Map<String, String>>() {
-    }.getType();
-    Map<String, String> metaData = GSON.fromJson(rootObject.get("Meta Data"), metaDataType);
-    Type dataType = new TypeToken<Map<String, Map<String, String>>>() {
-    }.getType();
-    Map<String, Map<String, String>> stockData = GSON.fromJson(rootObject.get("Time Series (Daily)"), dataType);
+  public Map<String, String> getMetaData() {
+    return metaData;
+  }
 
-    ResponseData response = new ResponseData(metaData);
-    stockData.forEach(response::addDaily);
+  @Override
+  public List<StockData> getStockData() {
+    return stockData;
+  }
 
-    return response;
+  public static Either<Daily, Exception> from(String json) {
+    Parser parser = new Parser();
+    return parser.parseJson(json);
+  }
+
+  private static class Parser extends TimeSeriesParser<Daily> {
+
+    @Override
+    String getStockDataKey() {
+      return "Time Series (Daily)";
+    }
+
+    @Override
+    Daily resolve(Map<String, String> metaData, Map<String, Map<String, String>> stockData) {
+      List<StockData> stocks = new ArrayList<>();
+      stockData.forEach((key, values) -> stocks.add(new StockData(
+              DateTime.parse(key, DATE_FORMAT),
+              Double.parseDouble(values.get("1. open")),
+              Double.parseDouble(values.get("2. high")),
+              Double.parseDouble(values.get("3. low")),
+              Double.parseDouble(values.get("4. close")),
+              Long.parseLong(values.get("5. volume"))
+      )));
+      return new Daily(metaData, stocks);
+    }
   }
 
 }

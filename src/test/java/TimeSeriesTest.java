@@ -5,8 +5,7 @@ import input.time_series.Interval;
 import input.time_series.OutputSize;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import output.time_series.data.ResponseData;
-import output.time_series.data.StockData;
+import output.time_series.*;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(unexpectedJson));
 
-    Either<ResponseData, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<IntraDay, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(false)));
     assertThat(resp.getRight(), is(instanceOf(JsonSyntaxException.class)));
     assertThat(resp.getRight().getCause(), is(instanceOf(MalformedJsonException.class)));
@@ -49,7 +48,7 @@ public class TimeSeriesTest {
     String json = "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_INTRADAY.\"}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<IntraDay, Exception> resp = timeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(false)));
     assertThat(resp.getRight(), is(instanceOf(RuntimeException.class)));
     assertThat(resp.getRight().getMessage(), containsString("Invalid API call"));
@@ -93,7 +92,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
+    Either<IntraDay, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -153,7 +152,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.daily("DUMMY", OutputSize.COMPACT);
+    Either<Daily, Exception> resp = timeSeries.daily("DUMMY", OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -221,7 +220,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
+    Either<DailyAdjusted, Exception> resp = timeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -282,7 +281,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.weekly("DUMMY");
+    Either<Weekly, Exception> resp = timeSeries.weekly("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -345,7 +344,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.weeklyAdjusted("DUMMY");
+    Either<WeeklyAdjusted, Exception> resp = timeSeries.weeklyAdjusted("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -404,7 +403,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.monthly("DUMMY");
+    Either<Monthly, Exception> resp = timeSeries.monthly("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();
@@ -467,7 +466,7 @@ public class TimeSeriesTest {
             "}";
     timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
 
-    Either<ResponseData, Exception> resp = timeSeries.monthlyAdjusted("DUMMY");
+    Either<MonthlyAdjusted, Exception> resp = timeSeries.monthlyAdjusted("DUMMY");
     assertThat(resp.isLeft(), is(equalTo(true)));
 
     Map<String, String> metaData = resp.getLeft().getMetaData();

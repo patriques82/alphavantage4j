@@ -1,4 +1,4 @@
-package output.time_series.data;
+package output.time_series;
 
 import org.joda.time.DateTime;
 
