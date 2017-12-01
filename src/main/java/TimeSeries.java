@@ -2,10 +2,9 @@ import com.msiops.ground.either.Either;
 import input.time_series.Function;
 import input.time_series.Interval;
 import input.time_series.OutputSize;
-import output.data.ResponseData;
-import output.data.time_series.StockData;
-import output.models.JsonParser;
-import output.models.time_series.*;
+import output.JsonParser;
+import output.time_series.*;
+import output.time_series.data.ResponseData;
 
 /**
  * The Stock Time Series Data provides realtime and historical equity data in 4 different temporal resolutions:
@@ -13,15 +12,13 @@ import output.models.time_series.*;
  */
 public class TimeSeries {
   private final ApiConnector apiConnector;
-  private final JsonParser<ResponseData<StockData>> jsonParser;
 
   /**
-   * Constructs a Time Series Data api endpoint with the help of an {@link ApiConnector}
+   * Constructs a Time Series Data api endpoint with the help of an {@link ApiConnector} and a {@link JsonParser}
    * @param apiConnector the connection to the api
    */
-  public TimeSeries(ApiConnector apiConnector, JsonParser<ResponseData<StockData>> jsonParser) {
+  public TimeSeries(ApiConnector apiConnector) {
     this.apiConnector = apiConnector;
-    this.jsonParser = jsonParser;
   }
   /**
    * This API returns intraday time series (timestamp, open, high, low, close, volume) of the equity specified, updated realtime.
@@ -30,9 +27,9 @@ public class TimeSeries {
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
    * @return either a successful response (left) or an exception (right)
    */
-  public Either<ResponseData<StockData>, Exception> intraDay(String symbol, Interval interval, OutputSize outputSize) {
+  public Either<ResponseData, Exception> intraDay(String symbol, Interval interval, OutputSize outputSize) {
     return apiConnector.getRequest(symbol, Function.INTRADAY, interval, outputSize)
-            .flatMap(jsonString -> jsonParser.parseJson(jsonString, new IntraDay(interval)));
+            .flatMap(jsonString -> new IntraDay(interval).parseJson(jsonString));
   }
   /**
    * This API returns intraday time series (timestamp, open, high, low, close, volume) of the equity specified, updated realtime.
@@ -40,9 +37,9 @@ public class TimeSeries {
    * @param interval the interval between two consecutive data points in the time series {@link Interval}
    * @return either a successful response (left) or an exception (right)
    */
-  public Either<ResponseData<StockData>, Exception> intraDay(String symbol, Interval interval) {
+  public Either<ResponseData, Exception> intraDay(String symbol, Interval interval) {
     return apiConnector.getRequest(symbol, Function.INTRADAY, interval)
-            .flatMap(jsonString -> jsonParser.parseJson(jsonString, new IntraDay(interval)));
+            .flatMap(jsonString -> new IntraDay(interval).parseJson(jsonString));
   }
   /**
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume) of the equity specified.
@@ -50,72 +47,73 @@ public class TimeSeries {
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
    * @return either a successful response (left) or an exception (right)
    */
-  public Either<ResponseData<StockData>, Exception> daily(String symbol, OutputSize outputSize) {
+  public Either<ResponseData, Exception> daily(String symbol, OutputSize outputSize) {
     return apiConnector.getRequest(symbol, Function.DAILY, outputSize)
-            .flatMap(jsonString -> jsonParser.parseJson(jsonString, new Daily()));
+            .flatMap(jsonString -> new Daily().parseJson(jsonString));
   }
   /**
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume) of the equity specified.
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public Either<ResponseData<StockData>, Exception> daily(String symbol) {
+  public Either<ResponseData, Exception> daily(String symbol) {
     return apiConnector.getRequest(symbol, Function.DAILY)
-            .flatMap(jsonString -> jsonParser.parseJson(jsonString, new Daily()));  }
+            .flatMap(jsonString -> new Daily().parseJson(jsonString));
+  }
   /**
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume, daily adjusted close, and split/dividend events)
    * @param symbol the stock symbol to lookup
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
    * @return either a successful response (left) or an exception (right)
    */
-  public Either<ResponseData<StockData>, Exception> dailyAdjusted(String symbol, OutputSize outputSize) {
+  public Either<ResponseData, Exception> dailyAdjusted(String symbol, OutputSize outputSize) {
     return apiConnector.getRequest(symbol, Function.DAILY_ADJUSTED, outputSize)
-            .flatMap(jsonString -> jsonParser.parseJson(jsonString, new DailyAdjusted()));
+            .flatMap(jsonString -> new DailyAdjusted().parseJson(jsonString));
   }
   /**
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume, daily adjusted close, and split/dividend events)
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public Either<ResponseData<StockData>, Exception> dailyAdjusted(String symbol) {
+  public Either<ResponseData, Exception> dailyAdjusted(String symbol) {
     return apiConnector.getRequest(symbol, Function.DAILY_ADJUSTED)
-            .flatMap(jsonString -> jsonParser.parseJson(jsonString, new DailyAdjusted()));
+            .flatMap(jsonString -> new DailyAdjusted().parseJson(jsonString));
   }
   /**
    * This API returns weekly time series (last trading day of each week, weekly open, weekly high, weekly low, weekly close, weekly volume)
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public Either<ResponseData<StockData>, Exception> weekly(String symbol) {
+  public Either<ResponseData, Exception> weekly(String symbol) {
     return apiConnector.getRequest(symbol, Function.WEEKLY)
-            .flatMap(jsonString -> jsonParser.parseJson(jsonString, new Weekly()));
+            .flatMap(jsonString -> new Weekly().parseJson(jsonString));
   }
   /**
    * This API returns weekly adjusted time series (last trading day of each week, weekly open, weekly high, weekly low, weekly close, weekly adjusted close, weekly volume, weekly dividend)
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public Either<ResponseData<StockData>, Exception> weeklyAdjusted(String symbol) {
+  public Either<ResponseData, Exception> weeklyAdjusted(String symbol) {
     return apiConnector.getRequest(symbol, Function.WEEKLY_ADJUSTED)
-            .flatMap(jsonString -> jsonParser.parseJson(jsonString, new WeeklyAdjusted()));
+            .flatMap(jsonString -> new WeeklyAdjusted().parseJson(jsonString));
   }
   /**
    * This API returns monthly time series (last trading day of each month, monthly open, monthly high, monthly low, monthly close, monthly volume)
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public Either<ResponseData<StockData>, Exception> monthly(String symbol) {
+  public Either<ResponseData, Exception> monthly(String symbol) {
     return apiConnector.getRequest(symbol, Function.MONTHLY)
-            .flatMap(jsonString -> jsonParser.parseJson(jsonString, new Monthly()));
+            .flatMap(jsonString -> new Monthly().parseJson(jsonString));
   }
   /**
    * This API returns monthly adjusted time series (last trading day of each month, monthly open, monthly high, monthly low, monthly close, monthly adjusted close, monthly volume, monthly dividend)
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public Either<ResponseData<StockData>, Exception> monthlyAdjusted(String symbol) {
+  public Either<ResponseData, Exception> monthlyAdjusted(String symbol) {
     return apiConnector.getRequest(symbol, Function.MONTHLY_ADJUSTED)
-            .flatMap(jsonString -> jsonParser.parseJson(jsonString, new MonthlyAdjusted()));
+            .flatMap(jsonString -> new MonthlyAdjusted().parseJson(jsonString));
   }
 
 }

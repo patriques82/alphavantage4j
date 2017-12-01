@@ -1,4 +1,4 @@
-package output.data.technical_indicator;
+package output.technical_indicators.data;
 
 import org.joda.time.DateTime;
 
