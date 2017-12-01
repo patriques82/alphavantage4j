@@ -57,7 +57,9 @@ public class AlphaVantageConnector implements ApiConnector {
     for (ApiParameter parameter : apiParameters) {
       urlBuilder.append(parameter);
     }
-    urlBuilder.append("symbol", symbol);
+    if(symbol!=null){
+        urlBuilder.append("symbol", symbol);    	
+    }
     urlBuilder.append("apikey", apiKey);
     return urlBuilder.getUrl();
   }
