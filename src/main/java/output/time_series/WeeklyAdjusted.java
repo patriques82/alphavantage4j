@@ -12,7 +12,7 @@ public class WeeklyAdjusted implements Response {
   private final Map<String, String> metaData;
   private final List<StockData> stocks;
 
-  public WeeklyAdjusted(Map<String, String> metaData, List<StockData> stocks) {
+  private WeeklyAdjusted(Map<String, String> metaData, List<StockData> stocks) {
     this.metaData = metaData;
     this.stocks = stocks;
   }

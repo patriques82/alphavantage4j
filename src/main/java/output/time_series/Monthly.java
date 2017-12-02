@@ -12,7 +12,7 @@ public class Monthly implements Response {
   private final Map<String, String> metaData;
   private final List<StockData> stocks;
 
-  public Monthly(Map<String, String> metaData, List<StockData> stocks) {
+  private Monthly(Map<String, String> metaData, List<StockData> stocks) {
     this.metaData = metaData;
     this.stocks = stocks;
   }

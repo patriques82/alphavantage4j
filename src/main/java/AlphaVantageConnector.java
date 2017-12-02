@@ -5,7 +5,6 @@ import input.ApiParameterBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -25,14 +24,8 @@ public class AlphaVantageConnector implements ApiConnector {
   @Override
   public Either<String, Exception> getRequest(String symbol, ApiParameter... apiParameters) {
     String params = getParameters(symbol, apiParameters);
-    URL request = null;
     try {
-      request = new URL(BASE_URL + params);
-    } catch (MalformedURLException e) {
-      return Either.right(e);
-    }
-
-    try {
+      URL request = new URL(BASE_URL + params);
       URLConnection connection = request.openConnection();
       connection.setConnectTimeout(timeOut);
       connection.setReadTimeout(timeOut);

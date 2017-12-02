@@ -11,7 +11,7 @@ public class Daily implements Response {
   private final Map<String, String> metaData;
   private final List<StockData> stockData;
 
-  public Daily(final Map<String, String> metaData, final List<StockData> stockData) {
+  private Daily(final Map<String, String> metaData, final List<StockData> stockData) {
     this.metaData = metaData;
     this.stockData = stockData;
   }

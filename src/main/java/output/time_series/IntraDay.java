@@ -12,7 +12,7 @@ public class IntraDay implements Response {
   private final Map<String, String> metaData;
   private final List<StockData> stocks;
 
-  public IntraDay(Map<String, String> metaData, List<StockData> stocks) {
+  private IntraDay(Map<String, String> metaData, List<StockData> stocks) {
     this.metaData = metaData;
     this.stocks = stocks;
   }

@@ -12,7 +12,7 @@ public class MonthlyAdjusted implements Response {
   private final Map<String, String> metaData;
   private final List<StockData> stocks;
 
-  public MonthlyAdjusted(Map<String, String> metaData, List<StockData> stocks) {
+  private MonthlyAdjusted(Map<String, String> metaData, List<StockData> stocks) {
     this.metaData = metaData;
     this.stocks = stocks;
   }
