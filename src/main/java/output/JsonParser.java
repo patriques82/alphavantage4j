@@ -9,7 +9,7 @@ public abstract class JsonParser<Data> {
   private static com.google.gson.JsonParser PARSER = new com.google.gson.JsonParser();
   protected static Gson GSON = new Gson();
 
-  public abstract Data resolve(JsonObject rootObject);
+  public abstract Data resolve(JsonObject rootObject) throws AlphaVantageException;
 
   public Data parseJson(String json) throws AlphaVantageException {
     try {
