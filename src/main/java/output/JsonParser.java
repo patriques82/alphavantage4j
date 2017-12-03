@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.msiops.ground.either.Either;
 
 public abstract class JsonParser<Data> {
   private static com.google.gson.JsonParser PARSER = new com.google.gson.JsonParser();
@@ -12,20 +11,20 @@ public abstract class JsonParser<Data> {
 
   public abstract Data resolve(JsonObject rootObject);
 
-  public Either<Data, Exception> parseJson(String json) {
+  public Data parseJson(String json) throws AlphaVantageException {
     try {
       JsonElement jsonElement = PARSER.parse(json);
       JsonObject rootObject = jsonElement.getAsJsonObject();
 
       JsonElement errorMessage = rootObject.get("Error Message");
       if (errorMessage != null) {
-        return Either.right(new RuntimeException(errorMessage.getAsString()));
+        throw new AlphaVantageException(errorMessage.getAsString());
       }
 
-      return Either.left(resolve(rootObject));
+      return resolve(rootObject);
 
     } catch (JsonSyntaxException e) {
-      return Either.right(e);
+      throw new AlphaVantageException("error parsing json", e);
     }
   }
 

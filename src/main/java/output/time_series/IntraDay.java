@@ -1,8 +1,8 @@
 package output.time_series;
 
-import com.msiops.ground.either.Either;
 import input.time_series.Interval;
 import org.joda.time.DateTime;
+import output.AlphaVantageException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class IntraDay implements Response {
     return stocks;
   }
 
-  public static Either<IntraDay, Exception> from(Interval interval, String json) {
+  public static IntraDay from(Interval interval, String json) throws AlphaVantageException {
     Parser parser = new Parser(interval);
     return parser.parseJson(json);
   }

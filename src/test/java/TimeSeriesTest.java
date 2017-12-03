@@ -1,23 +1,22 @@
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.MalformedJsonException;
-import com.msiops.ground.either.Either;
 import input.time_series.Interval;
 import input.time_series.OutputSize;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import output.AlphaVantageException;
 import output.time_series.*;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TimeSeriesTest {
   private TimeSeries timeSeries;
 
-  @Test
-  public void changeOfAPI() {
+  @Test(expected = AlphaVantageException.class)
+  public void changeOfAPI() throws AlphaVantageException {
     String unexpectedJson = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -35,27 +34,20 @@ public class TimeSeriesTest {
             "        },\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(unexpectedJson));
-
-    Either<IntraDay, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
-    assertThat(resp.isLeft(), is(equalTo(false)));
-    assertThat(resp.getRight(), is(instanceOf(JsonSyntaxException.class)));
-    assertThat(resp.getRight().getCause(), is(instanceOf(MalformedJsonException.class)));
+    timeSeries = new TimeSeries((symbol, parameters) -> unexpectedJson);
+    timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
   }
 
-  @Test
-  public void nonExistingSymbol() {
+  @Test(expected = AlphaVantageException.class)
+  public void nonExistingSymbol() throws AlphaVantageException {
     String json = "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_INTRADAY.\"}";
-    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> json);
 
-    Either<IntraDay, Exception> resp = timeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
-    assertThat(resp.isLeft(), is(equalTo(false)));
-    assertThat(resp.getRight(), is(instanceOf(RuntimeException.class)));
-    assertThat(resp.getRight().getMessage(), containsString("Invalid API call"));
+    timeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
   }
 
   @Test
-  public void intraDay() {
+  public void intraDay() throws AlphaVantageException {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -90,12 +82,11 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> json);
 
-    Either<IntraDay, Exception> resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
-    assertThat(resp.isLeft(), is(equalTo(true)));
+    IntraDay resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
 
-    Map<String, String> metaData = resp.getLeft().getMetaData();
+    Map<String, String> metaData = resp.getMetaData();
     assertThat(metaData.get("1. Information"), is(equalTo("Intraday (1min) prices and volumes")));
     assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
     assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-17 16:00:00")));
@@ -103,7 +94,7 @@ public class TimeSeriesTest {
     assertThat(metaData.get("5. Output Size"), is(equalTo("Compact")));
     assertThat(metaData.get("6. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -116,7 +107,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void daily() {
+  public void daily() throws AlphaVantageException {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -150,19 +141,18 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> json);
 
-    Either<Daily, Exception> resp = timeSeries.daily("DUMMY", OutputSize.COMPACT);
-    assertThat(resp.isLeft(), is(equalTo(true)));
+    Daily resp = timeSeries.daily("DUMMY", OutputSize.COMPACT);
 
-    Map<String, String> metaData = resp.getLeft().getMetaData();
+    Map<String, String> metaData = resp.getMetaData();
     assertThat(metaData.get("1. Information"), is(equalTo("Daily Prices (open, high, low, close) and Volumes")));
     assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
     assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24 12:47:32")));
     assertThat(metaData.get("4. Output Size"), is(equalTo("Compact")));
     assertThat(metaData.get("5. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -175,7 +165,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void dailyAdjusted() {
+  public void dailyAdjusted() throws AlphaVantageException {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -218,19 +208,18 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> json);
 
-    Either<DailyAdjusted, Exception> resp = timeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
-    assertThat(resp.isLeft(), is(equalTo(true)));
+    DailyAdjusted resp = timeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
 
-    Map<String, String> metaData = resp.getLeft().getMetaData();
+    Map<String, String> metaData = resp.getMetaData();
     assertThat(metaData.get("1. Information"), is(equalTo("Daily Time Series with Splits and Dividend Events")));
     assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
     assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24 12:47:32")));
     assertThat(metaData.get("4. Output Size"), is(equalTo("Compact")));
     assertThat(metaData.get("5. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -246,7 +235,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void weekly() {
+  public void weekly() throws AlphaVantageException {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -279,18 +268,17 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> json);
 
-    Either<Weekly, Exception> resp = timeSeries.weekly("DUMMY");
-    assertThat(resp.isLeft(), is(equalTo(true)));
+    Weekly resp = timeSeries.weekly("DUMMY");
 
-    Map<String, String> metaData = resp.getLeft().getMetaData();
+    Map<String, String> metaData = resp.getMetaData();
     assertThat(metaData.get("1. Information"), is(equalTo("Weekly Prices (open, high, low, close) and Volumes")));
     assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
     assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
     assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -303,7 +291,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void weeklyAdjusted() {
+  public void weeklyAdjusted() throws AlphaVantageException {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -342,18 +330,17 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> json);
 
-    Either<WeeklyAdjusted, Exception> resp = timeSeries.weeklyAdjusted("DUMMY");
-    assertThat(resp.isLeft(), is(equalTo(true)));
+    WeeklyAdjusted resp = timeSeries.weeklyAdjusted("DUMMY");
 
-    Map<String, String> metaData = resp.getLeft().getMetaData();
+    Map<String, String> metaData = resp.getMetaData();
     assertThat(metaData.get("1. Information"), is(equalTo("Weekly Adjusted Prices and Volumes")));
     assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
     assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
     assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -368,7 +355,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void monthly() {
+  public void monthly() throws AlphaVantageException {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -401,18 +388,17 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> json);
 
-    Either<Monthly, Exception> resp = timeSeries.monthly("DUMMY");
-    assertThat(resp.isLeft(), is(equalTo(true)));
+    Monthly resp = timeSeries.monthly("DUMMY");
 
-    Map<String, String> metaData = resp.getLeft().getMetaData();
+    Map<String, String> metaData = resp.getMetaData();
     assertThat(metaData.get("1. Information"), is(equalTo("Monthly Prices (open, high, low, close) and Volumes")));
     assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
     assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
     assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
@@ -425,7 +411,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void monthlyAdjusted() {
+  public void monthlyAdjusted() throws AlphaVantageException {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -464,18 +450,17 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> Either.left(json));
+    timeSeries = new TimeSeries((symbol, parameters) -> json);
 
-    Either<MonthlyAdjusted, Exception> resp = timeSeries.monthlyAdjusted("DUMMY");
-    assertThat(resp.isLeft(), is(equalTo(true)));
+    MonthlyAdjusted resp = timeSeries.monthlyAdjusted("DUMMY");
 
-    Map<String, String> metaData = resp.getLeft().getMetaData();
+    Map<String, String> metaData = resp.getMetaData();
     assertThat(metaData.get("1. Information"), is(equalTo("Monthly Adjusted Prices and Volumes")));
     assertThat(metaData.get("2. Symbol"), is(equalTo("DUMMY")));
     assertThat(metaData.get("3. Last Refreshed"), is(equalTo("2017-11-24")));
     assertThat(metaData.get("4. Time Zone"), is(equalTo("US/Eastern")));
 
-    List<StockData> stockData = resp.getLeft().getStockData();
+    List<StockData> stockData = resp.getStockData();
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);

@@ -1,5 +1,5 @@
-import com.msiops.ground.either.Either;
 import input.ApiParameter;
+import output.AlphaVantageException;
 
 /**
  * Connection to api endpoint.
@@ -12,5 +12,5 @@ public interface ApiConnector {
    * @param apiParameters the api parameters (required/optional) to the api call
    * @return Either the raw Json string or IOExcpetion
    */
-  Either<String, Exception> getRequest(String symbol, ApiParameter... apiParameters);
+  String getRequest(String symbol, ApiParameter... apiParameters) throws AlphaVantageException;
 }

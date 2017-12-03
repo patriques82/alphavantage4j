@@ -1,7 +1,7 @@
 package output.time_series;
 
-import com.msiops.ground.either.Either;
 import org.joda.time.DateTime;
+import output.AlphaVantageException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class WeeklyAdjusted implements Response {
     return stocks;
   }
 
-  public static Either<WeeklyAdjusted, Exception> from(String json) {
+  public static WeeklyAdjusted from(String json) throws AlphaVantageException {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }

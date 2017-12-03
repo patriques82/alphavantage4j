@@ -1,7 +1,7 @@
 package output.time_series;
 
-import com.msiops.ground.either.Either;
 import org.joda.time.DateTime;
+import output.AlphaVantageException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class Daily implements Response {
     return stockData;
   }
 
-  public static Either<Daily, Exception> from(String json) {
+  public static Daily from(String json) throws AlphaVantageException {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }

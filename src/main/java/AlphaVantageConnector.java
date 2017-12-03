@@ -1,6 +1,6 @@
-import com.msiops.ground.either.Either;
 import input.ApiParameter;
 import input.ApiParameterBuilder;
+import output.AlphaVantageException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class AlphaVantageConnector implements ApiConnector {
   }
 
   @Override
-  public Either<String, Exception> getRequest(String symbol, ApiParameter... apiParameters) {
+  public String getRequest(String symbol, ApiParameter... apiParameters) throws AlphaVantageException {
     String params = getParameters(symbol, apiParameters);
     try {
       URL request = new URL(BASE_URL + params);
@@ -39,9 +39,9 @@ public class AlphaVantageConnector implements ApiConnector {
         responseBuilder.append(line);
       }
       bufferedReader.close();
-      return Either.left(responseBuilder.toString());
+      return responseBuilder.toString();
     } catch (IOException e) {
-      return Either.right(e);
+      throw new AlphaVantageException("failure sending request", e);
     }
   }
 
