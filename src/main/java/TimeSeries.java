@@ -1,3 +1,4 @@
+import input.Symbol;
 import input.time_series.Function;
 import input.time_series.Interval;
 import input.time_series.OutputSize;
@@ -27,7 +28,7 @@ public class TimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public IntraDay intraDay(String symbol, Interval interval, OutputSize outputSize) throws AlphaVantageException {
-    String json = apiConnector.getRequest(symbol, Function.INTRADAY, interval, outputSize);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.INTRADAY, interval, outputSize);
     return IntraDay.from(interval, json);
   }
   /**
@@ -37,7 +38,7 @@ public class TimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public IntraDay intraDay(String symbol, Interval interval) throws AlphaVantageException {
-    String json = apiConnector.getRequest(symbol, Function.INTRADAY, interval);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.INTRADAY, interval);
     return IntraDay.from(interval, json);
   }
   /**
@@ -47,7 +48,7 @@ public class TimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Daily daily(String symbol, OutputSize outputSize) throws AlphaVantageException {
-    String json = apiConnector.getRequest(symbol, Function.DAILY, outputSize);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY, outputSize);
     return Daily.from(json);
   }
   /**
@@ -56,7 +57,7 @@ public class TimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Daily daily(String symbol) throws AlphaVantageException {
-    String json = apiConnector.getRequest(symbol, Function.DAILY);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY);
     return Daily.from(json);
   }
   /**
@@ -66,7 +67,7 @@ public class TimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public DailyAdjusted dailyAdjusted(String symbol, OutputSize outputSize) throws AlphaVantageException{
-    String json = apiConnector.getRequest(symbol, Function.DAILY_ADJUSTED, outputSize);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY_ADJUSTED, outputSize);
     return DailyAdjusted.from(json);
   }
   /**
@@ -75,7 +76,7 @@ public class TimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public DailyAdjusted dailyAdjusted(String symbol) throws AlphaVantageException {
-    String json = apiConnector.getRequest(symbol, Function.DAILY_ADJUSTED);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY_ADJUSTED);
     return DailyAdjusted.from(json);
   }
   /**
@@ -84,7 +85,7 @@ public class TimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Weekly weekly(String symbol) throws AlphaVantageException {
-    String json = apiConnector.getRequest(symbol, Function.WEEKLY);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.WEEKLY);
     return Weekly.from(json);
   }
   /**
@@ -93,7 +94,7 @@ public class TimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public WeeklyAdjusted weeklyAdjusted(String symbol) throws AlphaVantageException {
-    String json = apiConnector.getRequest(symbol, Function.WEEKLY_ADJUSTED);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.WEEKLY_ADJUSTED);
     return WeeklyAdjusted.from(json);
   }
   /**
@@ -102,7 +103,7 @@ public class TimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public Monthly monthly(String symbol) throws AlphaVantageException {
-    String json = apiConnector.getRequest(symbol, Function.MONTHLY);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.MONTHLY);
     return Monthly.from(json);
   }
   /**
@@ -111,7 +112,7 @@ public class TimeSeries {
    * @return either a successful response (left) or an exception (right)
    */
   public MonthlyAdjusted monthlyAdjusted(String symbol) throws AlphaVantageException {
-    String json = apiConnector.getRequest(symbol, Function.MONTHLY_ADJUSTED);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.MONTHLY_ADJUSTED);
     return MonthlyAdjusted.from(json);
   }
 

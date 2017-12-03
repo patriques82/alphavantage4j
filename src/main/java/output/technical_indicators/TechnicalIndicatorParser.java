@@ -1,4 +1,4 @@
-package output.time_series;
+package output.technical_indicators;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
@@ -9,12 +9,12 @@ import output.JsonParser;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-public abstract class TimeSeriesParser<Data> extends JsonParser<Data> {
+public abstract class TechnicalIndicatorParser<Data> extends JsonParser<Data> {
 
   abstract Data resolve(Map<String, String> metaData,
-                        Map<String, Map<String, String>> stockData) throws AlphaVantageException;
+                        Map<String, Map<String, String>> indicatorData) throws AlphaVantageException;
 
-  abstract String getStockDataKey();
+  abstract String getIndicatorKey();
 
   @Override
   public Data resolve(JsonObject rootObject) throws AlphaVantageException {
@@ -24,10 +24,10 @@ public abstract class TimeSeriesParser<Data> extends JsonParser<Data> {
     }.getType();
     try {
       Map<String, String> metaData = GSON.fromJson(rootObject.get("Meta Data"), metaDataType);
-      Map<String, Map<String, String>> stockData = GSON.fromJson(rootObject.get(getStockDataKey()), dataType);
-      return resolve(metaData, stockData);
+      Map<String, Map<String, String>> indicatorData = GSON.fromJson(rootObject.get(getIndicatorKey()), dataType);
+      return resolve(metaData, indicatorData);
     } catch (JsonSyntaxException e) {
-      throw new AlphaVantageException("time series api change", e);
+      throw new AlphaVantageException("technical indicators api change", e);
     }
   }
 }

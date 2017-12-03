@@ -1,3 +1,11 @@
+import input.Symbol;
+import input.technical_indicator.Function;
+import input.technical_indicator.Interval;
+import input.technical_indicator.SeriesType;
+import input.technical_indicator.TimePeriod;
+import output.AlphaVantageException;
+import output.technical_indicators.SMA;
+
 /**
  * Technical indicator values are updated realtime: the latest data point is derived from the current trading day of a given equity.
  */
@@ -11,8 +19,8 @@ public class TechnicalIndicators {
     this.apiConnector = apiConnector;
   }
 
-//  public Either<ResponseData, Exception> sma(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
-//    return apiConnector.getRequest(symbol, Function.SMA, timePeriod, interval, seriesType)
-//            .flatMap(jsonString -> response.models.JsonParser.parseJson(jsonString, new SMA()));
-//  }
+  public SMA sma(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) throws AlphaVantageException{
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.SMA, timePeriod, interval, seriesType);
+    return SMA.from(json);
+  }
 }

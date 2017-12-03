@@ -3,12 +3,13 @@ package output.time_series;
 import input.time_series.Interval;
 import org.joda.time.DateTime;
 import output.AlphaVantageException;
+import output.time_series.data.StockData;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class IntraDay implements Response {
+public class IntraDay {
   private final Map<String, String> metaData;
   private final List<StockData> stocks;
 
@@ -17,12 +18,10 @@ public class IntraDay implements Response {
     this.stocks = stocks;
   }
 
-  @Override
   public Map<String, String> getMetaData() {
     return metaData;
   }
 
-  @Override
   public List<StockData> getStockData() {
     return stocks;
   }

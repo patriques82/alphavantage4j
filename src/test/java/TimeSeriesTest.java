@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 import output.AlphaVantageException;
 import output.time_series.*;
+import output.time_series.data.StockData;
 
 import java.util.List;
 import java.util.Map;
@@ -34,15 +35,14 @@ public class TimeSeriesTest {
             "        },\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> unexpectedJson);
+    timeSeries = new TimeSeries(parameters -> unexpectedJson);
     timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
   }
 
   @Test(expected = AlphaVantageException.class)
   public void nonExistingSymbol() throws AlphaVantageException {
     String json = "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_INTRADAY.\"}";
-    timeSeries = new TimeSeries((symbol, parameters) -> json);
-
+    timeSeries = new TimeSeries(parameters -> json);
     timeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
   }
 
@@ -82,7 +82,7 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> json);
+    timeSeries = new TimeSeries(parameters -> json);
 
     IntraDay resp = timeSeries.intraDay("DUMMY", Interval.ONE_MIN, OutputSize.COMPACT);
 
@@ -141,7 +141,7 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> json);
+    timeSeries = new TimeSeries(parameters -> json);
 
     Daily resp = timeSeries.daily("DUMMY", OutputSize.COMPACT);
 
@@ -208,7 +208,7 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> json);
+    timeSeries = new TimeSeries(parameters -> json);
 
     DailyAdjusted resp = timeSeries.dailyAdjusted("DUMMY", OutputSize.COMPACT);
 
@@ -268,7 +268,7 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> json);
+    timeSeries = new TimeSeries(parameters -> json);
 
     Weekly resp = timeSeries.weekly("DUMMY");
 
@@ -330,7 +330,7 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> json);
+    timeSeries = new TimeSeries(parameters -> json);
 
     WeeklyAdjusted resp = timeSeries.weeklyAdjusted("DUMMY");
 
@@ -388,7 +388,7 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> json);
+    timeSeries = new TimeSeries(parameters -> json);
 
     Monthly resp = timeSeries.monthly("DUMMY");
 
@@ -450,7 +450,7 @@ public class TimeSeriesTest {
             "        }\n" +
             "    }\n" +
             "}";
-    timeSeries = new TimeSeries((symbol, parameters) -> json);
+    timeSeries = new TimeSeries(parameters -> json);
 
     MonthlyAdjusted resp = timeSeries.monthlyAdjusted("DUMMY");
 

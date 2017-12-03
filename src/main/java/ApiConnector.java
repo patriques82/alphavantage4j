@@ -8,9 +8,8 @@ import output.AlphaVantageException;
 public interface ApiConnector {
   /**
    * Sends request to api
-   * @param symbol the stock symbol to lookup
    * @param apiParameters the api parameters (required/optional) to the api call
    * @return Either the raw Json string or IOExcpetion
    */
-  String getRequest(String symbol, ApiParameter... apiParameters) throws AlphaVantageException;
+  String getRequest(ApiParameter... apiParameters) throws AlphaVantageException;
 }

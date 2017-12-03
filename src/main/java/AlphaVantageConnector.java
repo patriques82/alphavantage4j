@@ -22,8 +22,8 @@ public class AlphaVantageConnector implements ApiConnector {
   }
 
   @Override
-  public String getRequest(String symbol, ApiParameter... apiParameters) throws AlphaVantageException {
-    String params = getParameters(symbol, apiParameters);
+  public String getRequest(ApiParameter... apiParameters) throws AlphaVantageException {
+    String params = getParameters(apiParameters);
     try {
       URL request = new URL(BASE_URL + params);
       URLConnection connection = request.openConnection();
@@ -45,12 +45,11 @@ public class AlphaVantageConnector implements ApiConnector {
     }
   }
 
-  private String getParameters(String symbol, ApiParameter... apiParameters) {
+  private String getParameters(ApiParameter... apiParameters) {
     ApiParameterBuilder urlBuilder = new ApiParameterBuilder();
     for (ApiParameter parameter : apiParameters) {
       urlBuilder.append(parameter);
     }
-    urlBuilder.append("symbol", symbol);
     urlBuilder.append("apikey", apiKey);
     return urlBuilder.getUrl();
   }
