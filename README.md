@@ -17,7 +17,7 @@ git clone https://github.com/patriques82/alphavantage4j.git
 cd alphavantage4j
 ./gradlew publishToMavenLocal
 ```
-Now you have the artifact in your local maven repository and can be included in your build.gradle file
+Now you have the artifact in your local maven repository and can be included in your build file
 
 ### Including in Gradle project
 
@@ -45,14 +45,16 @@ dependencies {
 public class App {
   public static void main(String[] args) {
     String apiKey = "50M3AP1K3Y";
-    AlphaVantageConnector apiConnector = new AlphaVantageConnector(apiKey, 30000);
-    StockTimeSeries stockTimeSeries = new StockTimeSeries(apiConnector);
-    Either<ResponseData, Exception> response = stockTimeSeries.intraDay("MSFT", Interval.ONE_MIN, OutputSize.COMPACT);
-    if (response.isLeft()) {
+    int timeout = 3000;
+    AlphaVantageConnector apiConnector = new AlphaVantageConnector(apiKey, timeout);
+    TimeSeries stockTimeSeries = new TimeSeries(apiConnector);
+    
+    try {
+      IntraDay response = stockTimeSeries.intraDay("MSFT", Interval.ONE_MIN, OutputSize.COMPACT);
       MetaData metaData = response.getLeft().getMetaData();
       System.out.println("Stock: " + metaData.getSymbol());
       
-      List<StockData> stockData = response.getLeft().getStockData();
+      List<StockData> stockData = response.getStockData();
       stockData.forEach(stock -> {
         System.out.println("*****************************");
         System.out.println("date:   " + stock.getDateTime());
@@ -63,8 +65,8 @@ public class App {
         System.out.println("volume: " + stock.getVolume());
         System.out.println("*****************************");
       });
-    } else {
-      response.getRight().printStackTrace();
+    } catch (AlphaVantageException e) {
+      System.out.println("something went wrong");
     }
   }
 }
