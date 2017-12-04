@@ -1,4 +1,5 @@
-import co.alphavantage.TimeSeries;
+package co.alphavantage;
+
 import co.alphavantage.input.timeseries.Interval;
 import co.alphavantage.input.timeseries.OutputSize;
 import co.alphavantage.output.AlphaVantageException;
