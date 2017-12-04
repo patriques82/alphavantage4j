@@ -1,10 +1,11 @@
-import input.time_series.Interval;
-import input.time_series.OutputSize;
+import co.alphavantage.TimeSeries;
+import co.alphavantage.input.timeseries.Interval;
+import co.alphavantage.input.timeseries.OutputSize;
+import co.alphavantage.output.AlphaVantageException;
+import co.alphavantage.output.timeseries.*;
+import co.alphavantage.output.timeseries.data.StockData;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import output.AlphaVantageException;
-import output.time_series.*;
-import output.time_series.data.StockData;
 
 import java.util.List;
 import java.util.Map;

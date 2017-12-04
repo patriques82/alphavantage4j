@@ -46,8 +46,8 @@ public class App {
   public static void main(String[] args) {
     String apiKey = "50M3AP1K3Y";
     int timeout = 3000;
-    AlphaVantageConnector apiConnector = new AlphaVantageConnector(apiKey, timeout);
-    TimeSeries stockTimeSeries = new TimeSeries(apiConnector);
+    co.alphavantage4j.AlphaVantageConnector apiConnector = new co.alphavantage4j.AlphaVantageConnector(apiKey, timeout);
+    co.alphavantage4j.TimeSeries stockTimeSeries = new co.alphavantage4j.TimeSeries(apiConnector);
     
     Either<IntraDay, Exception> response = stockTimeSeries.intraDay("MSFT", Interval.ONE_MIN, OutputSize.COMPACT);
     if (response.isLeft()) {

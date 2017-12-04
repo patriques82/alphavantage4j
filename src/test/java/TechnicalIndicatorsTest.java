@@ -1,11 +1,12 @@
-import input.technical_indicator.Interval;
-import input.technical_indicator.SeriesType;
-import input.technical_indicator.TimePeriod;
+import co.alphavantage.TechnicalIndicators;
+import co.alphavantage.input.technicalindicator.Interval;
+import co.alphavantage.input.technicalindicator.SeriesType;
+import co.alphavantage.input.technicalindicator.TimePeriod;
+import co.alphavantage.output.AlphaVantageException;
+import co.alphavantage.output.technicalindicators.SMA;
+import co.alphavantage.output.technicalindicators.data.SMAData;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import output.AlphaVantageException;
-import output.technical_indicators.SMA;
-import output.technical_indicators.data.SMAData;
 
 import java.util.List;
 import java.util.Map;
