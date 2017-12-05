@@ -4,7 +4,6 @@ import co.alphavantage.input.Symbol;
 import co.alphavantage.input.timeseries.Function;
 import co.alphavantage.input.timeseries.Interval;
 import co.alphavantage.input.timeseries.OutputSize;
-import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.timeseries.*;
 
@@ -29,7 +28,7 @@ public class TimeSeries {
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
    * @return either a successful response (left) or an exception (right)
    */
-  public IntraDay intraDay(String symbol, Interval interval, OutputSize outputSize) throws AlphaVantageException {
+  public IntraDay intraDay(String symbol, Interval interval, OutputSize outputSize)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.INTRADAY, interval, outputSize);
     return IntraDay.from(interval, json);
   }
@@ -39,7 +38,7 @@ public class TimeSeries {
    * @param interval the interval between two consecutive data points in the time series {@link Interval}
    * @return either a successful response (left) or an exception (right)
    */
-  public IntraDay intraDay(String symbol, Interval interval) throws AlphaVantageException {
+  public IntraDay intraDay(String symbol, Interval interval)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.INTRADAY, interval);
     return IntraDay.from(interval, json);
   }
@@ -49,7 +48,7 @@ public class TimeSeries {
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
    * @return either a successful response (left) or an exception (right)
    */
-  public Daily daily(String symbol, OutputSize outputSize) throws AlphaVantageException {
+  public Daily daily(String symbol, OutputSize outputSize)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY, outputSize);
     return Daily.from(json);
   }
@@ -58,7 +57,7 @@ public class TimeSeries {
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public Daily daily(String symbol) throws AlphaVantageException {
+  public Daily daily(String symbol) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY);
     return Daily.from(json);
   }
@@ -68,7 +67,7 @@ public class TimeSeries {
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
    * @return either a successful response (left) or an exception (right)
    */
-  public DailyAdjusted dailyAdjusted(String symbol, OutputSize outputSize) throws AlphaVantageException{
+  public DailyAdjusted dailyAdjusted(String symbol, OutputSize outputSize) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY_ADJUSTED, outputSize);
     return DailyAdjusted.from(json);
   }
@@ -77,7 +76,7 @@ public class TimeSeries {
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public DailyAdjusted dailyAdjusted(String symbol) throws AlphaVantageException {
+  public DailyAdjusted dailyAdjusted(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY_ADJUSTED);
     return DailyAdjusted.from(json);
   }
@@ -86,7 +85,7 @@ public class TimeSeries {
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public Weekly weekly(String symbol) throws AlphaVantageException {
+  public Weekly weekly(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.WEEKLY);
     return Weekly.from(json);
   }
@@ -95,7 +94,7 @@ public class TimeSeries {
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public WeeklyAdjusted weeklyAdjusted(String symbol) throws AlphaVantageException {
+  public WeeklyAdjusted weeklyAdjusted(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.WEEKLY_ADJUSTED);
     return WeeklyAdjusted.from(json);
   }
@@ -104,7 +103,7 @@ public class TimeSeries {
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public Monthly monthly(String symbol) throws AlphaVantageException {
+  public Monthly monthly(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MONTHLY);
     return Monthly.from(json);
   }
@@ -113,7 +112,7 @@ public class TimeSeries {
    * @param symbol the stock symbol to lookup
    * @return either a successful response (left) or an exception (right)
    */
-  public MonthlyAdjusted monthlyAdjusted(String symbol) throws AlphaVantageException {
+  public MonthlyAdjusted monthlyAdjusted(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MONTHLY_ADJUSTED);
     return MonthlyAdjusted.from(json);
   }

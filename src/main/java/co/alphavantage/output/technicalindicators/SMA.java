@@ -25,7 +25,7 @@ public class SMA {
     return indicatorData;
   }
 
-  public static SMA from(String json) throws AlphaVantageException {
+  public static SMA from(String json) {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
@@ -39,17 +39,21 @@ public class SMA {
 
     @Override
     SMA resolve(Map<String, String> metaData,
-                Map<String, Map<String, String>> indicatorData) throws AlphaVantageException {
+                Map<String, Map<String, String>> indicatorData) {
       List<SMAData> indicators = new ArrayList<>();
+      indicatorData.forEach((key, values) -> indicators.add(getSMAData(key, values)));
+      return new SMA(metaData, indicators);
+    }
+
+    private SMAData getSMAData(String key, Map<String, String> values) {
       try {
-        indicatorData.forEach((key, values) -> indicators.add(new SMAData(
+        return new SMAData(
                 DateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
                 Double.parseDouble(values.get("SMA"))
-        )));
+        );
       } catch (Exception e) {
         throw new AlphaVantageException("SMA adjusted api change", e);
       }
-      return new SMA(metaData, indicators);
     }
 
 

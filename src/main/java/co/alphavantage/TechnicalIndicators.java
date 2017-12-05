@@ -5,7 +5,6 @@ import co.alphavantage.input.technicalindicator.Function;
 import co.alphavantage.input.technicalindicator.Interval;
 import co.alphavantage.input.technicalindicator.SeriesType;
 import co.alphavantage.input.technicalindicator.TimePeriod;
-import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.technicalindicators.SMA;
 
 /**
@@ -21,7 +20,7 @@ public class TechnicalIndicators {
     this.apiConnector = apiConnector;
   }
 
-  public SMA sma(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) throws AlphaVantageException{
+  public SMA sma(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.SMA, timePeriod, interval, seriesType);
     return SMA.from(json);
   }

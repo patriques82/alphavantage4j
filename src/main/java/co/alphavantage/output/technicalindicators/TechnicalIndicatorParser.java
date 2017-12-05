@@ -12,12 +12,12 @@ import java.util.Map;
 public abstract class TechnicalIndicatorParser<Data> extends JsonParser<Data> {
 
   abstract Data resolve(Map<String, String> metaData,
-                        Map<String, Map<String, String>> indicatorData) throws AlphaVantageException;
+                        Map<String, Map<String, String>> indicatorData);
 
   abstract String getIndicatorKey();
 
   @Override
-  public Data resolve(JsonObject rootObject) throws AlphaVantageException {
+  public Data resolve(JsonObject rootObject) {
     Type metaDataType = new TypeToken<Map<String, String>>() {
     }.getType();
     Type dataType = new TypeToken<Map<String, Map<String, String>>>() {

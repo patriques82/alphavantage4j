@@ -19,7 +19,7 @@ public class TimeSeriesTest {
   private TimeSeries timeSeries;
 
   @Test(expected = AlphaVantageException.class)
-  public void changeOfAPI() throws AlphaVantageException {
+  public void changeOfAPI() {
     String unexpectedJson = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -42,14 +42,14 @@ public class TimeSeriesTest {
   }
 
   @Test(expected = AlphaVantageException.class)
-  public void nonExistingSymbol() throws AlphaVantageException {
+  public void nonExistingSymbol() {
     String json = "{\"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_INTRADAY.\"}";
     timeSeries = new TimeSeries(parameters -> json);
     timeSeries.intraDay("NONEXISTING", Interval.ONE_MIN, OutputSize.COMPACT);
   }
 
   @Test
-  public void intraDay() throws AlphaVantageException {
+  public void intraDay() {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -109,7 +109,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void daily() throws AlphaVantageException {
+  public void daily() {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -167,7 +167,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void dailyAdjusted() throws AlphaVantageException {
+  public void dailyAdjusted() {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -237,7 +237,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void weekly() throws AlphaVantageException {
+  public void weekly() {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -293,7 +293,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void weeklyAdjusted() throws AlphaVantageException {
+  public void weeklyAdjusted() {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -357,7 +357,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void monthly() throws AlphaVantageException {
+  public void monthly() {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
@@ -413,7 +413,7 @@ public class TimeSeriesTest {
   }
 
   @Test
-  public void monthlyAdjusted() throws AlphaVantageException {
+  public void monthlyAdjusted() {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
