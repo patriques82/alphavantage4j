@@ -3,6 +3,7 @@
 # alphavantage4j
 
 A Java wrapper to get stock data and stock indicators from the Alpha Vantage API*
+(This is still a work in progress)
 
 ## Introduction
 
@@ -51,8 +52,9 @@ public class App {
     
     try {
       IntraDay response = stockTimeSeries.intraDay("MSFT", Interval.ONE_MIN, OutputSize.COMPACT);
-      MetaData metaData = response.getLeft().getMetaData();
-      System.out.println("Stock: " + metaData.getSymbol());
+      Map<String, String> metaData = response.getMetaData();
+      System.out.println("Information: ") + metaData.get("1. Information");
+      System.out.println("Stock: " + metaData.get("2. Symbol"));
       
       List<StockData> stockData = response.getStockData();
       stockData.forEach(stock -> {
