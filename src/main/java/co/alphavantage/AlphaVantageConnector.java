@@ -24,7 +24,7 @@ public class AlphaVantageConnector implements ApiConnector {
   }
 
   @Override
-  public String getRequest(ApiParameter... apiParameters) throws AlphaVantageException {
+  public String getRequest(ApiParameter... apiParameters) {
     String params = getParameters(apiParameters);
     try {
       URL request = new URL(BASE_URL + params);

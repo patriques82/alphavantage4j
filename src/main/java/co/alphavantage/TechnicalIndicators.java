@@ -31,7 +31,7 @@ public class TechnicalIndicators {
    * @return either a successful response or an exception
    * @throws AlphaVantageException
    */
-  public SMA sma(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) throws AlphaVantageException{
+  public SMA sma(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.SMA, timePeriod, interval, seriesType);
     return SMA.from(json);
   }

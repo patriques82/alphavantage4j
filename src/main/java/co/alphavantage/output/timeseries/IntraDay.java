@@ -26,7 +26,7 @@ public class IntraDay {
     return stocks;
   }
 
-  public static IntraDay from(Interval interval, String json) throws AlphaVantageException {
+  public static IntraDay from(Interval interval, String json)  {
     Parser parser = new Parser(interval);
     return parser.parseJson(json);
   }
@@ -45,7 +45,7 @@ public class IntraDay {
 
     @Override
     IntraDay resolve(Map<String, String> metaData,
-                     Map<String, Map<String, String>> stockData) throws AlphaVantageException {
+                     Map<String, Map<String, String>> stockData)  {
       List<StockData> stocks = new ArrayList<>();
       try {
         stockData.forEach((key, values) -> stocks.add(new StockData(

@@ -26,7 +26,7 @@ public class Monthly {
     return stocks;
   }
 
-  public static Monthly from(String json) throws AlphaVantageException {
+  public static Monthly from(String json)  {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
@@ -40,7 +40,7 @@ public class Monthly {
 
     @Override
     Monthly resolve(Map<String, String> metaData,
-                    Map<String, Map<String, String>> stockData) throws AlphaVantageException {
+                    Map<String, Map<String, String>> stockData)  {
       List<StockData> stocks = new ArrayList<>();
       try {
         stockData.forEach((key, values) -> stocks.add(new StockData(

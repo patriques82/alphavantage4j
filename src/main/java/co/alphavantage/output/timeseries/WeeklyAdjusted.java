@@ -26,7 +26,7 @@ public class WeeklyAdjusted {
     return stocks;
   }
 
-  public static WeeklyAdjusted from(String json) throws AlphaVantageException {
+  public static WeeklyAdjusted from(String json)  {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
@@ -40,7 +40,7 @@ public class WeeklyAdjusted {
 
     @Override
     WeeklyAdjusted resolve(Map<String, String> metaData,
-                           Map<String, Map<String, String>> stockData) throws AlphaVantageException {
+                           Map<String, Map<String, String>> stockData)  {
       List<StockData> stocks = new ArrayList<>();
       try {
         stockData.forEach((key, values) -> stocks.add(new StockData(
