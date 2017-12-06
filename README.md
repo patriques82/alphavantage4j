@@ -49,12 +49,12 @@ public class App {
     AlphaVantageConnector apiConnector = new AlphaVantageConnector(apiKey, timeout);
     TimeSeries stockTimeSeries = new TimeSeries(apiConnector);
     
-    Either<IntraDay, Exception> response = stockTimeSeries.intraDay("MSFT", Interval.ONE_MIN, OutputSize.COMPACT);
-    if (response.isLeft()) {
+    try {
+      IntraDay response = stockTimeSeries.intraDay("MSFT", Interval.ONE_MIN, OutputSize.COMPACT);
       MetaData metaData = response.getLeft().getMetaData();
       System.out.println("Stock: " + metaData.getSymbol());
       
-      List<StockData> stockData = response.getLeft().getStockData();
+      List<StockData> stockData = response.getStockData();
       stockData.forEach(stock -> {
         System.out.println("*****************************");
         System.out.println("date:   " + stock.getDateTime());
@@ -65,8 +65,8 @@ public class App {
         System.out.println("volume: " + stock.getVolume());
         System.out.println("*****************************");
       });
-    } else {
-      response.getRight().printStackTrace();
+    } catch (AlphaVantageException e) {
+      System.out.println("something went wrong");
     }
   }
 }

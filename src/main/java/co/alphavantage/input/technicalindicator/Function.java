@@ -3,7 +3,8 @@ package co.alphavantage.input.technicalindicator;
 import co.alphavantage.input.ApiParameter;
 
 public enum Function implements ApiParameter {
-  SMA("SMA");
+  SMA("SMA"),
+  EMA("EMA");
 
   private final String urlParameter;
 

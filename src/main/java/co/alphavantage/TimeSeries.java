@@ -26,7 +26,8 @@ public class TimeSeries {
    * @param symbol the stock symbol to lookup
    * @param interval the interval between two consecutive data points in the time series {@link Interval}
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
-   * @return either a successful response (left) or an exception (right)
+   * @return either a successful response or an exception
+   * @throws AlphaVantageException
    */
   public IntraDay intraDay(String symbol, Interval interval, OutputSize outputSize)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.INTRADAY, interval, outputSize);
@@ -36,7 +37,8 @@ public class TimeSeries {
    * This API returns intraday time series (timestamp, open, high, low, close, volume) of the equity specified, updated realtime.
    * @param symbol the stock symbol to lookup
    * @param interval the interval between two consecutive data points in the time series {@link Interval}
-   * @return either a successful response (left) or an exception (right)
+   * @return either a successful response or an exception
+   * @throws AlphaVantageException
    */
   public IntraDay intraDay(String symbol, Interval interval)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.INTRADAY, interval);
@@ -46,7 +48,8 @@ public class TimeSeries {
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume) of the equity specified.
    * @param symbol the stock symbol to lookup
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
-   * @return either a successful response (left) or an exception (right)
+   * @return either a successful response or an exception
+   * @throws AlphaVantageException
    */
   public Daily daily(String symbol, OutputSize outputSize)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY, outputSize);
@@ -55,7 +58,8 @@ public class TimeSeries {
   /**
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume) of the equity specified.
    * @param symbol the stock symbol to lookup
-   * @return either a successful response (left) or an exception (right)
+   * @return either a successful response or an exception
+   * @throws AlphaVantageException
    */
   public Daily daily(String symbol) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY);
@@ -65,7 +69,8 @@ public class TimeSeries {
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume, daily adjusted close, and split/dividend events)
    * @param symbol the stock symbol to lookup
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
-   * @return either a successful response (left) or an exception (right)
+   * @return either a successful response or an exception
+   * @throws AlphaVantageException
    */
   public DailyAdjusted dailyAdjusted(String symbol, OutputSize outputSize) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY_ADJUSTED, outputSize);
@@ -74,7 +79,8 @@ public class TimeSeries {
   /**
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume, daily adjusted close, and split/dividend events)
    * @param symbol the stock symbol to lookup
-   * @return either a successful response (left) or an exception (right)
+   * @return either a successful response or an exception
+   * @throws AlphaVantageException
    */
   public DailyAdjusted dailyAdjusted(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY_ADJUSTED);
@@ -83,7 +89,8 @@ public class TimeSeries {
   /**
    * This API returns weekly time series (last trading day of each week, weekly open, weekly high, weekly low, weekly close, weekly volume)
    * @param symbol the stock symbol to lookup
-   * @return either a successful response (left) or an exception (right)
+   * @return either a successful response or an exception
+   * @throws AlphaVantageException
    */
   public Weekly weekly(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.WEEKLY);
@@ -92,7 +99,8 @@ public class TimeSeries {
   /**
    * This API returns weekly adjusted time series (last trading day of each week, weekly open, weekly high, weekly low, weekly close, weekly adjusted close, weekly volume, weekly dividend)
    * @param symbol the stock symbol to lookup
-   * @return either a successful response (left) or an exception (right)
+   * @return either a successful response or an exception
+   * @throws AlphaVantageException
    */
   public WeeklyAdjusted weeklyAdjusted(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.WEEKLY_ADJUSTED);
@@ -101,7 +109,8 @@ public class TimeSeries {
   /**
    * This API returns monthly time series (last trading day of each month, monthly open, monthly high, monthly low, monthly close, monthly volume)
    * @param symbol the stock symbol to lookup
-   * @return either a successful response (left) or an exception (right)
+   * @return either a successful response or an exception
+   * @throws AlphaVantageException
    */
   public Monthly monthly(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MONTHLY);
@@ -110,7 +119,8 @@ public class TimeSeries {
   /**
    * This API returns monthly adjusted time series (last trading day of each month, monthly open, monthly high, monthly low, monthly close, monthly adjusted close, monthly volume, monthly dividend)
    * @param symbol the stock symbol to lookup
-   * @return either a successful response (left) or an exception (right)
+   * @return either a successful response or an exception
+   * @throws AlphaVantageException
    */
   public MonthlyAdjusted monthlyAdjusted(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MONTHLY_ADJUSTED);
