@@ -3,6 +3,7 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'maven-publish'
 apply plugin: 'java-library'
+apply plugin: 'eclipse'
 
 repositories {
     mavenCentral()
