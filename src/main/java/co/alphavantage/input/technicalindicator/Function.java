@@ -4,7 +4,8 @@ import co.alphavantage.input.ApiParameter;
 
 public enum Function implements ApiParameter {
   SMA("SMA"),
-  EMA("EMA");
+  EMA("EMA"),
+  MACD("MACD");
 
   private final String urlParameter;
 
