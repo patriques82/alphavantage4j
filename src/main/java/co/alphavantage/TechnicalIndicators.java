@@ -6,6 +6,7 @@ import co.alphavantage.input.technicalindicator.Interval;
 import co.alphavantage.input.technicalindicator.SeriesType;
 import co.alphavantage.input.technicalindicator.TimePeriod;
 import co.alphavantage.output.technicalindicators.EMA;
+import co.alphavantage.output.technicalindicators.MACD;
 import co.alphavantage.output.technicalindicators.SMA;
 
 /**
@@ -44,5 +45,10 @@ public class TechnicalIndicators {
   public EMA ema(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.EMA, timePeriod, interval, seriesType);
     return EMA.from(json);
+  }
+  
+  public MACD macd(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+	  String json = apiConnector.getRequest(new Symbol(symbol), Function.MACD, timePeriod, interval, seriesType);
+	  return MACD.from(json);
   }
 }
