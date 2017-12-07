@@ -18,7 +18,7 @@ public class SectorPerformances {
   }
 
   /**
-   * Yields the percentage of change in different timeperiods, from real-time to 10 years.
+   * Yields the percentage of change during different timeperiods, from real-time to 10 years.
    * @return {@link co.alphavantage.output.sectorperformances.Sectors} data
    */
   public Sectors sector() {
