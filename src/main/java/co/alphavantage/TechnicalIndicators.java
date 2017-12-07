@@ -47,6 +47,14 @@ public class TechnicalIndicators {
     return EMA.from(json);
   }
   
+  /**
+   * Returns the moving average converge/divergence (MACD) values
+   * @param symbol the stock symbol to lookup
+   * @param interval the interval between two consecutive data points in the time series {@link co.alphavantage.input.technicalindicator.Interval}
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link co.alphavantage.input.technicalindicator.TimePeriod}
+   * @param seriesType The desired price type in the time series {@link co.alphavantage.input.technicalindicator.SeriesType}
+   * @return MACD indicator data
+   */
   public MACD macd(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
 	  String json = apiConnector.getRequest(new Symbol(symbol), Function.MACD, timePeriod, interval, seriesType);
 	  return MACD.from(json);
