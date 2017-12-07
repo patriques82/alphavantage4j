@@ -107,10 +107,10 @@ public class TechnicalIndicatorsTest {
     assertThat(metaData.get("6: Series Type"), is(equalTo("close")));
     assertThat(metaData.get("7: Time Zone"), is(equalTo("US/Eastern")));
 
-    List<EMAData> smaData = resp.getData();
-    assertThat(smaData.size(), is(equalTo(3)));
+    List<EMAData> emaData = resp.getData();
+    assertThat(emaData.size(), is(equalTo(3)));
 
-    EMAData ema = smaData.get(0);
+    EMAData ema = emaData.get(0);
     assertThat(ema.getDateTime(), is(equalTo(new DateTime(2017, 12, 1, 16, 0))));
     assertThat(ema.getEma(), is(equalTo(84.0203d)));
   }
