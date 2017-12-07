@@ -114,50 +114,50 @@ public class TechnicalIndicatorsTest {
     assertThat(ema.getDateTime(), is(equalTo(new DateTime(2017, 12, 1, 16, 0))));
     assertThat(ema.getEma(), is(equalTo(84.0203d)));
   }
-  
+
   @Test
   public void macd() throws AlphaVantageException {
-	  String json = "" +
-	            "{\n" +
-	            "    \"Meta Data\": {\n" +
-	            "        \"1: Symbol\": \"DUMMY\",\n" +
-	            "        \"2: Indicator\": \"Moving Average Convergence/Divergence (MACD)\",\n" +
-	            "        \"3: Last Refreshed\": \"2017-12-01 16:00:00\",\n" +
-	            "        \"4: Interval\": \"15min\",\n" +
-	            "        \"5: Time Period\": 10,\n" +
-	            "        \"6: Series Type\": \"close\",\n" +
-	            "        \"7: Time Zone\": \"US/Eastern\"\n" +
-	            "    },\n" +
-	            "    \"Technical Analysis: MACD\": {\n" +
-	            "        \"2017-12-01 16:00\": {\n" +
-	            "            \"MACD\": \"84.0203\"\n" +
-	            "        },\n" +
-	            "        \"2017-12-01 15:45\": {\n" +
-	            "            \"MACD\": \"83.9763\"\n" +
-	            "        },\n" +
-	            "        \"2017-11-17 11:45\": {\n" +
-	            "            \"MACD\": \"82.6005\"\n" +
-	            "        }\n" +
-	            "    }\n" +
-	            "}";
-	  technicalIndicators = new TechnicalIndicators(apiParameters -> json);
-	  MACD response = technicalIndicators.macd("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10), SeriesType.CLOSE);
-	  
-	  Map<String, String> metaData = response.getMetaData();
-	  assertThat(metaData.get("1: Symbol"), is(equalTo("DUMMY")));
-	  assertThat(metaData.get("2: Indicator"), is(equalTo("Moving Average Convergence/Divergence (MACD)")));
-	  assertThat(metaData.get("3: Last Refreshed"), is(equalTo("2017-12-01 16:00:00")));
-	  assertThat(metaData.get("4: Interval"), is(equalTo("15min")));
-	  assertThat(metaData.get("5: Time Period"), is(equalTo("10")));
-	  assertThat(metaData.get("6: Series Type"), is(equalTo("close")));
-	  assertThat(metaData.get("7: Time Zone"), is(equalTo("US/Eastern")));
-	  
-	  List<MACDData> macdData = response.getData();
-	  assertThat(macdData.size(), is(equalTo(3)));
+    String json = "" +
+            "{\n" +
+            "    \"Meta Data\": {\n" +
+            "        \"1: Symbol\": \"DUMMY\",\n" +
+            "        \"2: Indicator\": \"Moving Average Convergence/Divergence (MACD)\",\n" +
+            "        \"3: Last Refreshed\": \"2017-12-01 16:00:00\",\n" +
+            "        \"4: Interval\": \"15min\",\n" +
+            "        \"5: Time Period\": 10,\n" +
+            "        \"6: Series Type\": \"close\",\n" +
+            "        \"7: Time Zone\": \"US/Eastern\"\n" +
+            "    },\n" +
+            "    \"Technical Analysis: MACD\": {\n" +
+            "        \"2017-12-01 16:00\": {\n" +
+            "            \"MACD\": \"84.0203\"\n" +
+            "        },\n" +
+            "        \"2017-12-01 15:45\": {\n" +
+            "            \"MACD\": \"83.9763\"\n" +
+            "        },\n" +
+            "        \"2017-11-17 11:45\": {\n" +
+            "            \"MACD\": \"82.6005\"\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    MACD response = technicalIndicators.macd("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10), SeriesType.CLOSE);
 
-	  MACDData macd = macdData.get(0);
-	  assertThat(macd.getDateTime(), is(equalTo(new DateTime(2017, 12, 1, 16, 0))));
-	  assertThat(macd.getMacd(), is(equalTo(84.0203d)));
+    Map<String, String> metaData = response.getMetaData();
+    assertThat(metaData.get("1: Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("2: Indicator"), is(equalTo("Moving Average Convergence/Divergence (MACD)")));
+    assertThat(metaData.get("3: Last Refreshed"), is(equalTo("2017-12-01 16:00:00")));
+    assertThat(metaData.get("4: Interval"), is(equalTo("15min")));
+    assertThat(metaData.get("5: Time Period"), is(equalTo("10")));
+    assertThat(metaData.get("6: Series Type"), is(equalTo("close")));
+    assertThat(metaData.get("7: Time Zone"), is(equalTo("US/Eastern")));
+
+    List<MACDData> macdData = response.getData();
+    assertThat(macdData.size(), is(equalTo(3)));
+
+    MACDData macd = macdData.get(0);
+    assertThat(macd.getDateTime(), is(equalTo(new DateTime(2017, 12, 1, 16, 0))));
+    assertThat(macd.getMacd(), is(equalTo(84.0203d)));
   }
 
 }

@@ -87,3 +87,8 @@ easily create project files with gradle:
 
     $ gradle idea     # Intellij IDEA
     $ gradle eclipse  # Eclipse
+    
+### Standards
+    
+  * Use 2 spaces for indentation.
+  * Make sure to document the code you write.

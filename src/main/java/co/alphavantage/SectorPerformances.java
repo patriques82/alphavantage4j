@@ -3,8 +3,12 @@ package co.alphavantage;
 import co.alphavantage.input.sectorperformances.Function;
 import co.alphavantage.output.sectorperformances.Sectors;
 
+/**
+ * Covers the US sectors (IT, Utilities, Energy, etc...)
+ */
 public class SectorPerformances {
   private final ApiConnector apiConnector;
+
   /**
    * Constructs a Sector Performances Data api endpoint with the help of an {@link ApiConnector}
    * @param apiConnector the connection to the api
@@ -13,6 +17,10 @@ public class SectorPerformances {
     this.apiConnector = apiConnector;
   }
 
+  /**
+   * Yields the percentage of change in different timeperiods, from real-time to 10 years.
+   * @return {@link co.alphavantage.output.sectorperformances.Sectors} data
+   */
   public Sectors sector() {
     String json = apiConnector.getRequest(Function.SECTOR);
     return Sectors.from(json);
