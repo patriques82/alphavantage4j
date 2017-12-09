@@ -5,6 +5,7 @@ import co.alphavantage.input.ApiParameter;
 public enum Function implements ApiParameter {
   SMA("SMA"),
   EMA("EMA"),
+  MACD("MACD"),
   INTRADAY("TIME_SERIES_INTRADAY"),
   DAILY("TIME_SERIES_DAILY"),
   DAILY_ADJUSTED("TIME_SERIES_DAILY_ADJUSTED"),

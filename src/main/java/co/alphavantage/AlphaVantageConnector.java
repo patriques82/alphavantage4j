@@ -11,20 +11,25 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
- * Connection to Alpha Vantage.
+ * Connection to Alpha Vantage API.
  */
 public class AlphaVantageConnector implements ApiConnector {
   private static final String BASE_URL = "https://www.alphavantage.co/query?";
   private final String apiKey;
   private final int timeOut;
 
+  /**
+   * Create Alpha
+   * @param apiKey
+   * @param timeOut
+   */
   public AlphaVantageConnector(String apiKey, int timeOut) {
     this.apiKey = apiKey;
     this.timeOut = timeOut;
   }
 
   @Override
-  public String getRequest(ApiParameter... apiParameters) throws AlphaVantageException {
+  public String getRequest(ApiParameter... apiParameters) {
     String params = getParameters(apiParameters);
     try {
       URL request = new URL(BASE_URL + params);

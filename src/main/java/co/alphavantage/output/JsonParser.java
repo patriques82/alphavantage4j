@@ -15,9 +15,9 @@ public abstract class JsonParser<Data> {
   private static com.google.gson.JsonParser PARSER = new com.google.gson.JsonParser();
   protected static Gson GSON = new Gson();
 
-  public abstract Data resolve(JsonObject rootObject) throws AlphaVantageException;
+  public abstract Data resolve(JsonObject rootObject);
 
-  public Data parseJson(String json) throws AlphaVantageException {
+  public Data parseJson(String json) {
     try {
       JsonElement jsonElement = PARSER.parse(json);
       JsonObject rootObject = jsonElement.getAsJsonObject();

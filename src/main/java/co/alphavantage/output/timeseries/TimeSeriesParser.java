@@ -12,12 +12,12 @@ import java.util.Map;
 public abstract class TimeSeriesParser<Data> extends JsonParser<Data> {
 
   abstract Data resolve(Map<String, String> metaData,
-                        Map<String, Map<String, String>> stockData) throws AlphaVantageException;
+                        Map<String, Map<String, String>> stockData) ;
 
   abstract String getStockDataKey();
 
   @Override
-  public Data resolve(JsonObject rootObject) throws AlphaVantageException {
+  public Data resolve(JsonObject rootObject)  {
     Type metaDataType = new TypeToken<Map<String, String>>() {
     }.getType();
     Type dataType = new TypeToken<Map<String, Map<String, String>>>() {
