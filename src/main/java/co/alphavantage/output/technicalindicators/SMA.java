@@ -1,6 +1,7 @@
 package co.alphavantage.output.technicalindicators;
 
 import co.alphavantage.output.AlphaVantageException;
+import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.SMAData;
 import org.joda.time.DateTime;
 
@@ -8,28 +9,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class SMA {
-  private final Map<String, String> metaData;
-  private final List<SMAData> indicatorData;
+/**
+ * Representation of simple moving average (SMA) response from api.
+ *
+ * @see TechnicalIndicatorResponse
+ */
+public class SMA extends TechnicalIndicatorResponse<SMAData> {
 
   private SMA(final Map<String, String> metaData, final List<SMAData> indicatorData) {
-    this.metaData = metaData;
-    this.indicatorData = indicatorData;
+    super(metaData, indicatorData);
   }
 
-  public Map<String, String> getMetaData() {
-    return metaData;
-  }
-
-  public List<SMAData> getData() {
-    return indicatorData;
-  }
-
+  /**
+   * Creates {@code SMA} instance from json.
+   *
+   * @param json string to parse
+   * @return SMA instance
+   */
   public static SMA from(String json) {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
 
+  /**
+   * Helper class for parsing json to {@code SMA}.
+   *
+   * @see TechnicalIndicatorParser
+   * @see JsonParser
+   */
   private static class Parser extends TechnicalIndicatorParser<SMA> {
 
     @Override

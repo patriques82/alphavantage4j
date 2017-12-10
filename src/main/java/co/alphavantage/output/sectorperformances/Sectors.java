@@ -26,7 +26,8 @@ public class Sectors {
   }
 
   /**
-   * Meta data for sectors data
+   * Meta data for sectors data.
+   *
    * @return map of keys and values in json representation of metadata.
    */
   public Map<String, String> getMetaData() {
@@ -35,6 +36,7 @@ public class Sectors {
 
   /**
    * Percentual changes in different sectors during different timeperiods; from real-time to 10 years.
+   *
    * @return list of percentual changes in different sectors.
    */
   public List<SectorData> getSectors() {
@@ -42,18 +44,20 @@ public class Sectors {
   }
 
   /**
-   * Create Sectors data representation from json object
+   * Create Sectors data representation from json object.
+   *
    * @param json string to parse
-   * @return Sectors data
-   * @throws AlphaVantageException
+   * @return {@code Sectors} data
    */
-  public static Sectors from(String json) throws AlphaVantageException {
+  public static Sectors from(String json) {
     SectorPerformancesParser parser = new SectorPerformancesParser();
     return parser.parseJson(json);
   }
 
   /**
-   * Helper class for parsing json to {@code Sector}
+   * Helper class for parsing json to {@code Sector}.
+   *
+   * @see JsonParser
    */
   private static class SectorPerformancesParser extends JsonParser<Sectors> {
 
@@ -78,6 +82,14 @@ public class Sectors {
       }
     }
 
+    /**
+     * Helper method for creating a {@link SectorData} instance.
+     *
+     * @param key the key, i.e "Rank A: Real-Time Performance" in the json object
+     * @param values a map of the key, values, i.e "Telecommunication Services": "1.52%"
+     * @return a {@link SectorData} instance
+     * @throws ParseException
+     */
     private SectorData createSectorData(String key, Map<String, String> values) throws ParseException {
       return new SectorData(
               key,

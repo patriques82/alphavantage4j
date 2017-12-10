@@ -2,6 +2,19 @@ package co.alphavantage.output.timeseries.data;
 
 import org.joda.time.DateTime;
 
+/**
+ * Representation of json object, i.e:
+ * "2017-07-06": {
+ *   "1. open": "68.2700",
+ *   "2. high": "68.7800",
+ *   "3. low": "68.1200",
+ *   "4. close": "68.5700",
+ *   "5. adjusted close": "67.8632",
+ *   "6. volume": "20776555",
+ *   "7. dividend amount": "0.0000",
+ *   "8. split coefficient": "1.0000"
+ * }
+ */
 public class StockData {
   private final DateTime dateTime;
   private final double open;

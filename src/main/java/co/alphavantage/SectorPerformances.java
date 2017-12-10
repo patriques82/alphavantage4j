@@ -19,7 +19,7 @@ public class SectorPerformances {
 
   /**
    * Yields the percentage of change during different timeperiods, from real-time to 10 years.
-   * @return {@link co.alphavantage.output.sectorperformances.Sectors} data
+   * @return {@link Sectors} data
    */
   public Sectors sector() {
     String json = apiConnector.getRequest(Function.SECTOR);

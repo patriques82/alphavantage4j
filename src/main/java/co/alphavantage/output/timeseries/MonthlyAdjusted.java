@@ -1,6 +1,7 @@
 package co.alphavantage.output.timeseries;
 
 import co.alphavantage.output.AlphaVantageException;
+import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.timeseries.data.StockData;
 import org.joda.time.DateTime;
 
@@ -8,28 +9,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MonthlyAdjusted {
-
-  private final Map<String, String> metaData;
-  private final List<StockData> stocks;
+/**
+ * Representation of monthly adjusted response from api.
+ *
+ * @see TimeSeriesResponse
+ */
+public class MonthlyAdjusted extends TimeSeriesResponse {
 
   private MonthlyAdjusted(Map<String, String> metaData, List<StockData> stocks) {
-    this.metaData = metaData;
-    this.stocks = stocks;
+    super(metaData, stocks);
   }
 
-  public Map<String, String> getMetaData() {
-    return metaData;
-  }
-
-  public List<StockData> getStockData() {
-    return stocks;
-  }
-
+  /**
+   * Creates {@code MonthlyAdjusted} instance from json.
+   *
+   * @param json string to parse
+   * @return MonthlyAdjusted instance
+   */
   public static MonthlyAdjusted from(String json)  {
     Parser parser = new Parser();
     return parser.parseJson(json);  }
 
+  /**
+   * Helper class for parsing json to {@code MonthlyAdjusted}.
+   *
+   * @see TimeSeriesParser
+   * @see JsonParser
+   */
   private static class Parser extends TimeSeriesParser<MonthlyAdjusted> {
 
     @Override

@@ -2,6 +2,9 @@ package co.alphavantage.input.sectorperformances;
 
 import co.alphavantage.input.ApiParameter;
 
+/**
+ * Function parameter for the sector api call.
+ */
 public enum Function implements ApiParameter {
   SECTOR("SECTOR"); // currently only uses one value but this could be extended
 
