@@ -11,32 +11,13 @@ import java.util.Map;
 
 /**
  * Representation of exponential moving average (EMA) response from api.
+ *
+ * @see TechnicalIndicatorResponse
  */
-public class EMA {
-  private final Map<String, String> metaData;
-  private final List<EMAData> indicatorData;
+public class EMA extends TechnicalIndicatorResponse<EMAData> {
 
   private EMA(final Map<String, String> metaData, final List<EMAData> indicatorData) {
-    this.metaData = metaData;
-    this.indicatorData = indicatorData;
-  }
-
-  /**
-   * Meta data for EMA data
-   *
-   * @return map of keys and values in json representation of metadata.
-   */
-  public Map<String, String> getMetaData() {
-    return metaData;
-  }
-
-  /**
-   * List of EMAData
-   *
-   * @return list of {@link EMAData}.
-   */
-  public List<EMAData> getData() {
-    return indicatorData;
+    super(metaData, indicatorData);
   }
 
   /**

@@ -8,13 +8,11 @@ import java.util.Map;
 /**
  * Response from time series call. Each specific response, i.e IntraDay, Daily, etc, extends this class.
  * This class simply acts as a container of metadata and stockdata.
- *
- * @see StockData
  */
 public class TimeSeriesResponse {
 
-  protected final Map<String, String> metaData;
-  protected final List<StockData> stockData;
+  private final Map<String, String> metaData;
+  private final List<StockData> stockData;
 
   TimeSeriesResponse(final Map<String, String> metaData, final List<StockData> stockData) {
     this.stockData = stockData;

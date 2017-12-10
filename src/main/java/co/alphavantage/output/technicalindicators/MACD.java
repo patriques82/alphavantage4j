@@ -11,32 +11,13 @@ import java.util.Map;
 
 /**
  * Representation of moving average converge/divergence (MACD) response from api.
+ *
+ * @see TechnicalIndicatorResponse
  */
-public class MACD {
-  private final Map<String, String> metaData;
-  private final List<MACDData> indicatorData;
+public class MACD extends TechnicalIndicatorResponse<MACDData> {
 
   private MACD(final Map<String, String> metaData, final List<MACDData> indicatorData) {
-    this.metaData = metaData;
-    this.indicatorData = indicatorData;
-  }
-
-  /**
-   * Meta data for MACD data
-   *
-   * @return map of keys and values in json representation of metadata.
-   */
-  public Map<String, String> getMetaData() {
-    return metaData;
-  }
-
-  /**
-   * List of MACDData
-   *
-   * @return list of {@link MACDData}.
-   */
-  public List<MACDData> getData() {
-    return indicatorData;
+    super(metaData, indicatorData);
   }
 
   /**

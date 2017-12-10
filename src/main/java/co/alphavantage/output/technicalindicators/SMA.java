@@ -11,32 +11,13 @@ import java.util.Map;
 
 /**
  * Representation of simple moving average (SMA) response from api.
+ *
+ * @see TechnicalIndicatorResponse
  */
-public class SMA {
-  private final Map<String, String> metaData;
-  private final List<SMAData> indicatorData;
+public class SMA extends TechnicalIndicatorResponse<SMAData> {
 
   private SMA(final Map<String, String> metaData, final List<SMAData> indicatorData) {
-    this.metaData = metaData;
-    this.indicatorData = indicatorData;
-  }
-
-  /**
-   * Meta data for SMA data
-   *
-   * @return map of keys and values in json representation of metadata.
-   */
-  public Map<String, String> getMetaData() {
-    return metaData;
-  }
-
-  /**
-   * List of SMAData
-   *
-   * @return list of {@link SMAData}.
-   */
-  public List<SMAData> getData() {
-    return indicatorData;
+    super(metaData, indicatorData);
   }
 
   /**
