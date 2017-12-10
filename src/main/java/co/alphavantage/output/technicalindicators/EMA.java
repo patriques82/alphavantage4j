@@ -1,6 +1,7 @@
 package co.alphavantage.output.technicalindicators;
 
 import co.alphavantage.output.AlphaVantageException;
+import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.EMAData;
 import org.joda.time.DateTime;
 
@@ -8,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Representation of exponential moving average (EMA) response from api.
+ */
 public class EMA {
   private final Map<String, String> metaData;
   private final List<EMAData> indicatorData;
@@ -17,19 +21,41 @@ public class EMA {
     this.indicatorData = indicatorData;
   }
 
+  /**
+   * Meta data for EMA data
+   *
+   * @return map of keys and values in json representation of metadata.
+   */
   public Map<String, String> getMetaData() {
     return metaData;
   }
 
+  /**
+   * List of EMAData
+   *
+   * @return list of {@link EMAData}.
+   */
   public List<EMAData> getData() {
     return indicatorData;
   }
 
+  /**
+   * Creates {@code EMA} instance from json
+   * @param json string to parse
+   * @return EMA instance
+   * @throws AlphaVantageException
+   */
   public static EMA from(String json) throws AlphaVantageException {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
 
+  /**
+   * Helper class for parsing json to {@code EMA}.
+   *
+   * @see TechnicalIndicatorParser
+   * @see JsonParser
+   */
   private static class Parser extends TechnicalIndicatorParser<EMA> {
 
     @Override

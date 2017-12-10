@@ -1,5 +1,21 @@
 package co.alphavantage.output.sectorperformances.data;
 
+/**
+ * Representation of a json object, i.e:
+ * "Rank A: Real-Time Performance": {
+ *  "Telecommunication Services": "1.52%",
+ *  "Health Care": "1.11%",
+ *  "Energy": "0.85%",
+ *  "Financials": "0.59%",
+ *  "Consumer Discretionary": "0.43%",
+ *  "Information Technology": "0.42%",
+ *  "Industrials": "0.40%",
+ *  "Utilities": "0.32%",
+ *  "Real Estate": "0.25%",
+ *  "Consumer Staples": "0.22%",
+ *  "Materials": "-0.02%"
+ * }
+ */
 public class SectorData {
 
   private final String key;
