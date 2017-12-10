@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 public class IntraDay {
   private final Map<String, String> metaData;
   private final List<StockData> stocks;

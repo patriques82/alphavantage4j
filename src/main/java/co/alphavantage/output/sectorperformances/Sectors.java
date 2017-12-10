@@ -44,7 +44,7 @@ public class Sectors {
   /**
    * Create Sectors data representation from json object
    * @param json string to parse
-   * @return Sectors data
+   * @return {@code Sectors} data
    * @throws AlphaVantageException
    */
   public static Sectors from(String json) throws AlphaVantageException {
@@ -54,6 +54,7 @@ public class Sectors {
 
   /**
    * Helper class for parsing json to {@code Sector}
+   * @see JsonParser
    */
   private static class SectorPerformancesParser extends JsonParser<Sectors> {
 

@@ -2,6 +2,9 @@ package co.alphavantage.input.technicalindicator;
 
 import co.alphavantage.input.ApiParameter;
 
+/**
+ * Function parameter for the technical indicators api call.
+ */
 public enum Function implements ApiParameter {
   SMA("SMA"),
   EMA("EMA"),

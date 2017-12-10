@@ -3,7 +3,7 @@ package co.alphavantage.input.timeseries;
 import co.alphavantage.input.ApiParameter;
 
 /**
- * Function parameter, i.e function=TIME_SERIES_INTRADAY
+ * Function parameter for the time series api call.
  */
 public enum Function implements ApiParameter {
   INTRADAY("TIME_SERIES_INTRADAY"),

@@ -2,6 +2,9 @@ package co.alphavantage.input.technicalindicator;
 
 import co.alphavantage.input.ApiParameter;
 
+/**
+ * Series type paramater for the technical indicators api call.
+ */
 public enum SeriesType implements ApiParameter {
   CLOSE("close"),
   OPEN("open"),
@@ -16,11 +19,11 @@ public enum SeriesType implements ApiParameter {
 
   @Override
   public String getKey() {
-    return null;
+    return "series_type";
   }
 
   @Override
   public String getValue() {
-    return null;
+    return urlParameter;
   }
 }

@@ -3,7 +3,7 @@ package co.alphavantage.input.timeseries;
 import co.alphavantage.input.ApiParameter;
 
 /**
- * Outputsize parameter, i.e outputsize=compact
+ * Output size parameter for the time series api call.
  */
 public enum OutputSize implements ApiParameter {
   COMPACT("compact"),
