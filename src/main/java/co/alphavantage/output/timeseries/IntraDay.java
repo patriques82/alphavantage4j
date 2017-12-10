@@ -2,6 +2,7 @@ package co.alphavantage.output.timeseries;
 
 import co.alphavantage.input.timeseries.Interval;
 import co.alphavantage.output.AlphaVantageException;
+import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.timeseries.data.StockData;
 import org.joda.time.DateTime;
 
@@ -9,28 +10,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class IntraDay {
-  private final Map<String, String> metaData;
-  private final List<StockData> stocks;
+/**
+ * Representation of intra day response from api.
+ *
+ * @see TimeSeriesResponse
+ */
+public class IntraDay extends TimeSeriesResponse {
 
   private IntraDay(Map<String, String> metaData, List<StockData> stocks) {
-    this.metaData = metaData;
-    this.stocks = stocks;
+    super(metaData, stocks);
   }
 
-  public Map<String, String> getMetaData() {
-    return metaData;
-  }
-
-  public List<StockData> getStockData() {
-    return stocks;
-  }
-
+  /**
+   * Creates {@code IntraDay} instance from json.
+   *
+   * @param json string to parse
+   * @return IntraDay instance
+   */
   public static IntraDay from(Interval interval, String json)  {
     Parser parser = new Parser(interval);
     return parser.parseJson(json);
   }
 
+  /**
+   * Helper class for parsing json to {@code IntraDay}.
+   *
+   * @see TimeSeriesParser
+   * @see JsonParser
+   */
   private static class Parser extends TimeSeriesParser<IntraDay> {
     private final Interval interval;
 

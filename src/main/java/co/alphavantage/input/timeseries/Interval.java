@@ -3,7 +3,7 @@ package co.alphavantage.input.timeseries;
 import co.alphavantage.input.ApiParameter;
 
 /**
- * Interval parameter, i.e interval=15min
+ * Interval parameter for the time series api call.
  */
 public enum Interval implements ApiParameter {
   ONE_MIN("1min"),

@@ -2,6 +2,9 @@ package co.alphavantage.input.technicalindicator;
 
 import co.alphavantage.input.ApiParameter;
 
+/**
+ * Interval parameter for the technical indicators api call.
+ */
 public enum Interval implements ApiParameter {
   ONE_MIN("1min"),
   FIVE_MIN("5min"),
@@ -20,11 +23,11 @@ public enum Interval implements ApiParameter {
 
   @Override
   public String getKey() {
-    return null;
+    return "interval";
   }
 
   @Override
   public String getValue() {
-    return null;
+    return urlParameter;
   }
 }

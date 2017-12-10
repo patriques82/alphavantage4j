@@ -23,6 +23,7 @@ public class TimeSeries {
 
   /**
    * Constructs a Time Series Data api endpoint with the help of an {@link ApiConnector} and a {@link JsonParser}
+   *
    * @param apiConnector the connection to the api
    */
   public TimeSeries(ApiConnector apiConnector) {
@@ -31,11 +32,11 @@ public class TimeSeries {
 
   /**
    * This API returns intraday time series (timestamp, open, high, low, close, volume) of the equity specified, updated realtime.
+   *
    * @param symbol the stock symbol to lookup
    * @param interval the interval between two consecutive data points in the time series {@link Interval}
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
-   * @return {@link co.alphavantage.output.timeseries.IntraDay} time series data
-   * @throws AlphaVantageException
+   * @return {@link IntraDay} time series data
    */
   public IntraDay intraDay(String symbol, Interval interval, OutputSize outputSize)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.INTRADAY, interval, outputSize);
@@ -44,10 +45,10 @@ public class TimeSeries {
 
   /**
    * This API returns intraday time series (timestamp, open, high, low, close, volume) of the equity specified, updated realtime.
+   *
    * @param symbol the stock symbol to lookup
    * @param interval the interval between two consecutive data points in the time series {@link Interval}
-   * @return {@link co.alphavantage.output.timeseries.IntraDay} time series data
-   * @throws AlphaVantageException
+   * @return {@link IntraDay} time series data
    */
   public IntraDay intraDay(String symbol, Interval interval)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.INTRADAY, interval);
@@ -56,10 +57,10 @@ public class TimeSeries {
 
   /**
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume) of the equity specified.
+   *
    * @param symbol the stock symbol to lookup
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
-   * @return {@link co.alphavantage.output.timeseries.Daily} time series data
-   * @throws AlphaVantageException
+   * @return {@link Daily} time series data
    */
   public Daily daily(String symbol, OutputSize outputSize)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY, outputSize);
@@ -68,9 +69,9 @@ public class TimeSeries {
 
   /**
    * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume) of the equity specified.
+   *
    * @param symbol the stock symbol to lookup
-   * @return {@link co.alphavantage.output.timeseries.Daily} time series data
-   * @throws AlphaVantageException
+   * @return {@link Daily} time series data
    */
   public Daily daily(String symbol) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY);
@@ -78,11 +79,11 @@ public class TimeSeries {
   }
 
   /**
-   * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume, daily adjusted close, and split/dividend events)
+   * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume, daily adjusted close, and split/dividend events).
+   *
    * @param symbol the stock symbol to lookup
    * @param outputSize the specification of the amount of returned data points {@link OutputSize}
-   * @return {@link co.alphavantage.output.timeseries.DailyAdjusted} time series data
-   * @throws AlphaVantageException
+   * @return {@link DailyAdjusted} time series data
    */
   public DailyAdjusted dailyAdjusted(String symbol, OutputSize outputSize) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY_ADJUSTED, outputSize);
@@ -90,10 +91,10 @@ public class TimeSeries {
   }
 
   /**
-   * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume, daily adjusted close, and split/dividend events)
+   * This API returns daily time series (date, daily open, daily high, daily low, daily close, daily volume, daily adjusted close, and split/dividend events).
+   *
    * @param symbol the stock symbol to lookup
-   * @return {@link co.alphavantage.output.timeseries.DailyAdjusted} time series data
-   * @throws AlphaVantageException
+   * @return {@link DailyAdjusted} time series data
    */
   public DailyAdjusted dailyAdjusted(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY_ADJUSTED);
@@ -101,10 +102,10 @@ public class TimeSeries {
   }
 
   /**
-   * This API returns weekly time series (last trading day of each week, weekly open, weekly high, weekly low, weekly close, weekly volume)
+   * This API returns weekly time series (last trading day of each week, weekly open, weekly high, weekly low, weekly close, weekly volume).
+   *
    * @param symbol the stock symbol to lookup
-   * @return {@link co.alphavantage.output.timeseries.Weekly} time series data
-   * @throws AlphaVantageException
+   * @return {@link Weekly} time series data
    */
   public Weekly weekly(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.WEEKLY);
@@ -112,10 +113,10 @@ public class TimeSeries {
   }
 
   /**
-   * This API returns weekly adjusted time series (last trading day of each week, weekly open, weekly high, weekly low, weekly close, weekly adjusted close, weekly volume, weekly dividend)
+   * This API returns weekly adjusted time series (last trading day of each week, weekly open, weekly high, weekly low, weekly close, weekly adjusted close, weekly volume, weekly dividend).
+   *
    * @param symbol the stock symbol to lookup
-   * @return {@link co.alphavantage.output.timeseries.WeeklyAdjusted} time series data
-   * @throws AlphaVantageException
+   * @return {@link WeeklyAdjusted} time series data
    */
   public WeeklyAdjusted weeklyAdjusted(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.WEEKLY_ADJUSTED);
@@ -123,10 +124,10 @@ public class TimeSeries {
   }
 
   /**
-   * This API returns monthly time series (last trading day of each month, monthly open, monthly high, monthly low, monthly close, monthly volume)
+   * This API returns monthly time series (last trading day of each month, monthly open, monthly high, monthly low, monthly close, monthly volume).
+   *
    * @param symbol the stock symbol to lookup
-   * @return {@link co.alphavantage.output.timeseries.Monthly} time series data
-   * @throws AlphaVantageException
+   * @return {@link Monthly} time series data
    */
   public Monthly monthly(String symbol)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MONTHLY);
@@ -135,11 +136,11 @@ public class TimeSeries {
 
   /**
    * This API returns monthly adjusted time series (last trading day of each month, monthly open, monthly high, monthly low, monthly close, monthly adjusted close, monthly volume, monthly dividend)
+   *
    * @param symbol the stock symbol to lookup
-   * @return {@link co.alphavantage.output.timeseries.MonthlyAdjusted} time series data
-   * @throws AlphaVantageException
+   * @return {@link MonthlyAdjusted} time series data
    */
-  public MonthlyAdjusted monthlyAdjusted(String symbol)  {
+  public MonthlyAdjusted monthlyAdjusted(String symbol) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MONTHLY_ADJUSTED);
     return MonthlyAdjusted.from(json);
   }

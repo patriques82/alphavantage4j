@@ -12,6 +12,8 @@ import java.net.URLConnection;
 
 /**
  * Connection to Alpha Vantage API.
+ *
+ * @see ApiConnector
  */
 public class AlphaVantageConnector implements ApiConnector {
   private static final String BASE_URL = "https://www.alphavantage.co/query?";
@@ -19,9 +21,10 @@ public class AlphaVantageConnector implements ApiConnector {
   private final int timeOut;
 
   /**
-   * Create Alpha
-   * @param apiKey
-   * @param timeOut
+   * Creates an AlphaVantageConnector.
+   *
+   * @param apiKey the secret key to access the api.
+   * @param timeOut the timeout for when reading the connection should give up.
    */
   public AlphaVantageConnector(String apiKey, int timeOut) {
     this.apiKey = apiKey;
@@ -52,6 +55,12 @@ public class AlphaVantageConnector implements ApiConnector {
     }
   }
 
+  /**
+   * Builds up the url query from the api parameters used to append to the base url.
+   *
+   * @param apiParameters the api parameters used in the query
+   * @return the query string to use in the url
+   */
   private String getParameters(ApiParameter... apiParameters) {
     ApiParameterBuilder urlBuilder = new ApiParameterBuilder();
     for (ApiParameter parameter : apiParameters) {

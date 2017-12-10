@@ -3,6 +3,7 @@ package co.alphavantage.common.lib;
 import co.alphavantage.input.ApiParameter;
 
 public enum Function implements ApiParameter {
+  SECTOR("SECTOR"),
   SMA("SMA"),
   EMA("EMA"),
   MACD("MACD"),

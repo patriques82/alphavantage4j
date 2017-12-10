@@ -1,6 +1,7 @@
 package co.alphavantage.output.timeseries;
 
 import co.alphavantage.output.AlphaVantageException;
+import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.timeseries.data.StockData;
 import org.joda.time.DateTime;
 
@@ -8,28 +9,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Daily {
-  private final Map<String, String> metaData;
-  private final List<StockData> stockData;
+/**
+ * Representation of daily response from api.
+ *
+ * @see TimeSeriesResponse
+ */
+public class Daily extends TimeSeriesResponse {
 
   private Daily(final Map<String, String> metaData, final List<StockData> stockData) {
-    this.metaData = metaData;
-    this.stockData = stockData;
+    super(metaData, stockData);
   }
 
-  public Map<String, String> getMetaData() {
-    return metaData;
-  }
-
-  public List<StockData> getStockData() {
-    return stockData;
-  }
-
+  /**
+   * Creates {@code Daily} instance from json.
+   *
+   * @param json string to parse
+   * @return Daily instance
+   */
   public static Daily from(String json)  {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
 
+  /**
+   * Helper class for parsing json to {@code Daily}.
+   *
+   * @see TimeSeriesParser
+   * @see JsonParser
+   */
   private static class Parser extends TimeSeriesParser<Daily> {
 
     @Override

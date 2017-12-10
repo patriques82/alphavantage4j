@@ -2,6 +2,12 @@ package co.alphavantage.output.technicalindicators.data;
 
 import org.joda.time.DateTime;
 
+/**
+ * Representation of json object, i.e:
+ * "2017-12-01 16:00": {
+ *   "MACD": "84.0203"
+ * }
+ */
 public class MACDData {
   private final DateTime dateTime;
   private final double macd;
