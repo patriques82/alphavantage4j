@@ -11,33 +11,13 @@ import java.util.Map;
 
 /**
  * Representation of weekly adjusted response from api.
+ *
+ * @see TimeSeriesResponse
  */
-public class WeeklyAdjusted {
-
-  private final Map<String, String> metaData;
-  private final List<StockData> stocks;
+public class WeeklyAdjusted extends TimeSeriesResponse {
 
   private WeeklyAdjusted(Map<String, String> metaData, List<StockData> stocks) {
-    this.metaData = metaData;
-    this.stocks = stocks;
-  }
-
-  /**
-   * Meta data for WeeklyAdjusted data
-   *
-   * @return map of keys and values in json representation of metadata.
-   */
-  public Map<String, String> getMetaData() {
-    return metaData;
-  }
-
-  /**
-   * List of StockData
-   *
-   * @return list of {@link StockData}.
-   */
-  public List<StockData> getStockData() {
-    return stocks;
+    super(metaData, stocks);
   }
 
   /**

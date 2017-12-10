@@ -11,32 +11,13 @@ import java.util.Map;
 
 /**
  * Representation of daily response from api.
+ *
+ * @see TimeSeriesResponse
  */
-public class Daily {
-  private final Map<String, String> metaData;
-  private final List<StockData> stockData;
+public class Daily extends TimeSeriesResponse {
 
   private Daily(final Map<String, String> metaData, final List<StockData> stockData) {
-    this.metaData = metaData;
-    this.stockData = stockData;
-  }
-
-  /**
-   * Meta data for Daily data
-   *
-   * @return map of keys and values in json representation of metadata.
-   */
-  public Map<String, String> getMetaData() {
-    return metaData;
-  }
-
-  /**
-   * List of StockData
-   *
-   * @return list of {@link StockData}.
-   */
-  public List<StockData> getStockData() {
-    return stockData;
+    super(metaData, stockData);
   }
 
   /**

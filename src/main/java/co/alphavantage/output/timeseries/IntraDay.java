@@ -12,32 +12,13 @@ import java.util.Map;
 
 /**
  * Representation of intra day response from api.
+ *
+ * @see TimeSeriesResponse
  */
-public class IntraDay {
-  private final Map<String, String> metaData;
-  private final List<StockData> stocks;
+public class IntraDay extends TimeSeriesResponse {
 
   private IntraDay(Map<String, String> metaData, List<StockData> stocks) {
-    this.metaData = metaData;
-    this.stocks = stocks;
-  }
-
-  /**
-   * Meta data for IntraDay data
-   *
-   * @return map of keys and values in json representation of metadata.
-   */
-  public Map<String, String> getMetaData() {
-    return metaData;
-  }
-
-  /**
-   * List of StockData
-   *
-   * @return list of {@link StockData}.
-   */
-  public List<StockData> getStockData() {
-    return stocks;
+    super(metaData, stocks);
   }
 
   /**
