@@ -1,7 +1,7 @@
 package co.alphavantage;
 
+import co.alphavantage.common.lib.Function;
 import co.alphavantage.input.Symbol;
-import co.alphavantage.input.technicalindicator.Function;
 import co.alphavantage.input.technicalindicator.Interval;
 import co.alphavantage.input.technicalindicator.SeriesType;
 import co.alphavantage.input.technicalindicator.TimePeriod;

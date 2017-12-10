@@ -1,7 +1,11 @@
 package co.alphavantage.output.exchange.data;
 
 import java.time.LocalDateTime;
-
+/**
+ * CurrencyExchangeData class used to register the rate of a conversion between to currencies
+ * 
+ * 
+ * */
 public class CurrencyExchangeData {
 
 	private final String fromCurrencyCode;
