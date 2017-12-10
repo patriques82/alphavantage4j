@@ -40,12 +40,12 @@ public class EMA {
   }
 
   /**
-   * Creates {@code EMA} instance from json
+   * Creates {@code EMA} instance from json.
+   *
    * @param json string to parse
    * @return EMA instance
-   * @throws AlphaVantageException
    */
-  public static EMA from(String json) throws AlphaVantageException {
+  public static EMA from(String json) {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }

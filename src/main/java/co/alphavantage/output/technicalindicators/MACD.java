@@ -40,10 +40,10 @@ public class MACD {
   }
 
   /**
-   * Creates {@code MACD} instance from json
+   * Creates {@code MACD} instance from json.
+   *
    * @param json string to parse
    * @return MACD instance
-   * @throws AlphaVantageException
    */
   public static MACD from(String json) {
     Parser parser = new Parser();

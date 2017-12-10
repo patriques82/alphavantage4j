@@ -40,10 +40,10 @@ public class SMA {
   }
 
   /**
-   * Creates {@code SMA} instance from json
+   * Creates {@code SMA} instance from json.
+   *
    * @param json string to parse
    * @return SMA instance
-   * @throws AlphaVantageException
    */
   public static SMA from(String json) {
     Parser parser = new Parser();

@@ -1,6 +1,7 @@
 package co.alphavantage.output.timeseries;
 
 import co.alphavantage.output.AlphaVantageException;
+import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.timeseries.data.StockData;
 import org.joda.time.DateTime;
 
@@ -8,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Representation of weekly adjusted response from api.
+ */
 public class WeeklyAdjusted {
 
   private final Map<String, String> metaData;
@@ -18,19 +22,41 @@ public class WeeklyAdjusted {
     this.stocks = stocks;
   }
 
+  /**
+   * Meta data for WeeklyAdjusted data
+   *
+   * @return map of keys and values in json representation of metadata.
+   */
   public Map<String, String> getMetaData() {
     return metaData;
   }
 
+  /**
+   * List of StockData
+   *
+   * @return list of {@link StockData}.
+   */
   public List<StockData> getStockData() {
     return stocks;
   }
 
+  /**
+   * Creates {@code WeeklyAdjusted} instance from json.
+   *
+   * @param json string to parse
+   * @return WeeklyAdjusted instance
+   */
   public static WeeklyAdjusted from(String json)  {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
 
+  /**
+   * Helper class for parsing json to {@code WeeklyAdjusted}.
+   *
+   * @see TimeSeriesParser
+   * @see JsonParser
+   */
   private static class Parser extends TimeSeriesParser<WeeklyAdjusted> {
 
     @Override

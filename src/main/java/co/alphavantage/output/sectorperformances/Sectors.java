@@ -48,9 +48,8 @@ public class Sectors {
    *
    * @param json string to parse
    * @return {@code Sectors} data
-   * @throws AlphaVantageException
    */
-  public static Sectors from(String json) throws AlphaVantageException {
+  public static Sectors from(String json) {
     SectorPerformancesParser parser = new SectorPerformancesParser();
     return parser.parseJson(json);
   }

@@ -33,7 +33,7 @@ public abstract class TechnicalIndicatorParser<Data> extends JsonParser<Data> {
    * Gets the key for the indicators, this differs for each response type, i.e MACD, EMA etc.
    * This is used by the resolve method below.
    *
-   * @return the meta data key
+   * @return the indicator data key
    */
   abstract String getIndicatorKey();
 
