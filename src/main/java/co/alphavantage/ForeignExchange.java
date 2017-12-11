@@ -1,6 +1,7 @@
 package co.alphavantage;
 import co.alphavantage.common.lib.Function;
-import co.alphavantage.input.exchange.Currency;
+import co.alphavantage.input.exchange.FromCurrency;
+import co.alphavantage.input.exchange.ToCurrency;
 import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.exchange.CurrencyExchange;
 
@@ -24,7 +25,7 @@ public class ForeignExchange {
 	   * @return {@link co.alphavantage.output.exchange.CurrencyExchange} data
 	   */
 	  public CurrencyExchange currencyExchangeRate(String fromCCY, String toCCY) throws AlphaVantageException{
-	    String json = apiConnector.getRequest(Function.CURRENCY_EXCHANGE,new Currency(fromCCY).from(), new Currency(toCCY).from());
+	    String json = apiConnector.getRequest(Function.CURRENCY_EXCHANGE,new FromCurrency(fromCCY), new ToCurrency(toCCY));
 	    return CurrencyExchange.from(json);
 	  }
 }

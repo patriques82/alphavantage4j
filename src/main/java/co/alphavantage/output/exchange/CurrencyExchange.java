@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -47,12 +48,11 @@ public class CurrencyExchange {
 			  Type dataType = new TypeToken<Map<String, Map<String, String>>>() {
 		      }.getType();
 		      try {
-		        Map<String, Map<String, String>> data = GSON.fromJson(rootObject, dataType);
-		        List<CurrencyExchangeData> exchanges = new ArrayList<>();
-		        data.forEach((key, values) -> {
-		            exchanges.add(createCurrencyExchangeData(values));
-		        });
-			    return new CurrencyExchange(exchanges.get(0));
+		        Map<String, Map<String,String>> data = GSON.fromJson(rootObject, dataType);
+		        CurrencyExchangeData exchangeData = createCurrencyExchangeData(data.values().stream()
+		        		.findFirst()
+		        		.orElse(Collections.emptyMap()));
+			    return new CurrencyExchange(exchangeData);
 		      } catch (JsonSyntaxException e) {
 		        throw new AlphaVantageException("technical indicators api change", e);
 		      }
