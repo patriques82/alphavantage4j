@@ -1,6 +1,6 @@
 package co.alphavantage;
 
-import co.alphavantage.input.sectorperformances.Function;
+import co.alphavantage.common.lib.Function;
 import co.alphavantage.output.sectorperformances.Sectors;
 
 /**
