@@ -6,10 +6,10 @@ import co.alphavantage.input.ApiParameter;
  * Series type parameter for the technical indicators api call.
  */
 public class TimePeriod implements ApiParameter {
-  private final String urlParameter;
+  private final String timePeriod;
 
-  private TimePeriod(String urlParameter) {
-    this.urlParameter = urlParameter;
+  private TimePeriod(String timePeriod) {
+    this.timePeriod = timePeriod;
   }
 
   public static TimePeriod of(int time) {
@@ -24,6 +24,6 @@ public class TimePeriod implements ApiParameter {
 
   @Override
   public String getValue() {
-    return urlParameter;
+    return timePeriod;
   }
 }

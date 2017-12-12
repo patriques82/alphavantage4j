@@ -2,7 +2,6 @@ package co.alphavantage.output.digitalcurrencies;
 
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.digitalcurrencies.data.DigitalCurrencyData;
-import com.google.gson.JsonObject;
 
 import java.util.List;
 import java.util.Map;
@@ -38,13 +37,14 @@ public class Daily extends DigitalCurrencyResponse {
   private static class Parser extends DigitalCurrencyParser<Daily> {
 
     @Override
-    protected Daily resolve(JsonObject rootObject) {
-      return null;
-    }
-
-    @Override
     String getDigitalCurrencyDataKey() {
       return "Time Series (Digital Currency Daily)";
     }
+
+    @Override
+    Daily resolve(Map<String, String> metaData, Map<String, Map<String, String>> digitalCurrencyData) {
+      return null;
+    }
+
   }
 }

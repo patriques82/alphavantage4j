@@ -1,6 +1,6 @@
 package co.alphavantage.output.technicalindicators.data;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 /**
  * Representation of json object, i.e:
@@ -9,15 +9,15 @@ import org.joda.time.DateTime;
  * }
  */
 public class EMAData {
-  private final DateTime datetime;
+  private final LocalDateTime datetime;
   private final double ema;
 
-  public EMAData(DateTime datetime, double ema) {
+  public EMAData(LocalDateTime datetime, double ema) {
     this.datetime = datetime;
     this.ema = ema;
   }
 
-  public DateTime getDateTime() {
+  public LocalDateTime getDateTime() {
     return datetime;
   }
 

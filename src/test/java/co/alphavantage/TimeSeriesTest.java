@@ -5,9 +5,9 @@ import co.alphavantage.input.timeseries.OutputSize;
 import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.timeseries.*;
 import co.alphavantage.output.timeseries.data.StockData;
-import org.joda.time.DateTime;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -100,7 +100,7 @@ public class TimeSeriesTest {
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
-    assertThat(stock.getDateTime(), is(equalTo(new DateTime(2017, 11, 17, 16, 0, 0))));
+    assertThat(stock.getDateTime(), is(equalTo(LocalDateTime.of(2017, 11, 17, 16, 0))));
     assertThat(stock.getOpen(), is(equalTo(82.39)));
     assertThat(stock.getHigh(), is(equalTo(82.42)));
     assertThat(stock.getLow(), is(equalTo(82.36)));
@@ -158,7 +158,7 @@ public class TimeSeriesTest {
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
-    assertThat(stock.getDateTime(), is(equalTo(new DateTime(2017, 11, 24, 0, 0, 0))));
+    assertThat(stock.getDateTime(), is(equalTo(LocalDateTime.of(2017, 11, 24, 0, 0))));
     assertThat(stock.getOpen(), is(equalTo(83.01)));
     assertThat(stock.getHigh(), is(equalTo(83.37)));
     assertThat(stock.getLow(), is(equalTo(82.78)));
@@ -225,7 +225,7 @@ public class TimeSeriesTest {
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
-    assertThat(stock.getDateTime(), is(equalTo(new DateTime(2017, 11, 24, 0, 0, 0))));
+    assertThat(stock.getDateTime(), is(equalTo(LocalDateTime.of(2017, 11, 24, 0, 0))));
     assertThat(stock.getOpen(), is(equalTo(83.01)));
     assertThat(stock.getHigh(), is(equalTo(83.43)));
     assertThat(stock.getLow(), is(equalTo(82.78)));
@@ -284,7 +284,7 @@ public class TimeSeriesTest {
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
-    assertThat(stock.getDateTime(), is(equalTo(new DateTime(2017, 11, 24, 0, 0, 0))));
+    assertThat(stock.getDateTime(), is(equalTo(LocalDateTime.of(2017, 11, 24, 0, 0))));
     assertThat(stock.getOpen(), is(equalTo(82.40)));
     assertThat(stock.getHigh(), is(equalTo(83.90)));
     assertThat(stock.getLow(), is(equalTo(82.25)));
@@ -346,7 +346,7 @@ public class TimeSeriesTest {
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
-    assertThat(stock.getDateTime(), is(equalTo(new DateTime(2017, 11, 24, 0, 0, 0))));
+    assertThat(stock.getDateTime(), is(equalTo(LocalDateTime.of(2017, 11, 24, 0, 0))));
     assertThat(stock.getOpen(), is(equalTo(82.40)));
     assertThat(stock.getHigh(), is(equalTo(83.90)));
     assertThat(stock.getLow(), is(equalTo(82.25)));
@@ -404,7 +404,7 @@ public class TimeSeriesTest {
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
-    assertThat(stock.getDateTime(), is(equalTo(new DateTime(2017, 11, 24, 0, 0, 0))));
+    assertThat(stock.getDateTime(), is(equalTo(LocalDateTime.of(2017, 11, 24, 0, 0))));
     assertThat(stock.getOpen(), is(equalTo(83.68)));
     assertThat(stock.getHigh(), is(equalTo(84.90)));
     assertThat(stock.getLow(), is(equalTo(84.90)));
@@ -466,7 +466,7 @@ public class TimeSeriesTest {
     assertThat(stockData.size(), is(equalTo(3)));
 
     StockData stock = stockData.get(0);
-    assertThat(stock.getDateTime(), is(equalTo(new DateTime(2017, 11, 24, 0, 0, 0))));
+    assertThat(stock.getDateTime(), is(equalTo(LocalDateTime.of(2017, 11, 24, 0, 0))));
     assertThat(stock.getOpen(), is(equalTo(83.68)));
     assertThat(stock.getHigh(), is(equalTo(84.90)));
     assertThat(stock.getLow(), is(equalTo(82.24)));

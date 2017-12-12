@@ -6,20 +6,20 @@ import co.alphavantage.input.ApiParameter;
  * The currency which is the base of the conversion in ForeignExchange functionality
  */
 public class FromCurrency implements ApiParameter {
-	String fromCurrency;
-	
-	public FromCurrency(String fromCurrency){
-		this.fromCurrency = fromCurrency;
-	}
+  String fromCurrency;
 
-	@Override
-	public String getKey() {
-		return "from_currency";
-	}
+  public FromCurrency(String fromCurrency) {
+    this.fromCurrency = fromCurrency;
+  }
 
-	@Override
-	public String getValue() {
-		return fromCurrency;
-	}
+  @Override
+  public String getKey() {
+    return "from_currency";
+  }
+
+  @Override
+  public String getValue() {
+    return fromCurrency;
+  }
 
 }

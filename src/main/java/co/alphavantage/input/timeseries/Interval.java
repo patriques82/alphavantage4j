@@ -13,10 +13,10 @@ public enum Interval implements ApiParameter {
   THIRTY_MIN("30min"),
   SIXTY_MIN("60min");
 
-  private final String urlParameter;
+  private final String interval;
 
-  Interval(String urlParameter) {
-    this.urlParameter = urlParameter;
+  Interval(String interval) {
+    this.interval = interval;
   }
 
   @Override
@@ -26,6 +26,6 @@ public enum Interval implements ApiParameter {
 
   @Override
   public String getValue() {
-    return urlParameter;
+    return interval;
   }
 }

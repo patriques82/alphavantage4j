@@ -9,10 +9,10 @@ public enum OutputSize implements ApiParameter {
   COMPACT("compact"),
   FULL("full");
 
-  private final String urlParameter;
+  private final String outputSize;
 
-  OutputSize(String urlParameter) {
-    this.urlParameter = urlParameter;
+  OutputSize(String outputSize) {
+    this.outputSize = outputSize;
   }
 
   @Override
@@ -22,6 +22,6 @@ public enum OutputSize implements ApiParameter {
 
   @Override
   public String getValue() {
-    return urlParameter;
+    return outputSize;
   }
 }

@@ -4,8 +4,8 @@ import co.alphavantage.input.timeseries.Interval;
 import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.timeseries.data.StockData;
-import org.joda.time.DateTime;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +56,7 @@ public class IntraDay extends TimeSeriesResponse {
       List<StockData> stocks = new ArrayList<>();
       try {
         stockData.forEach((key, values) -> stocks.add(new StockData(
-                DateTime.parse(key, DATE_WITH_TIME_FORMAT),
+                LocalDateTime.parse(key, DATE_WITH_TIME_FORMAT),
                 Double.parseDouble(values.get("1. open")),
                 Double.parseDouble(values.get("2. high")),
                 Double.parseDouble(values.get("3. low")),

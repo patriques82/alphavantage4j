@@ -174,10 +174,10 @@ public enum Market implements ApiParameter {
   ZMW("ZMW"),
   ZWL("ZWL");
 
-  private final String urlParameter;
+  private final String market;
 
-  Market(String urlParameter) {
-    this.urlParameter = urlParameter;
+  Market(String market) {
+    this.market = market;
   }
 
   @Override
@@ -187,6 +187,6 @@ public enum Market implements ApiParameter {
 
   @Override
   public String getValue() {
-    return urlParameter;
+    return market;
   }
 }

@@ -39,7 +39,7 @@ public class IntraDay extends DigitalCurrencyResponse {
     @Override
     IntraDay resolve(Map<String, String> metaData,
                      Map<String, Map<String, String>> digitalCurrencyData) {
-      return null;
+      return new IntraDay(metaData, null);
     }
 
     @Override

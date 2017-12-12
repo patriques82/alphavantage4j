@@ -1,7 +1,7 @@
 package co.alphavantage;
 
+import co.alphavantage.input.Function;
 import co.alphavantage.input.Symbol;
-import co.alphavantage.input.digitalcurrencies.Function;
 import co.alphavantage.input.digitalcurrencies.Market;
 import co.alphavantage.output.digitalcurrencies.Daily;
 import co.alphavantage.output.digitalcurrencies.IntraDay;
@@ -32,7 +32,7 @@ public class DigitalCurrencies {
    * @return {@link IntraDay} time series data.
    */
   public IntraDay intraDay(String symbol, Market market)  {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.INTRADAY, market);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.DIGITAL_CURRENCY_INTRADAY, market);
     return IntraDay.from(json);
   }
 
@@ -46,7 +46,7 @@ public class DigitalCurrencies {
    * @return {@link Daily} time series data
    */
   public Daily daily(String symbol, Market market)  {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY, market);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.DIGITAL_CURRENCY_DAILY, market);
     return Daily.from(json);
   }
 

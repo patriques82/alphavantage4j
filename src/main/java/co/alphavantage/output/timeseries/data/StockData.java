@@ -1,6 +1,6 @@
 package co.alphavantage.output.timeseries.data;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 /**
  * Representation of json object, i.e:
@@ -16,7 +16,7 @@ import org.joda.time.DateTime;
  * }
  */
 public class StockData {
-  private final DateTime dateTime;
+  private final LocalDateTime dateTime;
   private final double open;
   private final double high;
   private final double low;
@@ -26,7 +26,7 @@ public class StockData {
   private final double dividendAmount;
   private final double splitCoefficient;
 
-  public StockData(DateTime dateTime,
+  public StockData(LocalDateTime dateTime,
                    double open,
                    double high,
                    double low,
@@ -46,7 +46,7 @@ public class StockData {
     this.splitCoefficient = splitCoefficient;
   }
 
-  public StockData(DateTime dateTime,
+  public StockData(LocalDateTime dateTime,
                    double open,
                    double high,
                    double low,
@@ -65,7 +65,7 @@ public class StockData {
     this.splitCoefficient = 0;
   }
 
-  public StockData(DateTime dateTime,
+  public StockData(LocalDateTime dateTime,
                    double open,
                    double high,
                    double low,
@@ -82,7 +82,8 @@ public class StockData {
     this.splitCoefficient = 0;
   }
 
-  public DateTime getDateTime() {
+
+  public LocalDateTime getDateTime() {
     return dateTime;
   }
 

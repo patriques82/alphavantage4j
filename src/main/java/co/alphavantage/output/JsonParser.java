@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+
+import java.time.format.DateTimeFormatter;
 
 /**
  * Every Data response from a top-level call, i.e intraday, daily, sector, etc, uses this class internally
@@ -19,9 +19,9 @@ public abstract class JsonParser<Data> {
   /**
    * Different formats to help child responses to interpret different dates in json
    */
-  protected final DateTimeFormatter SIMPLE_DATE_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd");
-  protected final DateTimeFormatter DATE_WITH_TIME_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-  protected final DateTimeFormatter DATE_WITH_SIMPLE_TIME_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+  protected final DateTimeFormatter SIMPLE_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+  protected final DateTimeFormatter DATE_WITH_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+  protected final DateTimeFormatter DATE_WITH_SIMPLE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
   private static com.google.gson.JsonParser PARSER = new com.google.gson.JsonParser();
 

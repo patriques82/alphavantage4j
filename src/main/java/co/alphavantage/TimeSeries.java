@@ -1,18 +1,11 @@
 package co.alphavantage;
 
-import co.alphavantage.common.lib.Function;
+import co.alphavantage.input.Function;
 import co.alphavantage.input.Symbol;
 import co.alphavantage.input.timeseries.Interval;
 import co.alphavantage.input.timeseries.OutputSize;
-import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.JsonParser;
-import co.alphavantage.output.timeseries.Daily;
-import co.alphavantage.output.timeseries.DailyAdjusted;
-import co.alphavantage.output.timeseries.IntraDay;
-import co.alphavantage.output.timeseries.Monthly;
-import co.alphavantage.output.timeseries.MonthlyAdjusted;
-import co.alphavantage.output.timeseries.Weekly;
-import co.alphavantage.output.timeseries.WeeklyAdjusted;
+import co.alphavantage.output.timeseries.*;
 
 /**
  * The Stock Time Series Data provides realtime and historical equity data in 4 different temporal resolutions:
@@ -39,7 +32,7 @@ public class TimeSeries {
    * @return {@link IntraDay} time series data
    */
   public IntraDay intraDay(String symbol, Interval interval, OutputSize outputSize)  {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.INTRADAY, interval, outputSize);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TIME_SERIES_INTRADAY, interval, outputSize);
     return IntraDay.from(interval, json);
   }
 
@@ -51,7 +44,7 @@ public class TimeSeries {
    * @return {@link IntraDay} time series data
    */
   public IntraDay intraDay(String symbol, Interval interval)  {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.INTRADAY, interval);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TIME_SERIES_INTRADAY, interval);
     return IntraDay.from(interval, json);
   }
 
@@ -63,7 +56,7 @@ public class TimeSeries {
    * @return {@link Daily} time series data
    */
   public Daily daily(String symbol, OutputSize outputSize)  {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY, outputSize);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TIME_SERIES_DAILY, outputSize);
     return Daily.from(json);
   }
 
@@ -74,7 +67,7 @@ public class TimeSeries {
    * @return {@link Daily} time series data
    */
   public Daily daily(String symbol) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TIME_SERIES_DAILY);
     return Daily.from(json);
   }
 
@@ -86,7 +79,7 @@ public class TimeSeries {
    * @return {@link DailyAdjusted} time series data
    */
   public DailyAdjusted dailyAdjusted(String symbol, OutputSize outputSize) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY_ADJUSTED, outputSize);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TIME_SERIES_DAILY_ADJUSTED, outputSize);
     return DailyAdjusted.from(json);
   }
 
@@ -97,7 +90,7 @@ public class TimeSeries {
    * @return {@link DailyAdjusted} time series data
    */
   public DailyAdjusted dailyAdjusted(String symbol)  {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.DAILY_ADJUSTED);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TIME_SERIES_DAILY_ADJUSTED);
     return DailyAdjusted.from(json);
   }
 
@@ -108,7 +101,7 @@ public class TimeSeries {
    * @return {@link Weekly} time series data
    */
   public Weekly weekly(String symbol)  {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.WEEKLY);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TIME_SERIES_WEEKLY);
     return Weekly.from(json);
   }
 
@@ -119,7 +112,7 @@ public class TimeSeries {
    * @return {@link WeeklyAdjusted} time series data
    */
   public WeeklyAdjusted weeklyAdjusted(String symbol)  {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.WEEKLY_ADJUSTED);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TIME_SERIES_WEEKLY_ADJUSTED);
     return WeeklyAdjusted.from(json);
   }
 
@@ -130,7 +123,7 @@ public class TimeSeries {
    * @return {@link Monthly} time series data
    */
   public Monthly monthly(String symbol)  {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.MONTHLY);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TIME_SERIES_MONTHLY);
     return Monthly.from(json);
   }
 
@@ -141,7 +134,7 @@ public class TimeSeries {
    * @return {@link MonthlyAdjusted} time series data
    */
   public MonthlyAdjusted monthlyAdjusted(String symbol) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.MONTHLY_ADJUSTED);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TIME_SERIES_MONTHLY_ADJUSTED);
     return MonthlyAdjusted.from(json);
   }
 

@@ -3,8 +3,8 @@ package co.alphavantage.output.timeseries;
 import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.timeseries.data.StockData;
-import org.joda.time.DateTime;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +50,7 @@ public class Weekly extends TimeSeriesResponse {
       List<StockData> stocks = new ArrayList<>();
       try {
         stockData.forEach((key, values) -> stocks.add(new StockData(
-                DateTime.parse(key, SIMPLE_DATE_FORMAT),
+                LocalDate.parse(key, SIMPLE_DATE_FORMAT).atStartOfDay(),
                 Double.parseDouble(values.get("1. open")),
                 Double.parseDouble(values.get("2. high")),
                 Double.parseDouble(values.get("3. low")),

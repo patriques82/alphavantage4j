@@ -3,8 +3,8 @@ package co.alphavantage.output.technicalindicators;
 import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.MACDData;
-import org.joda.time.DateTime;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +53,10 @@ public class MACD extends TechnicalIndicatorResponse<MACDData> {
 
     private MACDData getMACDData(String key, Map<String, String> values) {
       try {
-        return new MACDData(DateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT), Double.parseDouble(values.get("MACD")));
+        return new MACDData(
+                LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+                Double.parseDouble(values.get("MACD"))
+        );
       } catch (Exception e) {
         throw new AlphaVantageException("MACD adjusted api change", e);
       }

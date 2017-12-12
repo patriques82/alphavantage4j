@@ -10,9 +10,9 @@ import co.alphavantage.output.technicalindicators.SMA;
 import co.alphavantage.output.technicalindicators.data.EMAData;
 import co.alphavantage.output.technicalindicators.data.MACDData;
 import co.alphavantage.output.technicalindicators.data.SMAData;
-import org.joda.time.DateTime;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -65,7 +65,7 @@ public class TechnicalIndicatorsTest {
     assertThat(smaData.size(), is(equalTo(3)));
 
     SMAData sma = smaData.get(0);
-    assertThat(sma.getDateTime(), is(equalTo(new DateTime(2017, 12, 1, 16, 0))));
+    assertThat(sma.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
     assertThat(sma.getSma(), is(equalTo(84.0203d)));
   }
 
@@ -111,7 +111,7 @@ public class TechnicalIndicatorsTest {
     assertThat(emaData.size(), is(equalTo(3)));
 
     EMAData ema = emaData.get(0);
-    assertThat(ema.getDateTime(), is(equalTo(new DateTime(2017, 12, 1, 16, 0))));
+    assertThat(ema.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
     assertThat(ema.getEma(), is(equalTo(84.0203d)));
   }
 
@@ -156,7 +156,7 @@ public class TechnicalIndicatorsTest {
     assertThat(macdData.size(), is(equalTo(3)));
 
     MACDData macd = macdData.get(0);
-    assertThat(macd.getDateTime(), is(equalTo(new DateTime(2017, 12, 1, 16, 0))));
+    assertThat(macd.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
     assertThat(macd.getMacd(), is(equalTo(84.0203d)));
   }
 

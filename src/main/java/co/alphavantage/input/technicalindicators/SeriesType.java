@@ -11,10 +11,10 @@ public enum SeriesType implements ApiParameter {
   HIGH("high"),
   LOW("low");
 
-  private final String urlParameter;
+  private final String seriesType;
 
-  SeriesType(String urlParameter) {
-    this.urlParameter = urlParameter;
+  SeriesType(String seriesType) {
+    this.seriesType = seriesType;
   }
 
   @Override
@@ -24,6 +24,6 @@ public enum SeriesType implements ApiParameter {
 
   @Override
   public String getValue() {
-    return urlParameter;
+    return seriesType;
   }
 }

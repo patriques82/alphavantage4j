@@ -3,8 +3,8 @@ package co.alphavantage.output.technicalindicators;
 import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.EMAData;
-import org.joda.time.DateTime;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +50,7 @@ public class EMA extends TechnicalIndicatorResponse<EMAData> {
       List<EMAData> indicators = new ArrayList<>();
       try {
         indicatorData.forEach((key, values) -> indicators.add(new EMAData(
-                DateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+                LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
                 Double.parseDouble(values.get("EMA"))
         )));
       } catch (Exception e) {

@@ -15,10 +15,10 @@ public enum Interval implements ApiParameter {
   WEEKLY("weekly"),
   MONTHLY("monthly");
 
-  private final String urlParameter;
+  private final String interval;
 
-  Interval(String urlParameter) {
-    this.urlParameter = urlParameter;
+  Interval(String interval) {
+    this.interval = interval;
   }
 
   @Override
@@ -28,6 +28,6 @@ public enum Interval implements ApiParameter {
 
   @Override
   public String getValue() {
-    return urlParameter;
+    return interval;
   }
 }
