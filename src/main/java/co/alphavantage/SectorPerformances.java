@@ -1,6 +1,6 @@
 package co.alphavantage;
 
-import co.alphavantage.input.sectorperformances.Function;
+import co.alphavantage.common.lib.Function;
 import co.alphavantage.output.sectorperformances.Sectors;
 
 /**
@@ -10,8 +10,7 @@ public class SectorPerformances {
   private final ApiConnector apiConnector;
 
   /**
-   * Constructs a Sector Performances Data api endpoint with the help of an {@link ApiConnector}.
-   *
+   * Constructs a Sector Performances Data api endpoint with the help of an {@link ApiConnector}
    * @param apiConnector the connection to the api
    */
   public SectorPerformances(ApiConnector apiConnector) {
@@ -20,7 +19,6 @@ public class SectorPerformances {
 
   /**
    * Yields the percentage of change during different timeperiods, from real-time to 10 years.
-   *
    * @return {@link Sectors} data
    */
   public Sectors sector() {
