@@ -1,14 +1,15 @@
-package co.alphavantage.input.technicalindicator;
+package co.alphavantage.input.digitalcurrencies;
 
 import co.alphavantage.input.ApiParameter;
 
 /**
- * Function parameter for the technical indicators api call.
+ * Function parameter for the digital and crypto currencies api call.
  */
 public enum Function implements ApiParameter {
-  SMA("SMA"),
-  EMA("EMA"),
-  MACD("MACD");
+  INTRADAY("TIME_SERIES_INTRADAY"),
+  DAILY("TIME_SERIES_DAILY"),
+  WEEKLY("TIME_SERIES_WEEKLY"),
+  MONTHLY("TIME_SERIES_MONTHLY");
 
   private final String urlParameter;
 

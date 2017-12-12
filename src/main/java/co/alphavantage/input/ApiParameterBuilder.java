@@ -11,7 +11,8 @@ public class ApiParameterBuilder {
   }
 
   /**
-   * append an api paramter to the builder.
+   * Append an api paramter to the builder.
+   *
    * @param apiParameter the api parameter to append to the url.
    * @return an instance of this builder.
    */
@@ -20,7 +21,8 @@ public class ApiParameterBuilder {
   }
 
   /**
-   * append raw strings parameters to the builder, key and value.
+   * Append raw strings parameters to the builder, key and value.
+   *
    * @param key in the api paramter key value pair.
    * @param value in the api parameter key value pair.
    * @return an instance of this builder.
@@ -33,6 +35,7 @@ public class ApiParameterBuilder {
 
   /**
    * Build the url string for the query in the api call.
+   *
    * @return the url query string.
    */
   public String getUrl() {

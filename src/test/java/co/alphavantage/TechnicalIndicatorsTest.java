@@ -1,8 +1,8 @@
 package co.alphavantage;
 
-import co.alphavantage.input.technicalindicator.Interval;
-import co.alphavantage.input.technicalindicator.SeriesType;
-import co.alphavantage.input.technicalindicator.TimePeriod;
+import co.alphavantage.input.technicalindicators.Interval;
+import co.alphavantage.input.technicalindicators.SeriesType;
+import co.alphavantage.input.technicalindicators.TimePeriod;
 import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.technicalindicators.EMA;
 import co.alphavantage.output.technicalindicators.MACD;

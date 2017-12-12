@@ -1,4 +1,4 @@
-package co.alphavantage.input.technicalindicator;
+package co.alphavantage.input.technicalindicators;
 
 import co.alphavantage.input.ApiParameter;
 
