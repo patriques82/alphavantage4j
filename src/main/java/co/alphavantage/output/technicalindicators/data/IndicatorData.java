@@ -3,26 +3,25 @@ package co.alphavantage.output.technicalindicators.data;
 import java.time.LocalDateTime;
 
 /**
- * Representation of json object, i.e:
+ * Representation of simole indicator json objects, i.e:
  * "2017-12-01 16:00": {
  *   "EMA": "84.0203"
  * }
  */
-public class EMAData {
+public class IndicatorData {
   private final LocalDateTime datetime;
-  private final double ema;
+  private final double data;
 
-  public EMAData(LocalDateTime datetime, double ema) {
+  public IndicatorData(LocalDateTime datetime, double data) {
     this.datetime = datetime;
-    this.ema = ema;
+    this.data = data;
   }
 
   public LocalDateTime getDateTime() {
     return datetime;
   }
 
-  public double getEma() {
-    return ema;
+  public double getData() {
+    return data;
   }
-
 }

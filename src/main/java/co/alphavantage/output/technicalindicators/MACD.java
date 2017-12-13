@@ -1,8 +1,7 @@
 package co.alphavantage.output.technicalindicators;
 
-import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.JsonParser;
-import co.alphavantage.output.technicalindicators.data.MACDData;
+import co.alphavantage.output.technicalindicators.data.IndicatorData;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,10 +13,10 @@ import java.util.Map;
  *
  * @see TechnicalIndicatorResponse
  */
-public class MACD extends TechnicalIndicatorResponse<MACDData> {
+public class MACD extends TechnicalIndicatorResponse<IndicatorData> {
 
   private MACD(final Map<String, String> metaData,
-               final List<MACDData> indicatorData) {
+               final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 
@@ -47,20 +46,12 @@ public class MACD extends TechnicalIndicatorResponse<MACDData> {
 
     @Override
     MACD resolve(Map<String, String> metaData, Map<String, Map<String, String>> indicatorData) {
-      List<MACDData> indicators = new ArrayList<>();
-      indicatorData.forEach((key, values) -> indicators.add(getMACDData(key, values)));
+      List<IndicatorData> indicators = new ArrayList<>();
+      indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
+              LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+              Double.parseDouble(values.get("MACD"))
+      )));
       return new MACD(metaData, indicators);
-    }
-
-    private MACDData getMACDData(String key, Map<String, String> values) {
-      try {
-        return new MACDData(
-                LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
-                Double.parseDouble(values.get("MACD"))
-        );
-      } catch (Exception e) {
-        throw new AlphaVantageException("MACD adjusted api change", e);
-      }
     }
   }
 }

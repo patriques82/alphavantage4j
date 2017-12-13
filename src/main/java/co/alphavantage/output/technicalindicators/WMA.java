@@ -1,5 +1,6 @@
 package co.alphavantage.output.technicalindicators;
 
+import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.IndicatorData;
 
@@ -8,51 +9,52 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 /**
- * Representation of simple moving average (SMA) response from api.
+ * Representation of weighted moving average (WMA) response from api.
  *
  * @see TechnicalIndicatorResponse
  */
-public class SMA extends TechnicalIndicatorResponse<IndicatorData> {
+public class WMA extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private SMA(final Map<String, String> metaData,
+  private WMA(final Map<String, String> metaData,
               final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 
   /**
-   * Creates {@code SMA} instance from json.
+   * Creates {@code WMA} instance from json.
    *
    * @param json string to parse
-   * @return SMA instance
+   * @return WMA instance
    */
-  public static SMA from(String json) {
+  public static WMA from(String json) {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
 
   /**
-   * Helper class for parsing json to {@code SMA}.
+   * Helper class for parsing json to {@code WMA}.
    *
    * @see TechnicalIndicatorParser
    * @see JsonParser
    */
-  private static class Parser extends TechnicalIndicatorParser<SMA> {
+  private static class Parser extends TechnicalIndicatorParser<WMA> {
 
     @Override
     String getIndicatorKey() {
-      return "Technical Analysis: SMA";
+      return "Technical Analysis: WMA";
     }
 
     @Override
-    SMA resolve(Map<String, String> metaData,
-                Map<String, Map<String, String>> indicatorData) {
+    WMA resolve(Map<String, String> metaData,
+                Map<String, Map<String, String>> indicatorData) throws AlphaVantageException {
       List<IndicatorData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
               LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
-              Double.parseDouble(values.get("SMA"))
+              Double.parseDouble(values.get("WMA"))
       )));
-      return new SMA(metaData, indicators);
+      return new WMA(metaData, indicators);
     }
   }
 }

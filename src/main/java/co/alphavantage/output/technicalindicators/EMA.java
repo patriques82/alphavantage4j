@@ -2,7 +2,7 @@ package co.alphavantage.output.technicalindicators;
 
 import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.JsonParser;
-import co.alphavantage.output.technicalindicators.data.EMAData;
+import co.alphavantage.output.technicalindicators.data.IndicatorData;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,10 +14,10 @@ import java.util.Map;
  *
  * @see TechnicalIndicatorResponse
  */
-public class EMA extends TechnicalIndicatorResponse<EMAData> {
+public class EMA extends TechnicalIndicatorResponse<IndicatorData> {
 
   private EMA(final Map<String, String> metaData,
-              final List<EMAData> indicatorData) {
+              final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 
@@ -48,15 +48,11 @@ public class EMA extends TechnicalIndicatorResponse<EMAData> {
     @Override
     EMA resolve(Map<String, String> metaData,
                 Map<String, Map<String, String>> indicatorData) throws AlphaVantageException {
-      List<EMAData> indicators = new ArrayList<>();
-      try {
-        indicatorData.forEach((key, values) -> indicators.add(new EMAData(
-                LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
-                Double.parseDouble(values.get("EMA"))
-        )));
-      } catch (Exception e) {
-        throw new AlphaVantageException("EMA adjusted api change", e);
-      }
+      List<IndicatorData> indicators = new ArrayList<>();
+      indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
+              LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+              Double.parseDouble(values.get("EMA"))
+      )));
       return new EMA(metaData, indicators);
     }
 

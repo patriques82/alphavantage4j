@@ -23,13 +23,16 @@ public enum Function implements ApiParameter {
   DIGITAL_CURRENCY_WEEKLY("DIGITAL_CURRENCY_WEEKLY"),
   DIGITAL_CURRENCY_MONTHLY("DIGITAL_CURRENCY_MONTHLY"),
 
+  // Sector Performance functions
+  SECTOR("SECTOR"),
+
   // Technical Indicator functions
   SMA("SMA"),
   EMA("EMA"),
   MACD("MACD"),
-
-  // Sector Performance functions
-  SECTOR("SECTOR");
+  DEMA("DEMA"),
+  WMA("WMA"),
+  TEMA("TEMA");
 
   private final String urlParameter;
 

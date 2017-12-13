@@ -5,9 +5,7 @@ import co.alphavantage.input.Symbol;
 import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.input.technicalindicators.SeriesType;
 import co.alphavantage.input.technicalindicators.TimePeriod;
-import co.alphavantage.output.technicalindicators.EMA;
-import co.alphavantage.output.technicalindicators.MACD;
-import co.alphavantage.output.technicalindicators.SMA;
+import co.alphavantage.output.technicalindicators.*;
 
 /**
  * Technical indicator values are updated realtime: the latest data point is derived from the current trading day of a given equity.
@@ -16,22 +14,22 @@ public class TechnicalIndicators {
   private final ApiConnector apiConnector;
 
   /**
-   * Constructs a Technical Indicator Data api endpoint with the help of an {@link ApiConnector}
+   * Constructs a Technical Indicator Data api endpoint with the help of an {@link ApiConnector}.
    *
-   * @param apiConnector the connection to the api
+   * @param apiConnector the connection to the api.
    */
   public TechnicalIndicators(ApiConnector apiConnector) {
     this.apiConnector = apiConnector;
   }
 
   /**
-   * Returns the simple moving average (SMA) values
+   * Returns the simple moving average (SMA) values.
    *
-   * @param symbol     the stock symbol to lookup
-   * @param interval   the interval between two consecutive data points in the time series {@link Interval}
-   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}
-   * @param seriesType The desired price type in the time series {@link SeriesType}
-   * @return {@link SMA} indicator data
+   * @param symbol the stock symbol to lookup.
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link SMA} indicator data.
    */
   public SMA sma(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.SMA, timePeriod, interval, seriesType);
@@ -39,13 +37,13 @@ public class TechnicalIndicators {
   }
 
   /**
-   * Returns the exponential moving average (EMA) values
+   * Returns the exponential moving average (EMA) values.
    *
-   * @param symbol     the stock symbol to lookup
-   * @param interval   the interval between two consecutive data points in the time series {@link Interval}
-   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}
-   * @param seriesType The desired price type in the time series {@link SeriesType}
-   * @return {@link EMA} indicator data
+   * @param symbol the stock symbol to lookup.
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link EMA} indicator data.
    */
   public EMA ema(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.EMA, timePeriod, interval, seriesType);
@@ -53,16 +51,58 @@ public class TechnicalIndicators {
   }
 
   /**
-   * Returns the moving average converge/divergence (MACD) values
+   * Returns the moving average converge/divergence (MACD) values.
    *
-   * @param symbol     the stock symbol to lookup
-   * @param interval   the interval between two consecutive data points in the time series {@link Interval}
-   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}
-   * @param seriesType The desired price type in the time series {@link SeriesType}
-   * @return {@link MACD} indicator data
+   * @param symbol the stock symbol to lookup.
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link MACD} indicator data.
    */
   public MACD macd(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MACD, timePeriod, interval, seriesType);
     return MACD.from(json);
+  }
+
+  /**
+   * Returns the double exponential moving average (DEMA) values.
+   *
+   * @param symbol the stock symbol to lookup.
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link DEMA} indicator data.
+   */
+  public DEMA dema(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.DEMA, timePeriod, interval, seriesType);
+    return DEMA.from(json);
+  }
+
+  /**
+   * Returns the double exponential moving average (DEMA) values.
+   *
+   * @param symbol the stock symbol to lookup.
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link DEMA} indicator data.
+   */
+  public WMA wma(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.WMA, timePeriod, interval, seriesType);
+    return WMA.from(json);
+  }
+
+  /**
+   * Returns the triple exponential moving average (TEMA) values.
+   *
+   * @param symbol the stock symbol to lookup.
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link TEMA} indicator data.
+   */
+  public TEMA tema(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TEMA, timePeriod, interval, seriesType);
+    return TEMA.from(json);
   }
 }

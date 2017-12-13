@@ -4,12 +4,8 @@ import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.input.technicalindicators.SeriesType;
 import co.alphavantage.input.technicalindicators.TimePeriod;
 import co.alphavantage.output.AlphaVantageException;
-import co.alphavantage.output.technicalindicators.EMA;
-import co.alphavantage.output.technicalindicators.MACD;
-import co.alphavantage.output.technicalindicators.SMA;
-import co.alphavantage.output.technicalindicators.data.EMAData;
-import co.alphavantage.output.technicalindicators.data.MACDData;
-import co.alphavantage.output.technicalindicators.data.SMAData;
+import co.alphavantage.output.technicalindicators.*;
+import co.alphavantage.output.technicalindicators.data.IndicatorData;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -61,12 +57,12 @@ public class TechnicalIndicatorsTest {
     assertThat(metaData.get("6: Series Type"), is(equalTo("close")));
     assertThat(metaData.get("7: Time Zone"), is(equalTo("US/Eastern")));
 
-    List<SMAData> smaData = resp.getData();
-    assertThat(smaData.size(), is(equalTo(3)));
+    List<IndicatorData> indicatorData = resp.getData();
+    assertThat(indicatorData.size(), is(equalTo(3)));
 
-    SMAData sma = smaData.get(0);
+    IndicatorData sma = indicatorData.get(0);
     assertThat(sma.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
-    assertThat(sma.getSma(), is(equalTo(84.0203d)));
+    assertThat(sma.getData(), is(equalTo(84.0203d)));
   }
 
   @Test
@@ -107,57 +103,149 @@ public class TechnicalIndicatorsTest {
     assertThat(metaData.get("6: Series Type"), is(equalTo("close")));
     assertThat(metaData.get("7: Time Zone"), is(equalTo("US/Eastern")));
 
-    List<EMAData> emaData = resp.getData();
-    assertThat(emaData.size(), is(equalTo(3)));
+    List<IndicatorData> indicatorData = resp.getData();
+    assertThat(indicatorData.size(), is(equalTo(3)));
 
-    EMAData ema = emaData.get(0);
+    IndicatorData ema = indicatorData.get(0);
     assertThat(ema.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
-    assertThat(ema.getEma(), is(equalTo(84.0203d)));
+    assertThat(ema.getData(), is(equalTo(84.0203d)));
   }
 
   @Test
-  public void macd() throws AlphaVantageException {
+  public void dema() throws AlphaVantageException {
     String json = "" +
             "{\n" +
             "    \"Meta Data\": {\n" +
             "        \"1: Symbol\": \"DUMMY\",\n" +
-            "        \"2: Indicator\": \"Moving Average Convergence/Divergence (MACD)\",\n" +
+            "        \"2: Indicator\": \"Double Exponential Moving Average (DEMA)\",\n" +
             "        \"3: Last Refreshed\": \"2017-12-01 16:00:00\",\n" +
             "        \"4: Interval\": \"15min\",\n" +
             "        \"5: Time Period\": 10,\n" +
             "        \"6: Series Type\": \"close\",\n" +
             "        \"7: Time Zone\": \"US/Eastern\"\n" +
             "    },\n" +
-            "    \"Technical Analysis: MACD\": {\n" +
+            "    \"Technical Analysis: DEMA\": {\n" +
             "        \"2017-12-01 16:00\": {\n" +
-            "            \"MACD\": \"84.0203\"\n" +
+            "            \"DEMA\": \"84.0203\"\n" +
             "        },\n" +
             "        \"2017-12-01 15:45\": {\n" +
-            "            \"MACD\": \"83.9763\"\n" +
+            "            \"DEMA\": \"83.9763\"\n" +
             "        },\n" +
             "        \"2017-11-17 11:45\": {\n" +
-            "            \"MACD\": \"82.6005\"\n" +
+            "            \"DEMA\": \"82.6005\"\n" +
             "        }\n" +
             "    }\n" +
             "}";
     technicalIndicators = new TechnicalIndicators(apiParameters -> json);
-    MACD response = technicalIndicators.macd("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10), SeriesType.CLOSE);
+    DEMA response = technicalIndicators.dema("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10), SeriesType.CLOSE);
 
     Map<String, String> metaData = response.getMetaData();
     assertThat(metaData.get("1: Symbol"), is(equalTo("DUMMY")));
-    assertThat(metaData.get("2: Indicator"), is(equalTo("Moving Average Convergence/Divergence (MACD)")));
+    assertThat(metaData.get("2: Indicator"), is(equalTo("Double Exponential Moving Average (DEMA)")));
     assertThat(metaData.get("3: Last Refreshed"), is(equalTo("2017-12-01 16:00:00")));
     assertThat(metaData.get("4: Interval"), is(equalTo("15min")));
     assertThat(metaData.get("5: Time Period"), is(equalTo("10")));
     assertThat(metaData.get("6: Series Type"), is(equalTo("close")));
     assertThat(metaData.get("7: Time Zone"), is(equalTo("US/Eastern")));
 
-    List<MACDData> macdData = response.getData();
-    assertThat(macdData.size(), is(equalTo(3)));
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(3)));
 
-    MACDData macd = macdData.get(0);
+    IndicatorData macd = indicatorData.get(0);
     assertThat(macd.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
-    assertThat(macd.getMacd(), is(equalTo(84.0203d)));
+    assertThat(macd.getData(), is(equalTo(84.0203d)));
   }
+
+  @Test
+  public void tema() throws AlphaVantageException {
+    String json = "" +
+            "{\n" +
+            "    \"Meta Data\": {\n" +
+            "        \"1: Symbol\": \"DUMMY\",\n" +
+            "        \"2: Indicator\": \"Triple Exponential Moving Average (TEMA)\",\n" +
+            "        \"3: Last Refreshed\": \"2017-12-01 16:00:00\",\n" +
+            "        \"4: Interval\": \"15min\",\n" +
+            "        \"5: Time Period\": 10,\n" +
+            "        \"6: Series Type\": \"close\",\n" +
+            "        \"7: Time Zone\": \"US/Eastern\"\n" +
+            "    },\n" +
+            "    \"Technical Analysis: TEMA\": {\n" +
+            "        \"2017-12-01 16:00\": {\n" +
+            "            \"TEMA\": \"84.0203\"\n" +
+            "        },\n" +
+            "        \"2017-12-01 15:45\": {\n" +
+            "            \"TEMA\": \"83.9763\"\n" +
+            "        },\n" +
+            "        \"2017-11-17 11:45\": {\n" +
+            "            \"TEMA\": \"82.6005\"\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    TEMA response = technicalIndicators.tema("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10), SeriesType.CLOSE);
+
+    Map<String, String> metaData = response.getMetaData();
+    assertThat(metaData.get("1: Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("2: Indicator"), is(equalTo("Triple Exponential Moving Average (TEMA)")));
+    assertThat(metaData.get("3: Last Refreshed"), is(equalTo("2017-12-01 16:00:00")));
+    assertThat(metaData.get("4: Interval"), is(equalTo("15min")));
+    assertThat(metaData.get("5: Time Period"), is(equalTo("10")));
+    assertThat(metaData.get("6: Series Type"), is(equalTo("close")));
+    assertThat(metaData.get("7: Time Zone"), is(equalTo("US/Eastern")));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(3)));
+
+    IndicatorData macd = indicatorData.get(0);
+    assertThat(macd.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
+    assertThat(macd.getData(), is(equalTo(84.0203d)));
+  }
+
+  @Test
+  public void wma() throws AlphaVantageException {
+    String json = "" +
+            "{\n" +
+            "    \"Meta Data\": {\n" +
+            "        \"1: Symbol\": \"DUMMY\",\n" +
+            "        \"2: Indicator\": \"Weighted Moving Average (WMA)\",\n" +
+            "        \"3: Last Refreshed\": \"2017-12-01 16:00:00\",\n" +
+            "        \"4: Interval\": \"15min\",\n" +
+            "        \"5: Time Period\": 10,\n" +
+            "        \"6: Series Type\": \"close\",\n" +
+            "        \"7: Time Zone\": \"US/Eastern\"\n" +
+            "    },\n" +
+            "    \"Technical Analysis: WMA\": {\n" +
+            "        \"2017-12-01 16:00\": {\n" +
+            "            \"WMA\": \"84.0203\"\n" +
+            "        },\n" +
+            "        \"2017-12-01 15:45\": {\n" +
+            "            \"WMA\": \"83.9763\"\n" +
+            "        },\n" +
+            "        \"2017-11-17 11:45\": {\n" +
+            "            \"WMA\": \"82.6005\"\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    WMA response = technicalIndicators.wma("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10), SeriesType.CLOSE);
+
+    Map<String, String> metaData = response.getMetaData();
+    assertThat(metaData.get("1: Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("2: Indicator"), is(equalTo("Weighted Moving Average (WMA)")));
+    assertThat(metaData.get("3: Last Refreshed"), is(equalTo("2017-12-01 16:00:00")));
+    assertThat(metaData.get("4: Interval"), is(equalTo("15min")));
+    assertThat(metaData.get("5: Time Period"), is(equalTo("10")));
+    assertThat(metaData.get("6: Series Type"), is(equalTo("close")));
+    assertThat(metaData.get("7: Time Zone"), is(equalTo("US/Eastern")));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(3)));
+
+    IndicatorData macd = indicatorData.get(0);
+    assertThat(macd.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
+    assertThat(macd.getData(), is(equalTo(84.0203d)));
+  }
+
+
 
 }
