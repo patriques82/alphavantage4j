@@ -5,6 +5,8 @@ import co.alphavantage.input.Symbol;
 import co.alphavantage.input.digitalcurrencies.Market;
 import co.alphavantage.output.digitalcurrencies.Daily;
 import co.alphavantage.output.digitalcurrencies.IntraDay;
+import co.alphavantage.output.digitalcurrencies.Monthly;
+import co.alphavantage.output.digitalcurrencies.Weekly;
 
 /**
  * APIs under this section provide a wide range of data feed for digital and crypto currencies such as Bitcoin.
@@ -33,7 +35,7 @@ public class DigitalCurrencies {
    */
   public IntraDay intraDay(String symbol, Market market)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DIGITAL_CURRENCY_INTRADAY, market);
-    return IntraDay.from(json);
+    return IntraDay.from(market, json);
   }
 
   /**
@@ -47,7 +49,34 @@ public class DigitalCurrencies {
    */
   public Daily daily(String symbol, Market market)  {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DIGITAL_CURRENCY_DAILY, market);
-    return Daily.from(json);
+    return Daily.from(market, json);
   }
 
+  /**
+   * This API returns the weekly historical time series for a digital currency (e.g., BTC) traded on a specific market
+   * (e.g., CNY/Chinese Yuan), refreshed daily at midnight (UTC). Prices and volumes are quoted in both the
+   * market-specific currency and USD.
+   *
+   * @param symbol The digital/crypto currency of your choice.
+   * @param market The exchange market of your choice.
+   * @return {@link Weekly} time series data
+   */
+  public Weekly weekly(String symbol, Market market) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.DIGITAL_CURRENCY_WEEKLY, market);
+    return Weekly.from(market, json);
+  }
+
+  /**
+   * This API returns the monthly historical time series for a digital currency (e.g., BTC) traded on a specific market
+   * (e.g., CNY/Chinese Yuan), refreshed daily at midnight (UTC). Prices and volumes are quoted in both the
+   * market-specific currency and USD.
+   *
+   * @param symbol The digital/crypto currency of your choice.
+   * @param market The exchange market of your choice.
+   * @return {@link Monthly} time series data
+   */
+  public Monthly monthly(String symbol, Market market) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.DIGITAL_CURRENCY_WEEKLY, market);
+    return Monthly.from(market, json);
+  }
 }

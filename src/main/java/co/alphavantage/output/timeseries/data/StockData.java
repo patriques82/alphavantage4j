@@ -82,7 +82,6 @@ public class StockData {
     this.splitCoefficient = 0;
   }
 
-
   public LocalDateTime getDateTime() {
     return dateTime;
   }

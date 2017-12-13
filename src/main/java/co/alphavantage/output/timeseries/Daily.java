@@ -16,7 +16,8 @@ import java.util.Map;
  */
 public class Daily extends TimeSeriesResponse {
 
-  private Daily(final Map<String, String> metaData, final List<StockData> stockData) {
+  private Daily(final Map<String, String> metaData,
+                final List<StockData> stockData) {
     super(metaData, stockData);
   }
 

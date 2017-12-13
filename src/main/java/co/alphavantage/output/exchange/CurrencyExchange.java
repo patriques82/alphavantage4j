@@ -19,7 +19,7 @@ public class CurrencyExchange {
 
   private CurrencyExchangeData data;
 
-  CurrencyExchange(CurrencyExchangeData data) {
+  CurrencyExchange(final CurrencyExchangeData data) {
     this.data = data;
   }
 

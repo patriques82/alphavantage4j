@@ -17,7 +17,8 @@ import java.util.Map;
  */
 public class IntraDay extends TimeSeriesResponse {
 
-  private IntraDay(Map<String, String> metaData, List<StockData> stocks) {
+  private IntraDay(final Map<String, String> metaData,
+                   final List<StockData> stocks) {
     super(metaData, stocks);
   }
 

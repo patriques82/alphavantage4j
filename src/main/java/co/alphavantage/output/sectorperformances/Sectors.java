@@ -20,7 +20,8 @@ public class Sectors {
   private final Map<String, String> metadata;
   private final List<SectorData> sectors;
 
-  Sectors(Map<String, String> metadata, List<SectorData> sectors) {
+  Sectors(final Map<String, String> metadata,
+          final List<SectorData> sectors) {
     this.metadata = metadata;
     this.sectors = sectors;
   }

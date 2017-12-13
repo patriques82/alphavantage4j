@@ -16,7 +16,8 @@ import java.util.Map;
  */
 public class Monthly extends TimeSeriesResponse {
 
-  private Monthly(Map<String, String> metaData, List<StockData> stocks) {
+  private Monthly(final Map<String, String> metaData,
+                  final List<StockData> stocks) {
     super(metaData, stocks);
   }
 

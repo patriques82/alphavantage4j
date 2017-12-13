@@ -16,7 +16,8 @@ import java.util.Map;
  */
 public class MACD extends TechnicalIndicatorResponse<MACDData> {
 
-  private MACD(final Map<String, String> metaData, final List<MACDData> indicatorData) {
+  private MACD(final Map<String, String> metaData,
+               final List<MACDData> indicatorData) {
     super(metaData, indicatorData);
   }
 

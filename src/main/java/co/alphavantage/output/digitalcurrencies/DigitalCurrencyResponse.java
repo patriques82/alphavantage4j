@@ -1,17 +1,15 @@
 package co.alphavantage.output.digitalcurrencies;
 
-import co.alphavantage.output.digitalcurrencies.data.DigitalCurrencyData;
-
 import java.util.List;
 import java.util.Map;
 
-public class DigitalCurrencyResponse {
+public class DigitalCurrencyResponse<Data> {
 
   private final Map<String, String> metaData;
-  private final List<DigitalCurrencyData> digitalData;
+  private final List<Data> digitalData;
 
   public DigitalCurrencyResponse(Map<String, String> metaData,
-                                 List<DigitalCurrencyData> digitalData) {
+                                 List<Data> digitalData) {
     this.metaData = metaData;
     this.digitalData = digitalData;
   }
@@ -20,7 +18,7 @@ public class DigitalCurrencyResponse {
     return metaData;
   }
 
-  public List<DigitalCurrencyData> getDigitalData() {
+  public List<Data> getDigitalData() {
     return digitalData;
   }
 }

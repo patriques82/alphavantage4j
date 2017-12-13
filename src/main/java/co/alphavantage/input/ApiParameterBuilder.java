@@ -16,8 +16,8 @@ public class ApiParameterBuilder {
    * @param apiParameter the api parameter to append to the url.
    * @return an instance of this builder.
    */
-  public ApiParameterBuilder append(ApiParameter apiParameter) {
-    return this.append(apiParameter.getKey(), apiParameter.getValue());
+  public void append(ApiParameter apiParameter) {
+    this.append(apiParameter.getKey(), apiParameter.getValue());
   }
 
   /**
@@ -27,10 +27,9 @@ public class ApiParameterBuilder {
    * @param value in the api parameter key value pair.
    * @return an instance of this builder.
    */
-  public ApiParameterBuilder append(String key, String value) {
+  public void append(String key, String value) {
     String parameter = "&" + key + "=" + value;
     this.urlBuilder.append(parameter);
-    return this;
   }
 
   /**

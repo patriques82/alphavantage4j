@@ -16,7 +16,8 @@ import java.util.Map;
  */
 public class EMA extends TechnicalIndicatorResponse<EMAData> {
 
-  private EMA(final Map<String, String> metaData, final List<EMAData> indicatorData) {
+  private EMA(final Map<String, String> metaData,
+              final List<EMAData> indicatorData) {
     super(metaData, indicatorData);
   }
 

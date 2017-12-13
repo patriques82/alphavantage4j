@@ -16,7 +16,8 @@ import java.util.Map;
  */
 public class WeeklyAdjusted extends TimeSeriesResponse {
 
-  private WeeklyAdjusted(Map<String, String> metaData, List<StockData> stocks) {
+  private WeeklyAdjusted(final Map<String, String> metaData,
+                         final List<StockData> stocks) {
     super(metaData, stocks);
   }
 

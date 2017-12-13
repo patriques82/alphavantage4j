@@ -16,7 +16,8 @@ import java.util.Map;
  */
 public class SMA extends TechnicalIndicatorResponse<SMAData> {
 
-  private SMA(final Map<String, String> metaData, final List<SMAData> indicatorData) {
+  private SMA(final Map<String, String> metaData,
+              final List<SMAData> indicatorData) {
     super(metaData, indicatorData);
   }
 
