@@ -1,5 +1,7 @@
 package co.alphavantage.input;
 
+import javax.annotation.Nullable;
+
 /**
  * Builder for api parameters.
  */
@@ -16,8 +18,10 @@ public class ApiParameterBuilder {
    * @param apiParameter the api parameter to append to the url.
    * @return an instance of this builder.
    */
-  public void append(ApiParameter apiParameter) {
-    this.append(apiParameter.getKey(), apiParameter.getValue());
+  public void append(@Nullable ApiParameter apiParameter) {
+    if (apiParameter != null) {
+      append(apiParameter.getKey(), apiParameter.getValue());
+    }
   }
 
   /**

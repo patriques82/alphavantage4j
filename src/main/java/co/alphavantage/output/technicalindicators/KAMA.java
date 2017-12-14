@@ -10,50 +10,50 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Representation of exponential moving average (EMA) response from api.
+ * Representation of Kaufman adaptive moving average (KAMA) response from api.
  *
  * @see TechnicalIndicatorResponse
  */
-public class EMA extends TechnicalIndicatorResponse<IndicatorData> {
+public class KAMA extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private EMA(final Map<String, String> metaData,
-              final List<IndicatorData> indicatorData) {
+  private KAMA(final Map<String, String> metaData,
+               final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 
   /**
-   * Creates {@code EMA} instance from json.
+   * Creates {@code KAMA} instance from json.
    *
    * @param json string to parse
-   * @return EMA instance
+   * @return KAMA instance
    */
-  public static EMA from(String json) {
+  public static KAMA from(String json) {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
 
   /**
-   * Helper class for parsing json to {@code EMA}.
+   * Helper class for parsing json to {@code KAMA}.
    *
    * @see TechnicalIndicatorParser
    * @see JsonParser
    */
-  private static class Parser extends TechnicalIndicatorParser<EMA> {
+  private static class Parser extends TechnicalIndicatorParser<KAMA> {
 
     @Override
     String getIndicatorKey() {
-      return "Technical Analysis: EMA";
+      return "Technical Analysis: KAMA";
     }
 
     @Override
-    EMA resolve(Map<String, String> metaData,
+    KAMA resolve(Map<String, String> metaData,
                 Map<String, Map<String, String>> indicatorData) throws AlphaVantageException {
       List<IndicatorData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
               LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
-              Double.parseDouble(values.get("EMA"))
+              Double.parseDouble(values.get("KAMA"))
       )));
-      return new EMA(metaData, indicators);
+      return new KAMA(metaData, indicators);
     }
   }
 }

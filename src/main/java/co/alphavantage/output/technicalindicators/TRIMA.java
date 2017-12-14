@@ -10,50 +10,51 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Representation of exponential moving average (EMA) response from api.
+ * Representation of triangular exponential moving average (TRIMA) response from api.
  *
  * @see TechnicalIndicatorResponse
  */
-public class EMA extends TechnicalIndicatorResponse<IndicatorData> {
+public class TRIMA extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private EMA(final Map<String, String> metaData,
-              final List<IndicatorData> indicatorData) {
+  private TRIMA(final Map<String, String> metaData,
+                final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 
   /**
-   * Creates {@code EMA} instance from json.
+   * Creates {@code TRIMA} instance from json.
    *
    * @param json string to parse
-   * @return EMA instance
+   * @return TRIMA instance
    */
-  public static EMA from(String json) {
+  public static TRIMA from(String json) {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
 
   /**
-   * Helper class for parsing json to {@code EMA}.
+   * Helper class for parsing json to {@code TRIMA}.
    *
    * @see TechnicalIndicatorParser
    * @see JsonParser
    */
-  private static class Parser extends TechnicalIndicatorParser<EMA> {
+  private static class Parser extends TechnicalIndicatorParser<TRIMA> {
 
     @Override
     String getIndicatorKey() {
-      return "Technical Analysis: EMA";
+      return "Technical Analysis: TRIMA";
     }
 
     @Override
-    EMA resolve(Map<String, String> metaData,
-                Map<String, Map<String, String>> indicatorData) throws AlphaVantageException {
+    TRIMA resolve(Map<String, String> metaData,
+                  Map<String, Map<String, String>> indicatorData) throws AlphaVantageException {
       List<IndicatorData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
               LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
-              Double.parseDouble(values.get("EMA"))
+              Double.parseDouble(values.get("TRIMA"))
       )));
-      return new EMA(metaData, indicators);
+      return new TRIMA(metaData, indicators);
     }
+
   }
 }

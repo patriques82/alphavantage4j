@@ -10,50 +10,50 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Representation of exponential moving average (EMA) response from api.
+ * Representation of the relative strength index (RSI) response from api.
  *
  * @see TechnicalIndicatorResponse
  */
-public class EMA extends TechnicalIndicatorResponse<IndicatorData> {
+public class RSI extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private EMA(final Map<String, String> metaData,
+  private RSI(final Map<String, String> metaData,
               final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 
   /**
-   * Creates {@code EMA} instance from json.
+   * Creates {@code RSI} instance from json.
    *
    * @param json string to parse
-   * @return EMA instance
+   * @return RSI instance
    */
-  public static EMA from(String json) {
+  public static RSI from(String json) {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
 
   /**
-   * Helper class for parsing json to {@code EMA}.
+   * Helper class for parsing json to {@code RSI}.
    *
    * @see TechnicalIndicatorParser
    * @see JsonParser
    */
-  private static class Parser extends TechnicalIndicatorParser<EMA> {
+  private static class Parser extends TechnicalIndicatorParser<RSI> {
 
     @Override
     String getIndicatorKey() {
-      return "Technical Analysis: EMA";
+      return "Technical Analysis: RSI";
     }
 
     @Override
-    EMA resolve(Map<String, String> metaData,
+    RSI resolve(Map<String, String> metaData,
                 Map<String, Map<String, String>> indicatorData) throws AlphaVantageException {
       List<IndicatorData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
               LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
-              Double.parseDouble(values.get("EMA"))
+              Double.parseDouble(values.get("RSI"))
       )));
-      return new EMA(metaData, indicators);
+      return new RSI(metaData, indicators);
     }
   }
 }

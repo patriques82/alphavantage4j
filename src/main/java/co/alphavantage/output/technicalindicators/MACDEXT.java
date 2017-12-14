@@ -9,43 +9,43 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Representation of moving average converge/divergence (MACD) response from api.
+ * Representation of MACD with Controllable MA Type (MACDEXT) response from api.
  *
  * @see TechnicalIndicatorResponse
  */
-public class MACD extends TechnicalIndicatorResponse<MACDData> {
+public class MACDEXT extends TechnicalIndicatorResponse<MACDData> {
 
-  private MACD(final Map<String, String> metaData,
-               final List<MACDData> indicatorData) {
+  private MACDEXT(final Map<String, String> metaData,
+                  final List<MACDData> indicatorData) {
     super(metaData, indicatorData);
   }
 
   /**
-   * Creates {@code MACD} instance from json.
+   * Creates {@code MACDEXT} instance from json.
    *
    * @param json string to parse
-   * @return MACD instance
+   * @return MACDEXT instance
    */
-  public static MACD from(String json) {
+  public static MACDEXT from(String json) {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
 
   /**
-   * Helper class for parsing json to {@code MACD}.
+   * Helper class for parsing json to {@code MACDEXT}.
    *
    * @see TechnicalIndicatorParser
    * @see JsonParser
    */
-  private static class Parser extends TechnicalIndicatorParser<MACD> {
+  private static class Parser extends TechnicalIndicatorParser<MACDEXT> {
 
     @Override
     String getIndicatorKey() {
-      return "Technical Analysis: MACD";
+      return "Technical Analysis: MACDEXT";
     }
 
     @Override
-    MACD resolve(Map<String, String> metaData, Map<String, Map<String, String>> indicatorData) {
+    MACDEXT resolve(Map<String, String> metaData, Map<String, Map<String, String>> indicatorData) {
       List<MACDData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new MACDData(
               LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
@@ -53,7 +53,7 @@ public class MACD extends TechnicalIndicatorResponse<MACDData> {
               Double.parseDouble(values.get("MACD_Hist")),
               Double.parseDouble(values.get("MACD"))
       )));
-      return new MACD(metaData, indicators);
+      return new MACDEXT(metaData, indicators);
     }
   }
 }

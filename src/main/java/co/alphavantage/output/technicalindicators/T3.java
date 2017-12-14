@@ -1,6 +1,5 @@
 package co.alphavantage.output.technicalindicators;
 
-import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.IndicatorData;
 
@@ -10,50 +9,51 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Representation of exponential moving average (EMA) response from api.
+ * Representation of the triple exponential moving average (T3) response from api.
  *
  * @see TechnicalIndicatorResponse
  */
-public class EMA extends TechnicalIndicatorResponse<IndicatorData> {
+public class T3 extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private EMA(final Map<String, String> metaData,
-              final List<IndicatorData> indicatorData) {
+  private T3(final Map<String, String> metaData,
+             final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 
   /**
-   * Creates {@code EMA} instance from json.
+   * Creates {@codeT3} instance from json.
    *
    * @param json string to parse
-   * @return EMA instance
+   * @return T3 instance
    */
-  public static EMA from(String json) {
+  public static T3 from(String json) {
     Parser parser = new Parser();
     return parser.parseJson(json);
   }
 
   /**
-   * Helper class for parsing json to {@code EMA}.
+   * Helper class for parsing json to {@code T3}.
    *
    * @see TechnicalIndicatorParser
    * @see JsonParser
    */
-  private static class Parser extends TechnicalIndicatorParser<EMA> {
+  private static class Parser extends TechnicalIndicatorParser<T3> {
 
     @Override
     String getIndicatorKey() {
-      return "Technical Analysis: EMA";
+      return "Technical Analysis: T3";
     }
 
     @Override
-    EMA resolve(Map<String, String> metaData,
-                Map<String, Map<String, String>> indicatorData) throws AlphaVantageException {
+    T3 resolve(Map<String, String> metaData,
+                Map<String, Map<String, String>> indicatorData) {
       List<IndicatorData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
               LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
-              Double.parseDouble(values.get("EMA"))
+              Double.parseDouble(values.get("T3"))
       )));
-      return new EMA(metaData, indicators);
+      return new T3(metaData, indicators);
     }
   }
 }
+
