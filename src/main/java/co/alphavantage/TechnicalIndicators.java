@@ -108,7 +108,7 @@ public class TechnicalIndicators {
    * @param signalMaType Moving average type for the signal moving average. by default SMA {@link SignalMaType}
    * @return {@link MACDEXT} indicator data.
    */
-  public MACD macdext(String symbol,
+  public MACDEXT macdext(String symbol,
                       Interval interval,
                       TimePeriod timePeriod,
                       @Nullable FastPeriod fastPeriod,
@@ -128,7 +128,7 @@ public class TechnicalIndicators {
             fastMaType,
             slowMaType,
             signalMaType);
-    return MACD.from(json);
+    return MACDEXT.from(json);
   }
 
   /**
@@ -355,6 +355,7 @@ public class TechnicalIndicators {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.WMA, timePeriod, interval, seriesType);
     return WMA.from(json);
   }
+
 
 
 }
