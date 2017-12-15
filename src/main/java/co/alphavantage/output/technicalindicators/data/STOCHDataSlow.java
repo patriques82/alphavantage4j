@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
  * "SlowK": "31.4081"
  * }
  */
-public class SlowSTOCHData {
+public class STOCHDataSlow {
   private final LocalDateTime datetime;
   private final double slowD;
   private final double slowK;
 
-  public SlowSTOCHData(LocalDateTime datetime,
+  public STOCHDataSlow(LocalDateTime datetime,
                        double slowD,
                        double slowK) {
     this.datetime = datetime;

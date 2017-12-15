@@ -55,7 +55,7 @@ public class CCI extends TechnicalIndicatorResponse<IndicatorData> {
       List<IndicatorData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
               resolveDate(key),
-              Double.parseDouble(values.get("ADX"))
+              Double.parseDouble(values.get("CCI"))
       )));
       return new CCI(metaData, indicators);
     }

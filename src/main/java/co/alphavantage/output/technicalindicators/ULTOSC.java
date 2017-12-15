@@ -55,7 +55,7 @@ public class ULTOSC extends TechnicalIndicatorResponse<IndicatorData> {
       List<IndicatorData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
               resolveDate(key),
-              Double.parseDouble(values.get("MFI"))
+              Double.parseDouble(values.get("ULTOSC"))
       )));
       return new ULTOSC(metaData, indicators);
     }

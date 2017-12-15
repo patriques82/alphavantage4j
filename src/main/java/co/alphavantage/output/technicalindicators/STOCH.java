@@ -2,7 +2,7 @@ package co.alphavantage.output.technicalindicators;
 
 import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.output.JsonParser;
-import co.alphavantage.output.technicalindicators.data.SlowSTOCHData;
+import co.alphavantage.output.technicalindicators.data.STOCHDataSlow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +13,10 @@ import java.util.Map;
  *
  * @see TechnicalIndicatorResponse
  */
-public class STOCH extends TechnicalIndicatorResponse<SlowSTOCHData> {
+public class STOCH extends TechnicalIndicatorResponse<STOCHDataSlow> {
 
   private STOCH(final Map<String, String> metaData,
-                final List<SlowSTOCHData> indicatorData) {
+                final List<STOCHDataSlow> indicatorData) {
     super(metaData, indicatorData);
   }
 
@@ -51,8 +51,8 @@ public class STOCH extends TechnicalIndicatorResponse<SlowSTOCHData> {
 
     @Override
     STOCH resolve(Map<String, String> metaData, Map<String, Map<String, String>> indicatorData) {
-      List<SlowSTOCHData> indicators = new ArrayList<>();
-      indicatorData.forEach((key, values) -> indicators.add(new SlowSTOCHData(
+      List<STOCHDataSlow> indicators = new ArrayList<>();
+      indicatorData.forEach((key, values) -> indicators.add(new STOCHDataSlow(
               resolveDate(key),
               Double.parseDouble(values.get("SlowD")),
               Double.parseDouble(values.get("SlowK"))

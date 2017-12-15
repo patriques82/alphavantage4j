@@ -55,7 +55,7 @@ public class HT_DCPERIOD extends TechnicalIndicatorResponse<IndicatorData> {
       List<IndicatorData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
               resolveDate(key),
-              Double.parseDouble(values.get("HT_DCPERIOD"))
+              Double.parseDouble(values.get("DCPERIOD"))
       )));
       return new HT_DCPERIOD(metaData, indicators);
     }

@@ -2,8 +2,7 @@ package co.alphavantage;
 
 import co.alphavantage.input.technicalindicators.*;
 import co.alphavantage.output.technicalindicators.*;
-import co.alphavantage.output.technicalindicators.data.IndicatorData;
-import co.alphavantage.output.technicalindicators.data.MACDData;
+import co.alphavantage.output.technicalindicators.data.*;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -58,9 +57,9 @@ public class TechnicalIndicatorsTest {
     List<IndicatorData> indicatorData = response.getData();
     assertThat(indicatorData.size(), is(equalTo(3)));
 
-    IndicatorData macd = indicatorData.get(0);
-    assertThat(macd.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
-    assertThat(macd.getData(), is(equalTo(84.0203d)));
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
+    assertThat(data.getData(), is(equalTo(84.0203d)));
   }
 
   @Test
@@ -104,9 +103,9 @@ public class TechnicalIndicatorsTest {
     List<IndicatorData> indicatorData = resp.getData();
     assertThat(indicatorData.size(), is(equalTo(3)));
 
-    IndicatorData ema = indicatorData.get(0);
-    assertThat(ema.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
-    assertThat(ema.getData(), is(equalTo(84.0203d)));
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
+    assertThat(data.getData(), is(equalTo(84.0203d)));
   }
 
   @Test
@@ -150,9 +149,9 @@ public class TechnicalIndicatorsTest {
     List<IndicatorData> indicatorData = resp.getData();
     assertThat(indicatorData.size(), is(equalTo(3)));
 
-    IndicatorData ema = indicatorData.get(0);
-    assertThat(ema.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 14, 16, 0))));
-    assertThat(ema.getData(), is(equalTo(84.8376d)));
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 14, 16, 0))));
+    assertThat(data.getData(), is(equalTo(84.8376d)));
   }
 
   @Test
@@ -210,11 +209,11 @@ public class TechnicalIndicatorsTest {
     List<MACDData> indicatorData = resp.getData();
     assertThat(indicatorData.size(), is(equalTo(3)));
 
-    MACDData macd = indicatorData.get(0);
-    assertThat(macd.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 14, 16, 0))));
-    assertThat(macd.getHist(), is(equalTo(0.0197d)));
-    assertThat(macd.getSignal(), is(equalTo(-0.1967d)));
-    assertThat(macd.getMacd(), is(equalTo(-0.1770d)));
+    MACDData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 14, 16, 0))));
+    assertThat(data.getHist(), is(equalTo(0.0197d)));
+    assertThat(data.getSignal(), is(equalTo(-0.1967d)));
+    assertThat(data.getMacd(), is(equalTo(-0.1770d)));
   }
 
   @Test
@@ -271,14 +270,14 @@ public class TechnicalIndicatorsTest {
     List<MACDData> indicatorData = resp.getData();
     assertThat(indicatorData.size(), is(equalTo(1)));
 
-    MACDData macd = indicatorData.get(0);
-    assertThat(macd.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 4, 11, 0))));
-    assertThat(macd.getMacd(), is(equalTo(-0.3448d)));
-    assertThat(macd.getHist(), is(equalTo(-0.2407d)));
-    assertThat(macd.getSignal(), is(equalTo(-0.1041d)));
+    MACDData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 4, 11, 0))));
+    assertThat(data.getMacd(), is(equalTo(-0.3448d)));
+    assertThat(data.getHist(), is(equalTo(-0.2407d)));
+    assertThat(data.getSignal(), is(equalTo(-0.1041d)));
+
   }
 
-  //TODO
   @Test
   public void mama() {
     String json = "" +
@@ -301,9 +300,27 @@ public class TechnicalIndicatorsTest {
             "    }\n" +
             "}";
 
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    MAMA resp = technicalIndicators.mama("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10), null, null, null);
+    Map<String, String> metaData = resp.getMetaData();
+    assertThat(metaData.get("1: Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("2: Indicator"), is(equalTo("MESA Adaptive Moving Average (MAMA)")));
+    assertThat(metaData.get("3: Last Refreshed"), is(equalTo("2017-12-14 16:00:00")));
+    assertThat(metaData.get("4: Interval"), is(equalTo("15min")));
+    assertThat(metaData.get("5.1: Fast Limit"), is(equalTo("0.02")));
+    assertThat(metaData.get("5.2: Slow Limit"), is(equalTo("0.01")));
+    assertThat(metaData.get("6: Series Type"), is(equalTo("close")));
+    assertThat(metaData.get("7: Time Zone"), is(equalTo("US/Eastern Time")));
+
+    List<MAMAData> indicatorData = resp.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    MAMAData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 14, 16, 0))));
+    assertThat(data.getMama(), is(equalTo(81.2088d)));
+    assertThat(data.getFama(), is(equalTo(53.0511d)));
   }
 
-  //TODO
   @Test
   public void rsi() {
     String json = "" +
@@ -323,7 +340,23 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    RSI resp = technicalIndicators.rsi("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10), SeriesType.CLOSE);
+    Map<String, String> metaData = resp.getMetaData();
+    assertThat(metaData.get("1: Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("2: Indicator"), is(equalTo("Relative Strength Index (RSI)")));
+    assertThat(metaData.get("3: Last Refreshed"), is(equalTo("2017-12-14 16:00:00")));
+    assertThat(metaData.get("4: Interval"), is(equalTo("15min")));
+    assertThat(metaData.get("5: Time Period"), is(equalTo("10")));
+    assertThat(metaData.get("6: Series Type"), is(equalTo("close")));
+    assertThat(metaData.get("7: Time Zone"), is(equalTo("US/Eastern Time")));
 
+    List<IndicatorData> indicatorData = resp.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 12, 0))));
+    assertThat(data.getData(), is(equalTo(57.2543d)));
   }
 
   @Test
@@ -367,12 +400,11 @@ public class TechnicalIndicatorsTest {
     List<IndicatorData> indicatorData = resp.getData();
     assertThat(indicatorData.size(), is(equalTo(3)));
 
-    IndicatorData sma = indicatorData.get(0);
-    assertThat(sma.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
-    assertThat(sma.getData(), is(equalTo(84.0203d)));
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
+    assertThat(data.getData(), is(equalTo(84.0203d)));
   }
 
-  //TODO
   @Test
   public void stoch() {
     String json = "" +
@@ -397,9 +429,30 @@ public class TechnicalIndicatorsTest {
             "    }\n" +
             "}";
 
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    STOCH resp = technicalIndicators.stoch("DUMMY", Interval.FIFTEEN_MIN, null, null, null, null, null);
+
+    Map<String, String> metaData = resp.getMetaData();
+    assertThat(metaData.get("1: Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("2: Indicator"), is(equalTo("Stochastic (STOCH)")));
+    assertThat(metaData.get("3: Last Refreshed"), is(equalTo("2017-12-14 16:00:00")));
+    assertThat(metaData.get("4: Interval"), is(equalTo("15min")));
+    assertThat(metaData.get("5.1: FastK Period"), is(equalTo("5")));
+    assertThat(metaData.get("5.2: SlowK Period"), is(equalTo("3")));
+    assertThat(metaData.get("5.3: SlowK MA Type"), is(equalTo("1")));
+    assertThat(metaData.get("5.4: SlowD Period"), is(equalTo("3")));
+    assertThat(metaData.get("5.5: SlowD MA Type"), is(equalTo("1")));
+    assertThat(metaData.get("6: Time Zone"), is(equalTo("US/Eastern Time")));
+
+    List<STOCHDataSlow> indicatorData = resp.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    STOCHDataSlow data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 11, 30))));
+    assertThat(data.getSlowK(), is(equalTo(27.9031d)));
+    assertThat(data.getSlowD(), is(equalTo(41.7739d)));
   }
 
-  //TODO
   @Test
   public void stochf() {
     String json = "" +
@@ -422,9 +475,28 @@ public class TechnicalIndicatorsTest {
             "    }\n" +
             "}";
 
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    STOCHF resp = technicalIndicators.stochf("DUMMY", Interval.FIFTEEN_MIN, null, null, null);
+
+    Map<String, String> metaData = resp.getMetaData();
+    assertThat(metaData.get("1: Symbol"), is(equalTo("DUMMY")));
+    assertThat(metaData.get("2: Indicator"), is(equalTo("Stochastic Fast (STOCHF)")));
+    assertThat(metaData.get("3: Last Refreshed"), is(equalTo("2017-12-14 16:00:00")));
+    assertThat(metaData.get("4: Interval"), is(equalTo("15min")));
+    assertThat(metaData.get("5.1: FastK Period"), is(equalTo("6")));
+    assertThat(metaData.get("5.2: FastD Period"), is(equalTo("3")));
+    assertThat(metaData.get("5.3: FastD MA Type"), is(equalTo("1")));
+    assertThat(metaData.get("6: Time Zone"), is(equalTo("US/Eastern Time")));
+
+    List<STOCHDataFast> indicatorData = resp.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    STOCHDataFast data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 11, 15))));
+    assertThat(data.getFastK(), is(equalTo(33.3333d)));
+    assertThat(data.getFastD(), is(equalTo(51.8195d)));
   }
 
-  //TODO
   @Test
   public void stochrsi() {
     String json = "" +
@@ -443,15 +515,29 @@ public class TechnicalIndicatorsTest {
             "    },\n" +
             "    \"Technical Analysis: STOCHRSI\": {\n" +
             "        \"2017-12-01 13:45\": {\n" +
-            "            \"FastD\": \"75.1311\",\n" +
-            "            \"FastK\": \"81.4649\"\n" +
+            "            \"FastK\": \"75.1311\",\n" +
+            "            \"FastD\": \"81.4649\"\n" +
             "        }\n" +
             "    }\n" +
             "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    STOCHRSI resp = technicalIndicators.stochrsi("DUMMY",
+            Interval.FIFTEEN_MIN,
+            TimePeriod.of(10),
+            SeriesType.CLOSE,
+            null,
+            null,
+            null);
 
+    List<STOCHDataFast> indicatorData = resp.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    STOCHDataFast data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 13, 45))));
+    assertThat(data.getFastK(), is(equalTo(75.1311d)));
+    assertThat(data.getFastD(), is(equalTo(81.4649d)));
   }
 
-  //TODO
   @Test
   public void t3() {
     String json = "" +
@@ -472,10 +558,17 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    T3 resp = technicalIndicators.t3("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10), SeriesType.CLOSE);
 
+    List<IndicatorData> indicatorData = resp.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 5, 9, 30))));
+    assertThat(data.getData(), is(equalTo(81.2514d)));
   }
 
-  //TODO
   @Test
   public void tema() {
     String json = "" +
@@ -516,12 +609,11 @@ public class TechnicalIndicatorsTest {
     List<IndicatorData> indicatorData = response.getData();
     assertThat(indicatorData.size(), is(equalTo(3)));
 
-    IndicatorData macd = indicatorData.get(0);
-    assertThat(macd.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
-    assertThat(macd.getData(), is(equalTo(84.0203d)));
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
+    assertThat(data.getData(), is(equalTo(84.0203d)));
   }
 
-  //TODO
   @Test
   public void trima() {
     String json = "" +
@@ -542,9 +634,17 @@ public class TechnicalIndicatorsTest {
             "    }\n" +
             "}";
 
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    TRIMA resp = technicalIndicators.trima("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10), SeriesType.CLOSE);
+
+    List<IndicatorData> indicatorData = resp.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 11, 45))));
+    assertThat(data.getData(), is(equalTo(84.2648d)));
   }
 
-  //TODO
   @Test
   public void willr() {
     String json = "" +
@@ -564,6 +664,15 @@ public class TechnicalIndicatorsTest {
             "    }\n" +
             "}";
 
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    WILLR resp = technicalIndicators.willr("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10));
+
+    List<IndicatorData> indicatorData = resp.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 11, 45))));
+    assertThat(data.getData(), is(equalTo(-48.2075d)));
   }
 
   @Test
@@ -606,12 +715,11 @@ public class TechnicalIndicatorsTest {
     List<IndicatorData> indicatorData = response.getData();
     assertThat(indicatorData.size(), is(equalTo(3)));
 
-    IndicatorData macd = indicatorData.get(0);
-    assertThat(macd.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
-    assertThat(macd.getData(), is(equalTo(84.0203d)));
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 16, 0))));
+    assertThat(data.getData(), is(equalTo(84.0203d)));
   }
 
-  // TODO
   @Test
   public void adx() {
     String json = "" +
@@ -630,9 +738,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    ADX response = technicalIndicators.adx("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 14, 15))));
+    assertThat(data.getData(), is(equalTo(13.6308d)));
   }
 
-  // TODO
   @Test
   public void adxr() {
     String json = "" +
@@ -651,9 +768,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    ADXR response = technicalIndicators.adxr("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 14, 15))));
+    assertThat(data.getData(), is(equalTo(13.6308d)));
   }
 
-  // TODO
   @Test
   public void apo() {
     String json = "" +
@@ -676,9 +802,17 @@ public class TechnicalIndicatorsTest {
             "    }\n" +
             "}";
 
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    APO response = technicalIndicators.apo("DUMMY", Interval.FIFTEEN_MIN, SeriesType.CLOSE, null, null, null);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 15, 45))));
+    assertThat(data.getData(), is(equalTo(0.0216d)));
   }
 
-  //TODO
   @Test
   public void ppo() {
     String json = "" +
@@ -700,9 +834,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    PPO response = technicalIndicators.ppo("DUMMY", Interval.FIFTEEN_MIN, SeriesType.CLOSE, null, null, null);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 15, 45))));
+    assertThat(data.getData(), is(equalTo(0.0257d)));
   }
 
-  //TODO
   @Test
   public void mom() {
     String json = "" +
@@ -722,9 +865,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    MOM response = technicalIndicators.mom("DUMMY", Interval.FIFTEEN_MIN, TimePeriod.of(10), SeriesType.CLOSE);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 12, 0))));
+    assertThat(data.getData(), is(equalTo(0.4000d)));
   }
 
-  //TODO
   @Test
   public void bop() {
     String json = "" +
@@ -742,9 +894,17 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    BOP response = technicalIndicators.bop("DUMMY", Interval.FIFTEEN_MIN);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 9, 30))));
+    assertThat(data.getData(), is(equalTo(-0.1250d)));
   }
 
-  //TODO
   @Test
   public void cci() {
     String json = "" +
@@ -763,9 +923,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    CCI response = technicalIndicators.cci("DUMMY", Interval.DAILY, TimePeriod.of(10));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 1, 14, 0, 0))));
+    assertThat(data.getData(), is(equalTo(-11.0151d)));
   }
 
-  //TODO
   @Test
   public void cmo() {
     String json = "" +
@@ -785,9 +954,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    CMO response = technicalIndicators.cmo("DUMMY", Interval.DAILY, TimePeriod.of(10), SeriesType.CLOSE);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 3, 24, 0, 0))));
+    assertThat(data.getData(), is(equalTo(-0.9150d)));
   }
 
-  //TODO
   @Test
   public void roc() {
     String json = "" +
@@ -807,9 +985,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    ROC response = technicalIndicators.roc("DUMMY", Interval.WEEKLY, TimePeriod.of(10), SeriesType.CLOSE);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 3, 24, 0, 0))));
+    assertThat(data.getData(), is(equalTo(-0.4989d)));
   }
 
-  //TODO
   @Test
   public void rocr() {
     String json = "" +
@@ -829,9 +1016,17 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    ROCR response = technicalIndicators.rocr("DUMMY", Interval.DAILY, TimePeriod.of(10), SeriesType.CLOSE);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 1, 18, 0, 0))));
+    assertThat(data.getData(), is(equalTo(0.9893d)));
   }
 
-  //TODO
   @Test
   public void aroon() {
     String json = "" +
@@ -851,9 +1046,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    AROON response = technicalIndicators.aroon("DUMMY", Interval.DAILY, TimePeriod.of(14));
+
+    List<AROONData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    AROONData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 1, 24, 0, 0))));
+    assertThat(data.getAroonUp(), is(equalTo(0.0000d)));
+    assertThat(data.getAroonDown(), is(equalTo(100.0000d)));
   }
 
-  //TODO
   @Test
   public void aroonosc() {
     String json = "" +
@@ -872,9 +1076,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    AROONOSC response = technicalIndicators.aroonosc("DUMMY", Interval.THIRTY_MIN, TimePeriod.of(10));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 14, 30))));
+    assertThat(data.getData(), is(equalTo(-30.0000d)));
   }
 
-  //TODO
   @Test
   public void mfi() {
     String json = "" +
@@ -893,9 +1106,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    MFI response = technicalIndicators.mfi("DUMMY", Interval.WEEKLY, TimePeriod.of(10));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 3, 24, 0, 0))));
+    assertThat(data.getData(), is(equalTo(47.5642d)));
   }
 
-  //TODO
   @Test
   public void trix() {
     String json = "" +
@@ -915,9 +1137,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    TRIX response = technicalIndicators.trix("DUMMY", Interval.DAILY, TimePeriod.of(10), SeriesType.CLOSE);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 2, 11, 0, 0))));
+    assertThat(data.getData(), is(equalTo(-0.1527d)));
   }
 
-  //TODO
   @Test
   public void ultosc() {
     String json = "" +
@@ -938,9 +1169,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    ULTOSC response = technicalIndicators.ultosc("DUMMY", Interval.THIRTY_MIN, null, null, null);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 5, 9, 30))));
+    assertThat(data.getData(), is(equalTo(44.5000d)));
   }
 
-  //TODO
   @Test
   public void dx() {
     String json = "" +
@@ -959,9 +1199,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    DX response = technicalIndicators.dx("DUMMY", Interval.THIRTY_MIN, TimePeriod.of(10));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 14, 30))));
+    assertThat(data.getData(), is(equalTo(1.5590d)));
   }
 
-  //TODO
   @Test
   public void minus_di() {
     String json = "" +
@@ -980,9 +1229,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    MINUS_DI response = technicalIndicators.minus_di("DUMMY", Interval.WEEKLY, TimePeriod.of(10));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 3, 24, 0, 0))));
+    assertThat(data.getData(), is(equalTo(17.5170d)));
   }
 
-  //TODO
   @Test
   public void plus_di() {
     String json = "" +
@@ -1001,10 +1259,17 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    PLUS_DI response = technicalIndicators.plus_di("DUMMY", Interval.THIRTY_MIN, TimePeriod.of(10));
 
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 14, 30))));
+    assertThat(data.getData(), is(equalTo(18.6114d)));
   }
 
-  //TODO
   @Test
   public void minus_dm() {
     String json = "" +
@@ -1023,9 +1288,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    MINUS_DM response = technicalIndicators.minus_dm("DUMMY", Interval.DAILY, TimePeriod.of(10));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 1, 14, 0, 0))));
+    assertThat(data.getData(), is(equalTo(14.8100d)));
   }
 
-  //TODO
   @Test
   public void plus_dm() {
     String json = "" +
@@ -1044,9 +1318,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    PLUS_DM response = technicalIndicators.plus_dm("DUMMY", Interval.DAILY, TimePeriod.of(10));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 1, 14, 0, 0))));
+    assertThat(data.getData(), is(equalTo(6.7600d)));
   }
 
-  //TODO
   @Test
   public void bbands() {
     String json = "" +
@@ -1071,9 +1354,26 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    BBANDS response = technicalIndicators.bbands("DUMMY",
+            Interval.WEEKLY,
+            TimePeriod.of(5),
+            SeriesType.CLOSE,
+            null,
+            null,
+            null);
+
+    List<BBANDSData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    BBANDSData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 2, 11, 0, 0))));
+    assertThat(data.getLowerBand(), is(equalTo(89.2034d)));
+    assertThat(data.getUpperBand(), is(equalTo(119.0966d)));
+    assertThat(data.getMidBand(), is(equalTo(104.1500d)));
   }
 
-  //TODO
   @Test
   public void midpoint() {
     String json = "" +
@@ -1093,9 +1393,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    MIDPOINT response = technicalIndicators.midpoint("DUMMY", Interval.DAILY, TimePeriod.of(10), SeriesType.CLOSE);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 1, 14, 0, 0))));
+    assertThat(data.getData(), is(equalTo(111.1850d)));
   }
 
-  //TODO
   @Test
   public void midprice() {
     String json = "" +
@@ -1114,9 +1423,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    MIDPRICE response = technicalIndicators.midprice("DUMMY", Interval.THIRTY_MIN, TimePeriod.of(10));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 14, 0))));
+    assertThat(data.getData(), is(equalTo(84.0150d)));
   }
 
-  //TODO
   @Test
   public void sar() {
     String json = "" +
@@ -1136,9 +1454,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    SAR response = technicalIndicators.sar("DUMMY", Interval.WEEKLY, null, null);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 1, 21, 0, 0))));
+    assertThat(data.getData(), is(equalTo(101.5000d)));
   }
 
-  //TODO
   @Test
   public void trange() {
     String json = "" +
@@ -1156,9 +1483,17 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    TRANGE response = technicalIndicators.trange("DUMMY", Interval.DAILY);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 1, 4, 0, 0))));
+    assertThat(data.getData(), is(equalTo(4.8700d)));
   }
 
-  //TODO
   @Test
   public void atr() {
     String json = "" +
@@ -1177,9 +1512,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    ATR response = technicalIndicators.atr("DUMMY", Interval.THIRTY_MIN, TimePeriod.of(14));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 4, 9, 30))));
+    assertThat(data.getData(), is(equalTo(0.4977d)));
   }
 
-  //TODO
   @Test
   public void natr() {
     String json = "" +
@@ -1198,9 +1542,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    NATR response = technicalIndicators.natr("DUMMY", Interval.WEEKLY, TimePeriod.of(14));
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 4, 20, 0, 0))));
+    assertThat(data.getData(), is(equalTo(14.8359d)));
   }
 
-  //TODO
   @Test
   public void ad() {
     String json = "" +
@@ -1218,9 +1571,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    AD response = technicalIndicators.ad("DUMMY", Interval.DAILY);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 1, 3, 0, 0))));
+    assertThat(data.getData(), is(equalTo(10050679.7583d)));
   }
 
-  //TODO
   @Test
   public void adosc() {
     String json = "" +
@@ -1240,9 +1602,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    ADOSC response = technicalIndicators.adosc("DUMMY", Interval.THIRTY_MIN, null, null);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 1, 14, 0))));
+    assertThat(data.getData(), is(equalTo(-126632.7402d)));
   }
 
-  //TODO
   @Test
   public void obv() {
     String json = "" +
@@ -1260,9 +1631,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    OBV response = technicalIndicators.obv("DUMMY", Interval.WEEKLY);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 1, 14, 0, 0))));
+    assertThat(data.getData(), is(equalTo(157400000.0000d)));
   }
 
-  //TODO
   @Test
   public void ht_trendline() {
     String json = "" +
@@ -1281,9 +1661,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    HT_TRENDLINE response = technicalIndicators.ht_trendline("DUMMY", Interval.DAILY, SeriesType.CLOSE);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 4, 3, 0, 0))));
+    assertThat(data.getData(), is(equalTo(99.7075d)));
   }
 
-  //TODO
   @Test
   public void ht_sine() {
     String json = "" +
@@ -1303,9 +1692,19 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    HT_SINE response = technicalIndicators.ht_sine("DUMMY", Interval.THIRTY_MIN, SeriesType.CLOSE);
+
+    List<HT_SINEData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    HT_SINEData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 8, 9, 30))));
+    assertThat(data.getLeadSine(), is(equalTo(-0.8497d)));
+    assertThat(data.getSine(), is(equalTo(-0.9737d)));
   }
 
-  //TODO
   @Test
   public void ht_trendmode() {
     String json = "" +
@@ -1324,9 +1723,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    HT_TRENDMODE response = technicalIndicators.ht_trendmode("DUMMY", Interval.WEEKLY, SeriesType.CLOSE);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 1, 14, 0, 0))));
+    assertThat(data.getData(), is(equalTo(0d)));
   }
 
-  //TODO
   @Test
   public void ht_dcperiod() {
     String json = "" +
@@ -1345,9 +1753,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    HT_DCPERIOD response = technicalIndicators.ht_dcperiod("DUMMY", Interval.DAILY, SeriesType.CLOSE);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 2, 17, 0, 0))));
+    assertThat(data.getData(), is(equalTo(15.6467d)));
   }
 
-  //TODO
   @Test
   public void ht_dcphase() {
     String json = "" +
@@ -1366,9 +1783,18 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    HT_DCPHASE response = technicalIndicators.ht_dcphase("DUMMY", Interval.THIRTY_MIN, SeriesType.CLOSE);
+
+    List<IndicatorData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    IndicatorData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2017, 12, 8, 9, 30))));
+    assertThat(data.getData(), is(equalTo(256.8257d)));
   }
 
-  //TODO
   @Test
   public void ht_phasor() {
     String json = "" +
@@ -1388,5 +1814,15 @@ public class TechnicalIndicatorsTest {
             "        }\n" +
             "    }\n" +
             "}";
+    technicalIndicators = new TechnicalIndicators(apiParameters -> json);
+    HT_PHASOR response = technicalIndicators.ht_phasor("DUMMY", Interval.WEEKLY, SeriesType.CLOSE);
+
+    List<HT_PHASORData> indicatorData = response.getData();
+    assertThat(indicatorData.size(), is(equalTo(1)));
+
+    HT_PHASORData data = indicatorData.get(0);
+    assertThat(data.getDateTime(), is(equalTo(LocalDateTime.of(2000, 8, 25, 0, 0))));
+    assertThat(data.getPhase(), is(equalTo(-2.5430d)));
+    assertThat(data.getQuadrature(), is(equalTo(-10.8250d)));
   }
 }

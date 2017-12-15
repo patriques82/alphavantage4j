@@ -9,28 +9,28 @@ import java.time.LocalDateTime;
  *   "FastK": "18.4211"
  * }
  */
-public class FastSTOCHData {
+public class STOCHDataFast {
   private final LocalDateTime datetime;
-  private final double fastD;
   private final double fastK;
+  private final double fastD;
 
-  public FastSTOCHData(LocalDateTime datetime,
-                       double fastD,
-                       double fastK) {
+  public STOCHDataFast(LocalDateTime datetime,
+                       double fastK,
+                       double fastD) {
     this.datetime = datetime;
-    this.fastD = fastD;
     this.fastK = fastK;
+    this.fastD = fastD;
   }
 
   public LocalDateTime getDateTime() {
     return datetime;
   }
 
-  public double getFastD() {
-    return fastD;
-  }
-
   public double getFastK() {
     return fastK;
+  }
+
+  public double getFastD() {
+    return fastD;
   }
 }

@@ -63,8 +63,8 @@ public class TechnicalIndicators {
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link ADX} indicator data.
    */
-  public ADX adx(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.ADX, timePeriod, interval, seriesType);
+  public ADX adx(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.ADX, timePeriod, interval);
     return ADX.from(interval, json);
   }
 
@@ -77,8 +77,8 @@ public class TechnicalIndicators {
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link ADX} indicator data.
    */
-  public ADXR adxr(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.ADXR, timePeriod, interval, seriesType);
+  public ADXR adxr(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.ADXR, timePeriod, interval);
     return ADXR.from(interval, json);
   }
 
@@ -260,8 +260,8 @@ public class TechnicalIndicators {
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_DCPERIOD} indicator data.
    */
-  public HT_DCPERIOD ht_dcperiod(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_DCPERIOD, timePeriod, interval, seriesType);
+  public HT_DCPERIOD ht_dcperiod(String symbol, Interval interval, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_DCPERIOD, interval, seriesType);
     return HT_DCPERIOD.from(interval, json);
   }
 
@@ -274,8 +274,8 @@ public class TechnicalIndicators {
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_DCPERIOD} indicator data.
    */
-  public HT_DCPHASE ht_dcphase(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_DCPHASE, timePeriod, interval, seriesType);
+  public HT_DCPHASE ht_dcphase(String symbol, Interval interval, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_DCPHASE, interval, seriesType);
     return HT_DCPHASE.from(interval, json);
   }
 
@@ -288,8 +288,8 @@ public class TechnicalIndicators {
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_PHASOR} indicator data.
    */
-  public HT_PHASOR ht_dcphasor(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_PHASOR, timePeriod, interval, seriesType);
+  public HT_PHASOR ht_phasor(String symbol, Interval interval, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_PHASOR, interval, seriesType);
     return HT_PHASOR.from(interval, json);
   }
 
@@ -302,8 +302,8 @@ public class TechnicalIndicators {
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_SINE} indicator data.
    */
-  public HT_SINE ht_sine(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_SINE, timePeriod, interval, seriesType);
+  public HT_SINE ht_sine(String symbol, Interval interval, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_SINE, interval, seriesType);
     return HT_SINE.from(interval, json);
   }
 
@@ -316,8 +316,8 @@ public class TechnicalIndicators {
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_TRENDLINE} indicator data.
    */
-  public HT_TRENDLINE ht_trendline(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_TRENDLINE, timePeriod, interval, seriesType);
+  public HT_TRENDLINE ht_trendline(String symbol, Interval interval, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_TRENDLINE, interval, seriesType);
     return HT_TRENDLINE.from(interval, json);
   }
 
@@ -330,8 +330,8 @@ public class TechnicalIndicators {
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_TRENDMODE} indicator data.
    */
-  public HT_TRENDMODE ht_trendmode(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_TRENDMODE, timePeriod, interval, seriesType);
+  public HT_TRENDMODE ht_trendmode(String symbol, Interval interval, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_TRENDMODE, interval, seriesType);
     return HT_TRENDMODE.from(interval, json);
   }
 
@@ -683,8 +683,6 @@ public class TechnicalIndicators {
    */
   public STOCH stoch(String symbol,
                      Interval interval,
-                     TimePeriod timePeriod,
-                     SeriesType seriesType,
                      @Nullable FastKPeriod fastKPeriod,
                      @Nullable SlowKPeriod slowKPeriod,
                      @Nullable SlowDPeriod slowDPeriod,
@@ -693,9 +691,7 @@ public class TechnicalIndicators {
     String json = apiConnector.getRequest(
             new Symbol(symbol),
             Function.STOCH,
-            timePeriod,
             interval,
-            seriesType,
             fastKPeriod,
             slowKPeriod,
             slowDPeriod,
@@ -719,17 +715,13 @@ public class TechnicalIndicators {
    */
   public STOCHF stochf(String symbol,
                        Interval interval,
-                       TimePeriod timePeriod,
-                       SeriesType seriesType,
                        @Nullable FastKPeriod fastKPeriod,
                        @Nullable FastDPeriod fastDPeriod,
                        @Nullable FastDMaType fastDMaType) {
     String json = apiConnector.getRequest(
             new Symbol(symbol),
             Function.STOCHF,
-            timePeriod,
             interval,
-            seriesType,
             fastKPeriod,
             fastDPeriod,
             fastDMaType);
@@ -864,8 +856,8 @@ public class TechnicalIndicators {
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link WILLR} indicator data.
    */
-  public WILLR willr(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.WILLR, timePeriod, interval, seriesType);
+  public WILLR willr(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.WILLR, timePeriod, interval);
     return WILLR.from(interval, json);
   }
 
