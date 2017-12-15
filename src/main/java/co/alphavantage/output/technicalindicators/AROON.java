@@ -1,9 +1,9 @@
 package co.alphavantage.output.technicalindicators;
 
+import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.AROONData;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,12 @@ public class AROON extends TechnicalIndicatorResponse<AROONData> {
   /**
    * Creates {@code AROON} instance from json.
    *
+   * @param interval specifies how to interpret the date key to the data json object
    * @param json string to parse
    * @return AROON instance
    */
-  public static AROON from(String json) {
-    Parser parser = new Parser();
+  public static AROON from(Interval interval, String json) {
+    Parser parser = new Parser(interval);
     return parser.parseJson(json);
   }
 
@@ -39,6 +40,10 @@ public class AROON extends TechnicalIndicatorResponse<AROONData> {
    */
   private static class Parser extends TechnicalIndicatorParser<AROON> {
 
+    public Parser(Interval interval) {
+      super(interval);
+    }
+
     @Override
     String getIndicatorKey() {
       return "Technical Analysis: AROON";
@@ -49,7 +54,7 @@ public class AROON extends TechnicalIndicatorResponse<AROONData> {
                 Map<String, Map<String, String>> indicatorData) {
       List<AROONData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new AROONData(
-              LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+              resolveDate(key),
               Double.parseDouble(values.get("Aroon Up")),
               Double.parseDouble(values.get("Aroon Down"))
       )));

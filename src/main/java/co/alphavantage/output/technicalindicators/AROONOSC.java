@@ -1,9 +1,9 @@
 package co.alphavantage.output.technicalindicators;
 
+import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.IndicatorData;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,12 @@ public class AROONOSC extends TechnicalIndicatorResponse<IndicatorData> {
   /**
    * Creates {@code AROONOSC} instance from json.
    *
+   * @param interval specifies how to interpret the date key to the data json object
    * @param json string to parse
    * @return AROONOSC instance
    */
-  public static AROONOSC from(String json) {
-    Parser parser = new Parser();
+  public static AROONOSC from(Interval interval, String json) {
+    Parser parser = new Parser(interval);
     return parser.parseJson(json);
   }
 
@@ -39,6 +40,10 @@ public class AROONOSC extends TechnicalIndicatorResponse<IndicatorData> {
    */
   private static class Parser extends TechnicalIndicatorParser<AROONOSC> {
 
+    public Parser(Interval interval) {
+      super(interval);
+    }
+
     @Override
     String getIndicatorKey() {
       return "Technical Analysis: AROONOSC";
@@ -49,7 +54,7 @@ public class AROONOSC extends TechnicalIndicatorResponse<IndicatorData> {
                 Map<String, Map<String, String>> indicatorData) {
       List<IndicatorData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
-              LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+              resolveDate(key),
               Double.parseDouble(values.get("AROONOSC"))
       )));
       return new AROONOSC(metaData, indicators);

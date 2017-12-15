@@ -34,7 +34,7 @@ public class TechnicalIndicators {
    */
   public AD ad(String symbol, Interval interval) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.AD, interval);
-    return AD.from(json);
+    return AD.from(interval, json);
   }
 
   /**
@@ -51,7 +51,7 @@ public class TechnicalIndicators {
                      @Nullable FastPeriod fastPeriod,
                      @Nullable SlowPeriod slowPeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.ADOSC, interval, fastPeriod);
-    return ADOSC.from(json);
+    return ADOSC.from(interval, json);
   }
 
   /**
@@ -65,7 +65,7 @@ public class TechnicalIndicators {
    */
   public ADX adx(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.ADX, timePeriod, interval, seriesType);
-    return ADX.from(json);
+    return ADX.from(interval, json);
   }
 
   /**
@@ -79,7 +79,7 @@ public class TechnicalIndicators {
    */
   public ADXR adxr(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.ADXR, timePeriod, interval, seriesType);
-    return ADXR.from(json);
+    return ADXR.from(interval, json);
   }
 
   /**
@@ -100,7 +100,7 @@ public class TechnicalIndicators {
                  @Nullable SlowPeriod slowPeriod,
                  @Nullable MaType maType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.APO, interval, seriesType, fastPeriod, slowPeriod, maType);
-    return APO.from(json);
+    return APO.from(interval, json);
   }
 
   /**
@@ -113,7 +113,7 @@ public class TechnicalIndicators {
    */
   public AROON aroon(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.AROON, interval, timePeriod);
-    return AROON.from(json);
+    return AROON.from(interval, json);
   }
 
   /**
@@ -126,7 +126,7 @@ public class TechnicalIndicators {
    */
   public AROONOSC aroonosc(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.AROONOSC, interval, timePeriod);
-    return AROONOSC.from(json);
+    return AROONOSC.from(interval, json);
   }
 
   /**
@@ -139,7 +139,7 @@ public class TechnicalIndicators {
    */
   public ATR atr(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.ATR, interval, timePeriod);
-    return ATR.from(json);
+    return ATR.from(interval, json);
   }
 
   /**
@@ -168,7 +168,7 @@ public class TechnicalIndicators {
             nbDevUp,
             nbDevDn,
             maType);
-    return BBANDS.from(json);
+    return BBANDS.from(interval, json);
   }
 
   /**
@@ -180,7 +180,7 @@ public class TechnicalIndicators {
    */
   public BOP bop(String symbol, Interval interval) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.BOP, interval);
-    return BOP.from(json);
+    return BOP.from(interval, json);
   }
 
   /**
@@ -193,7 +193,7 @@ public class TechnicalIndicators {
    */
   public CCI cci(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.CCI, interval, timePeriod);
-    return CCI.from(json);
+    return CCI.from(interval, json);
   }
 
   /**
@@ -207,7 +207,7 @@ public class TechnicalIndicators {
    */
   public CMO cmo(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.CMO, timePeriod, interval, seriesType);
-    return CMO.from(json);
+    return CMO.from(interval, json);
   }
 
   /**
@@ -221,7 +221,7 @@ public class TechnicalIndicators {
    */
   public DEMA dema(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DEMA, timePeriod, interval, seriesType);
-    return DEMA.from(json);
+    return DEMA.from(interval, json);
   }
 
   /**
@@ -234,7 +234,7 @@ public class TechnicalIndicators {
    */
   public DX dx(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.DX, interval, timePeriod);
-    return DX.from(json);
+    return DX.from(interval, json);
   }
 
   /**
@@ -248,7 +248,7 @@ public class TechnicalIndicators {
    */
   public EMA ema(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.EMA, timePeriod, interval, seriesType);
-    return EMA.from(json);
+    return EMA.from(interval, json);
   }
 
   /**
@@ -262,7 +262,7 @@ public class TechnicalIndicators {
    */
   public HT_DCPERIOD ht_dcperiod(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_DCPERIOD, timePeriod, interval, seriesType);
-    return HT_DCPERIOD.from(json);
+    return HT_DCPERIOD.from(interval, json);
   }
 
   /**
@@ -276,7 +276,7 @@ public class TechnicalIndicators {
    */
   public HT_DCPHASE ht_dcphase(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_DCPHASE, timePeriod, interval, seriesType);
-    return HT_DCPHASE.from(json);
+    return HT_DCPHASE.from(interval, json);
   }
 
   /**
@@ -290,7 +290,7 @@ public class TechnicalIndicators {
    */
   public HT_PHASOR ht_dcphasor(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_PHASOR, timePeriod, interval, seriesType);
-    return HT_PHASOR.from(json);
+    return HT_PHASOR.from(interval, json);
   }
 
   /**
@@ -304,7 +304,7 @@ public class TechnicalIndicators {
    */
   public HT_SINE ht_sine(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_SINE, timePeriod, interval, seriesType);
-    return HT_SINE.from(json);
+    return HT_SINE.from(interval, json);
   }
 
   /**
@@ -318,7 +318,7 @@ public class TechnicalIndicators {
    */
   public HT_TRENDLINE ht_trendline(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_TRENDLINE, timePeriod, interval, seriesType);
-    return HT_TRENDLINE.from(json);
+    return HT_TRENDLINE.from(interval, json);
   }
 
   /**
@@ -332,7 +332,7 @@ public class TechnicalIndicators {
    */
   public HT_TRENDMODE ht_trendmode(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_TRENDMODE, timePeriod, interval, seriesType);
-    return HT_TRENDMODE.from(json);
+    return HT_TRENDMODE.from(interval, json);
   }
 
   /**
@@ -346,7 +346,7 @@ public class TechnicalIndicators {
    */
   public KAMA kama(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.KAMA, timePeriod, interval, seriesType);
-    return KAMA.from(json);
+    return KAMA.from(interval, json);
   }
 
   /**
@@ -374,7 +374,7 @@ public class TechnicalIndicators {
             fastPeriod,
             slowPeriod,
             signalPeriod);
-    return MACD.from(json);
+    return MACD.from(interval, json);
   }
 
   /**
@@ -411,7 +411,7 @@ public class TechnicalIndicators {
             fastMaType,
             slowMaType,
             signalMaType);
-    return MACDEXT.from(json);
+    return MACDEXT.from(interval, json);
   }
 
   /**
@@ -439,7 +439,7 @@ public class TechnicalIndicators {
             seriesType,
             fastLimit,
             slowLimit);
-    return MAMA.from(json);
+    return MAMA.from(interval, json);
   }
 
   /**
@@ -452,7 +452,7 @@ public class TechnicalIndicators {
    */
   public MFI mfi(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MFI, interval, timePeriod);
-    return MFI.from(json);
+    return MFI.from(interval, json);
   }
 
   /**
@@ -466,7 +466,7 @@ public class TechnicalIndicators {
    */
   public MIDPOINT midpoint(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MIDPOINT, timePeriod, interval, seriesType);
-    return MIDPOINT.from(json);
+    return MIDPOINT.from(interval, json);
   }
 
   /**
@@ -479,7 +479,7 @@ public class TechnicalIndicators {
    */
   public MIDPRICE midprice(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MIDPRICE, interval, timePeriod);
-    return MIDPRICE.from(json);
+    return MIDPRICE.from(interval, json);
   }
 
   /**
@@ -492,7 +492,7 @@ public class TechnicalIndicators {
    */
   public MINUS_DI minus_di(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MINUS_DI, interval, timePeriod);
-    return MINUS_DI.from(json);
+    return MINUS_DI.from(interval, json);
   }
 
   /**
@@ -505,7 +505,7 @@ public class TechnicalIndicators {
    */
   public MINUS_DM minus_dm(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MINUS_DM, interval, timePeriod);
-    return MINUS_DM.from(json);
+    return MINUS_DM.from(interval, json);
   }
 
   /**
@@ -519,7 +519,7 @@ public class TechnicalIndicators {
    */
   public MOM mom(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.MOM, timePeriod, interval, seriesType);
-    return MOM.from(json);
+    return MOM.from(interval, json);
   }
 
   /**
@@ -532,7 +532,7 @@ public class TechnicalIndicators {
    */
   public NATR natr(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.NATR, interval, timePeriod);
-    return NATR.from(json);
+    return NATR.from(interval, json);
   }
 
   /**
@@ -544,7 +544,7 @@ public class TechnicalIndicators {
    */
   public OBV obv(String symbol, Interval interval) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.OBV, interval);
-    return OBV.from(json);
+    return OBV.from(interval, json);
   }
 
   /**
@@ -557,7 +557,7 @@ public class TechnicalIndicators {
    */
   public PLUS_DI plus_di(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.PLUS_DI, interval, timePeriod);
-    return PLUS_DI.from(json);
+    return PLUS_DI.from(interval, json);
   }
 
   /**
@@ -570,7 +570,7 @@ public class TechnicalIndicators {
    */
   public PLUS_DM plus_dm(String symbol, Interval interval, TimePeriod timePeriod) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.PLUS_DM, interval, timePeriod);
-    return PLUS_DM.from(json);
+    return PLUS_DM.from(interval, json);
   }
 
   /**
@@ -591,7 +591,7 @@ public class TechnicalIndicators {
                  @Nullable SlowPeriod slowPeriod,
                  @Nullable MaType maType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.PPO, interval, seriesType, fastPeriod, slowPeriod, maType);
-    return PPO.from(json);
+    return PPO.from(interval, json);
   }
 
   /**
@@ -605,7 +605,7 @@ public class TechnicalIndicators {
    */
   public ROC roc(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.ROC, timePeriod, interval, seriesType);
-    return ROC.from(json);
+    return ROC.from(interval, json);
   }
 
   /**
@@ -619,7 +619,7 @@ public class TechnicalIndicators {
    */
   public ROCR rocr(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.ROCR, timePeriod, interval, seriesType);
-    return ROCR.from(json);
+    return ROCR.from(interval, json);
   }
 
   /**
@@ -633,7 +633,7 @@ public class TechnicalIndicators {
    */
   public RSI rsi(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.RSI, timePeriod, interval, seriesType);
-    return RSI.from(json);
+    return RSI.from(interval, json);
   }
 
   /**
@@ -650,7 +650,7 @@ public class TechnicalIndicators {
                  @Nullable Acceleration acceleration,
                  @Nullable Maximum maximum) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.SAR, interval, acceleration, maximum);
-    return SAR.from(json);
+    return SAR.from(interval, json);
   }
 
   /**
@@ -664,7 +664,7 @@ public class TechnicalIndicators {
    */
   public SMA sma(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.SMA, timePeriod, interval, seriesType);
-    return SMA.from(json);
+    return SMA.from(interval, json);
   }
 
   /**
@@ -701,7 +701,7 @@ public class TechnicalIndicators {
             slowDPeriod,
             slowKMaType,
             slowDMaType);
-    return STOCH.from(json);
+    return STOCH.from(interval, json);
   }
 
 
@@ -733,7 +733,7 @@ public class TechnicalIndicators {
             fastKPeriod,
             fastDPeriod,
             fastDMaType);
-    return STOCHF.from(json);
+    return STOCHF.from(interval, json);
   }
 
 
@@ -765,7 +765,7 @@ public class TechnicalIndicators {
             fastKPeriod,
             fastDPeriod,
             fastDMaType);
-    return STOCHRSI.from(json);
+    return STOCHRSI.from(interval, json);
   }
 
   /**
@@ -779,7 +779,7 @@ public class TechnicalIndicators {
    */
   public T3 t3(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.T3, timePeriod, interval, seriesType);
-    return T3.from(json);
+    return T3.from(interval, json);
   }
 
   /**
@@ -793,7 +793,7 @@ public class TechnicalIndicators {
    */
   public TEMA tema(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.TEMA, timePeriod, interval, seriesType);
-    return TEMA.from(json);
+    return TEMA.from(interval, json);
   }
 
   /**
@@ -805,7 +805,7 @@ public class TechnicalIndicators {
    */
   public TRANGE trange(String symbol, Interval interval) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.TRANGE, interval);
-    return TRANGE.from(json);
+    return TRANGE.from(interval, json);
   }
 
   /**
@@ -819,7 +819,7 @@ public class TechnicalIndicators {
    */
   public TRIMA trima(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.TRIMA, timePeriod, interval, seriesType);
-    return TRIMA.from(json);
+    return TRIMA.from(interval, json);
   }
 
   /**
@@ -833,7 +833,7 @@ public class TechnicalIndicators {
    */
   public TRIX trix(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.TRIX, timePeriod, interval, seriesType);
-    return TRIX.from(json);
+    return TRIX.from(interval, json);
   }
 
   /**
@@ -852,7 +852,7 @@ public class TechnicalIndicators {
                        @Nullable TimePeriod2 timePeriod2,
                        @Nullable TimePeriod3 timePeriod3) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.ULTOSC, timePeriod1, timePeriod2, timePeriod3);
-    return ULTOSC.from(json);
+    return ULTOSC.from(interval, json);
   }
 
   /**
@@ -866,7 +866,7 @@ public class TechnicalIndicators {
    */
   public WILLR willr(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.WILLR, timePeriod, interval, seriesType);
-    return WILLR.from(json);
+    return WILLR.from(interval, json);
   }
 
   /**
@@ -880,7 +880,7 @@ public class TechnicalIndicators {
    */
   public WMA wma(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.WMA, timePeriod, interval, seriesType);
-    return WMA.from(json);
+    return WMA.from(interval, json);
   }
 
 }

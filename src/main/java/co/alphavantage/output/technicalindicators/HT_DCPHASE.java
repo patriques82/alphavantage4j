@@ -1,9 +1,9 @@
 package co.alphavantage.output.technicalindicators;
 
+import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.IndicatorData;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,12 @@ public class HT_DCPHASE extends TechnicalIndicatorResponse<IndicatorData> {
   /**
    * Creates {@code HT_DCPHASE} instance from json.
    *
+   * @param interval specifies how to interpret the date key to the data json object
    * @param json string to parse
    * @return HT_DCPHASE instance
    */
-  public static HT_DCPHASE from(String json) {
-    Parser parser = new Parser();
+  public static HT_DCPHASE from(Interval interval, String json) {
+    Parser parser = new Parser(interval);
     return parser.parseJson(json);
   }
 
@@ -39,6 +40,10 @@ public class HT_DCPHASE extends TechnicalIndicatorResponse<IndicatorData> {
    */
   private static class Parser extends TechnicalIndicatorParser<HT_DCPHASE> {
 
+    public Parser(Interval interval) {
+      super(interval);
+    }
+
     @Override
     String getIndicatorKey() {
       return "Technical Analysis: HT_DCPHASE";
@@ -49,7 +54,7 @@ public class HT_DCPHASE extends TechnicalIndicatorResponse<IndicatorData> {
                         Map<String, Map<String, String>> indicatorData) {
       List<IndicatorData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
-              LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+              resolveDate(key),
               Double.parseDouble(values.get("HT_DCPHASE"))
       )));
       return new HT_DCPHASE(metaData, indicators);

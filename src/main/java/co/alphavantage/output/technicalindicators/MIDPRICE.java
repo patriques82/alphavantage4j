@@ -1,9 +1,9 @@
 package co.alphavantage.output.technicalindicators;
 
+import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.IndicatorData;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,12 @@ public class MIDPRICE extends TechnicalIndicatorResponse<IndicatorData> {
   /**
    * Creates {@code MIDPRICE} instance from json.
    *
+   * @param interval specifies how to interpret the date key to the data json object
    * @param json string to parse
    * @return MIDPRICE instance
    */
-  public static MIDPRICE from(String json) {
-    Parser parser = new Parser();
+  public static MIDPRICE from(Interval interval, String json) {
+    Parser parser = new Parser(interval);
     return parser.parseJson(json);
   }
 
@@ -39,6 +40,10 @@ public class MIDPRICE extends TechnicalIndicatorResponse<IndicatorData> {
    */
   private static class Parser extends TechnicalIndicatorParser<MIDPRICE> {
 
+    public Parser(Interval interval) {
+      super(interval);
+    }
+
     @Override
     String getIndicatorKey() {
       return "Technical Analysis: MIDPRICE";
@@ -49,7 +54,7 @@ public class MIDPRICE extends TechnicalIndicatorResponse<IndicatorData> {
                      Map<String, Map<String, String>> indicatorData) {
       List<IndicatorData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
-              LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+              resolveDate(key),
               Double.parseDouble(values.get("MIDPRICE"))
       )));
       return new MIDPRICE(metaData, indicators);

@@ -1,9 +1,9 @@
 package co.alphavantage.output.technicalindicators;
 
+import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.SlowSTOCHData;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,12 @@ public class STOCH extends TechnicalIndicatorResponse<SlowSTOCHData> {
   /**
    * Creates {@code STOCH} instance from json.
    *
+   * @param interval specifies how to interpret the date key to the data json object
    * @param json string to parse
    * @return STOCH instance
    */
-  public static STOCH from(String json) {
-    Parser parser = new Parser();
+  public static STOCH from(Interval interval, String json) {
+    Parser parser = new Parser(interval);
     return parser.parseJson(json);
   }
 
@@ -39,6 +40,10 @@ public class STOCH extends TechnicalIndicatorResponse<SlowSTOCHData> {
    */
   private static class Parser extends TechnicalIndicatorParser<STOCH> {
 
+    public Parser(Interval interval) {
+      super(interval);
+    }
+
     @Override
     String getIndicatorKey() {
       return "Technical Analysis: STOCH";
@@ -48,7 +53,7 @@ public class STOCH extends TechnicalIndicatorResponse<SlowSTOCHData> {
     STOCH resolve(Map<String, String> metaData, Map<String, Map<String, String>> indicatorData) {
       List<SlowSTOCHData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new SlowSTOCHData(
-              LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+              resolveDate(key),
               Double.parseDouble(values.get("SlowD")),
               Double.parseDouble(values.get("SlowK"))
       )));

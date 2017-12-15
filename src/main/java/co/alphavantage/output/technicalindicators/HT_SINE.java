@@ -1,9 +1,9 @@
 package co.alphavantage.output.technicalindicators;
 
+import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.HT_SINEData;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,12 @@ public class HT_SINE extends TechnicalIndicatorResponse<HT_SINEData> {
   /**
    * Creates {@code HT_SINE} instance from json.
    *
+   * @param interval specifies how to interpret the date key to the data json object
    * @param json string to parse
    * @return HT_SINE instance
    */
-  public static HT_SINE from(String json) {
-    Parser parser = new Parser();
+  public static HT_SINE from(Interval interval, String json) {
+    Parser parser = new Parser(interval);
     return parser.parseJson(json);
   }
 
@@ -39,6 +40,10 @@ public class HT_SINE extends TechnicalIndicatorResponse<HT_SINEData> {
    */
   private static class Parser extends TechnicalIndicatorParser<HT_SINE> {
 
+    public Parser(Interval interval) {
+      super(interval);
+    }
+
     @Override
     String getIndicatorKey() {
       return "Technical Analysis: HT_SINE";
@@ -49,7 +54,7 @@ public class HT_SINE extends TechnicalIndicatorResponse<HT_SINEData> {
                          Map<String, Map<String, String>> indicatorData) {
       List<HT_SINEData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new HT_SINEData(
-              LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+              resolveDate(key),
               Double.parseDouble(values.get("LEAD SINE")),
               Double.parseDouble(values.get("SINE"))
       )));

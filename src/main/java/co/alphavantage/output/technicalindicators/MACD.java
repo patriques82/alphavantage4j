@@ -1,9 +1,9 @@
 package co.alphavantage.output.technicalindicators;
 
+import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.MACDData;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,12 @@ public class MACD extends TechnicalIndicatorResponse<MACDData> {
   /**
    * Creates {@code MACD} instance from json.
    *
+   * @param interval specifies how to interpret the date key to the data json object
    * @param json string to parse
    * @return MACD instance
    */
-  public static MACD from(String json) {
-    Parser parser = new Parser();
+  public static MACD from(Interval interval, String json) {
+    Parser parser = new Parser(interval);
     return parser.parseJson(json);
   }
 
@@ -39,6 +40,10 @@ public class MACD extends TechnicalIndicatorResponse<MACDData> {
    */
   private static class Parser extends TechnicalIndicatorParser<MACD> {
 
+    public Parser(Interval interval) {
+      super(interval);
+    }
+
     @Override
     String getIndicatorKey() {
       return "Technical Analysis: MACD";
@@ -48,7 +53,7 @@ public class MACD extends TechnicalIndicatorResponse<MACDData> {
     MACD resolve(Map<String, String> metaData, Map<String, Map<String, String>> indicatorData) {
       List<MACDData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new MACDData(
-              LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+              resolveDate(key),
               Double.parseDouble(values.get("MACD_Signal")),
               Double.parseDouble(values.get("MACD_Hist")),
               Double.parseDouble(values.get("MACD"))

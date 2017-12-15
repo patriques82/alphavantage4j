@@ -1,9 +1,9 @@
 package co.alphavantage.output.technicalindicators;
 
+import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.output.JsonParser;
 import co.alphavantage.output.technicalindicators.data.BBANDSData;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,12 @@ public class BBANDS extends TechnicalIndicatorResponse<BBANDSData> {
   /**
    * Creates {@code BBANDS} instance from json.
    *
+   * @param interval specifies how to interpret the date key to the data json object
    * @param json string to parse
    * @return BBANDS instance
    */
-  public static BBANDS from(String json) {
-    Parser parser = new Parser();
+  public static BBANDS from(Interval interval, String json) {
+    Parser parser = new Parser(interval);
     return parser.parseJson(json);
   }
 
@@ -39,6 +40,10 @@ public class BBANDS extends TechnicalIndicatorResponse<BBANDSData> {
    */
   private static class Parser extends TechnicalIndicatorParser<BBANDS> {
 
+    public Parser(Interval interval) {
+      super(interval);
+    }
+
     @Override
     String getIndicatorKey() {
       return "Technical Analysis: BBANDS";
@@ -48,7 +53,7 @@ public class BBANDS extends TechnicalIndicatorResponse<BBANDSData> {
     BBANDS resolve(Map<String, String> metaData, Map<String, Map<String, String>> indicatorData) {
       List<BBANDSData> indicators = new ArrayList<>();
       indicatorData.forEach((key, values) -> indicators.add(new BBANDSData(
-              LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
+              resolveDate(key),
               Double.parseDouble(values.get("Real Lower Band")),
               Double.parseDouble(values.get("Real Upper Band")),
               Double.parseDouble(values.get("Real Middle Band"))

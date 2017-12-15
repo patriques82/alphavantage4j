@@ -1,5 +1,6 @@
 package co.alphavantage.output.technicalindicators;
 
+import co.alphavantage.input.technicalindicators.Interval;
 import co.alphavantage.output.AlphaVantageException;
 import co.alphavantage.output.JsonParser;
 import com.google.gson.JsonObject;
@@ -7,6 +8,8 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -18,6 +21,12 @@ import java.util.Map;
  * @param <Data> the response for each individual Response, i.e MACD, EMA etc.
  */
 public abstract class TechnicalIndicatorParser<Data> extends JsonParser<Data> {
+
+  private final Interval interval;
+
+  public TechnicalIndicatorParser(Interval interval) {
+    this.interval = interval;
+  }
 
   /**
    * The specifics of the resolution is pushed down to each response type, i.e MACD, EMA etc.
@@ -37,8 +46,26 @@ public abstract class TechnicalIndicatorParser<Data> extends JsonParser<Data> {
    */
   abstract String getIndicatorKey();
 
+  /**
+   * Helper method for resolving local date time. If the key to the data object doesn´t specify hours and minutes it
+   * returns the hour at beginning of that day.
+   *
+   * @param key the key to the data object, i.e: "2017-12-01 11:15" or "2017-12-01" depending on interval
+   * @return the {@link LocalDateTime} instance
+   */
+  protected LocalDateTime resolveDate(String key) {
+    switch (interval) {
+      case MONTHLY:
+      case WEEKLY:
+      case DAILY:
+        return LocalDate.parse(key, SIMPLE_DATE_FORMAT).atStartOfDay();
+      default:
+        return LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT);
+    }
+  }
+
   @Override
-  public Data resolve(JsonObject rootObject) {
+  protected Data resolve(JsonObject rootObject) {
     Type metaDataType = new TypeToken<Map<String, String>>() {
     }.getType();
     Type dataType = new TypeToken<Map<String, Map<String, String>>>() {
