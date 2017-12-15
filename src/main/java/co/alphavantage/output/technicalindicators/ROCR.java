@@ -1,8 +1,9 @@
 package co.alphavantage.output.technicalindicators;
 
 import co.alphavantage.output.JsonParser;
+import co.alphavantage.output.technicalindicators.data.IndicatorData;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +13,10 @@ import java.util.Map;
  *
  * @see TechnicalIndicatorResponse
  */
-public class ROCR extends TechnicalIndicatorResponse<IndicatorDataSimple> {
+public class ROCR extends TechnicalIndicatorResponse<IndicatorData> {
 
   private ROCR(final Map<String, String> metaData,
-               final List<IndicatorDataSimple> indicators) {
+               final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 
@@ -46,9 +47,9 @@ public class ROCR extends TechnicalIndicatorResponse<IndicatorDataSimple> {
     @Override
     ROCR resolve(Map<String, String> metaData,
                 Map<String, Map<String, String>> indicatorData) {
-      List<IndicatorDataSimple> indicators = new ArrayList<>();
-      indicatorData.forEach((key, values) -> indicators.add(new IndicatorDataSimple(
-              LocalDate.parse(key, SIMPLE_DATE_FORMAT),
+      List<IndicatorData> indicators = new ArrayList<>();
+      indicatorData.forEach((key, values) -> indicators.add(new IndicatorData(
+              LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT),
               Double.parseDouble(values.get("ROCR"))
       )));
       return new ROCR(metaData, indicators);

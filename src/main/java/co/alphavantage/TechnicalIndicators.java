@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
  * Technical indicator values are updated realtime: the latest data point is derived from the current trading day of a given equity.
  */
 public class TechnicalIndicators {
+
   private final ApiConnector apiConnector;
 
   /**
@@ -22,6 +23,191 @@ public class TechnicalIndicators {
    */
   public TechnicalIndicators(ApiConnector apiConnector) {
     this.apiConnector = apiConnector;
+  }
+
+  /**
+   * Returns the Chaikin A/D line (AD) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @return {@link AD} indicator data.
+   */
+  public AD ad(String symbol, Interval interval) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.AD, interval);
+    return AD.from(json);
+  }
+
+  /**
+   * Returns the Chaikin A/D oscillator (ADOSC) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param fastPeriod the time period of the fast EMA, default 3 {@link FastPeriod}.
+   * @param slowPeriod the time period of the fast EMA, default 10 {@link SlowPeriod}.
+   * @return {@link ADOSC} indicator data.
+   */
+  public ADOSC adosc(String symbol,
+                     Interval interval,
+                     @Nullable FastPeriod fastPeriod,
+                     @Nullable SlowPeriod slowPeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.ADOSC, interval, fastPeriod);
+    return ADOSC.from(json);
+  }
+
+  /**
+   * Returns the average directional movement index (ADX) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link ADX} indicator data.
+   */
+  public ADX adx(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.ADX, timePeriod, interval, seriesType);
+    return ADX.from(json);
+  }
+
+  /**
+   * Returns the average directional movement index rating (ADXR) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link ADX} indicator data.
+   */
+  public ADXR adxr(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.ADXR, timePeriod, interval, seriesType);
+    return ADXR.from(json);
+  }
+
+  /**
+   * Returns the absolute price oscillator (APO) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @param fastPeriod default 12 {@link FastPeriod}.
+   * @param slowPeriod default 26 {@link SlowPeriod}.
+   * @param maType     Moving average type, default SMA {@link MaType}.
+   * @return {@link APO} indicator data.
+   */
+  public APO apo(String symbol,
+                 Interval interval,
+                 SeriesType seriesType,
+                 @Nullable FastPeriod fastPeriod,
+                 @Nullable SlowPeriod slowPeriod,
+                 @Nullable MaType maType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.APO, interval, seriesType, fastPeriod, slowPeriod, maType);
+    return APO.from(json);
+  }
+
+  /**
+   * Returns the Aroon (AROON) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link AROON} indicator data.
+   */
+  public AROON aroon(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.AROON, interval, timePeriod);
+    return AROON.from(json);
+  }
+
+  /**
+   * Returns the Aroon oscillator (AROONOSC) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link AROONOSC} indicator data.
+   */
+  public AROONOSC aroonosc(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.AROONOSC, interval, timePeriod);
+    return AROONOSC.from(json);
+  }
+
+  /**
+   * Returns the average true range (ATR) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link ATR} indicator data.
+   */
+  public ATR atr(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.ATR, interval, timePeriod);
+    return ATR.from(json);
+  }
+
+  /**
+   * Returns the Bollinger bands (BBANDS) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType the desired price type in the time series {@link SeriesType}.
+   * @param nbDevUp    The standard deviation multiplier of the upper band. Positive integers are accepted. By default 2 {@link NBDevUp}.
+   * @param nbDevDn    The standard deviation multiplier of the lower band. Positive integers are accepted. By default 2 {@link NBDevDn}.
+   * @return {@link BBANDS} indicator data.
+   */
+  public BBANDS bbands(String symbol,
+                       Interval interval,
+                       TimePeriod timePeriod,
+                       SeriesType seriesType,
+                       @Nullable NBDevUp nbDevUp,
+                       @Nullable NBDevDn nbDevDn,
+                       @Nullable MaType maType) {
+    String json = apiConnector.getRequest(new Symbol(symbol),
+            Function.BBANDS,
+            interval,
+            timePeriod,
+            seriesType,
+            nbDevUp,
+            nbDevDn,
+            maType);
+    return BBANDS.from(json);
+  }
+
+  /**
+   * Returns the balance of power (BOP) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @return {@link BOP} indicator data.
+   */
+  public BOP bop(String symbol, Interval interval) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.BOP, interval);
+    return BOP.from(json);
+  }
+
+  /**
+   * Returns the commodity channel index (CCI) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link CCI} indicator data.
+   */
+  public CCI cci(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.CCI, interval, timePeriod);
+    return CCI.from(json);
+  }
+
+  /**
+   * Returns the Chande momentum oscillator (CMO) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link CMO} indicator data.
+   */
+  public CMO cmo(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.CMO, timePeriod, interval, seriesType);
+    return CMO.from(json);
   }
 
   /**
@@ -39,6 +225,19 @@ public class TechnicalIndicators {
   }
 
   /**
+   * Returns the directional movement index (DX) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link DX} indicator data.
+   */
+  public DX dx(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.DX, interval, timePeriod);
+    return DX.from(json);
+  }
+
+  /**
    * Returns the exponential moving average (EMA) values.
    *
    * @param symbol     the stock symbol to lookup.
@@ -50,6 +249,90 @@ public class TechnicalIndicators {
   public EMA ema(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.EMA, timePeriod, interval, seriesType);
     return EMA.from(json);
+  }
+
+  /**
+   * Returns the Hilbert transform, dominant cycle period (HT_DCPERIOD) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link HT_DCPERIOD} indicator data.
+   */
+  public HT_DCPERIOD ht_dcperiod(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_DCPERIOD, timePeriod, interval, seriesType);
+    return HT_DCPERIOD.from(json);
+  }
+
+  /**
+   * Returns the Hilbert transform, dominant cycle phase (HT_DCPHASE) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link HT_DCPERIOD} indicator data.
+   */
+  public HT_DCPHASE ht_dcphase(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_DCPHASE, timePeriod, interval, seriesType);
+    return HT_DCPHASE.from(json);
+  }
+
+  /**
+   * Returns the Hilbert transform, phasor components (HT_PHASOR) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link HT_PHASOR} indicator data.
+   */
+  public HT_PHASOR ht_dcphasor(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_PHASOR, timePeriod, interval, seriesType);
+    return HT_PHASOR.from(json);
+  }
+
+  /**
+   * Returns the Hilbert transform, sine wave (HT_SINE) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link HT_SINE} indicator data.
+   */
+  public HT_SINE ht_sine(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_SINE, timePeriod, interval, seriesType);
+    return HT_SINE.from(json);
+  }
+
+  /**
+   * Returns the Hilbert transform, instantaneous trendline (HT_TRENDLINE) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link HT_TRENDLINE} indicator data.
+   */
+  public HT_TRENDLINE ht_trendline(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_TRENDLINE, timePeriod, interval, seriesType);
+    return HT_TRENDLINE.from(json);
+  }
+
+  /**
+   * Returns the Hilbert transform, trend vs cycle mode (HT_TRENDMODE) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link HT_TRENDMODE} indicator data.
+   */
+  public HT_TRENDMODE ht_trendmode(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.HT_TRENDMODE, timePeriod, interval, seriesType);
+    return HT_TRENDMODE.from(json);
   }
 
   /**
@@ -160,6 +443,186 @@ public class TechnicalIndicators {
   }
 
   /**
+   * Returns the money flow index (MFI) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link MFI} indicator data.
+   */
+  public MFI mfi(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.MFI, interval, timePeriod);
+    return MFI.from(json);
+  }
+
+  /**
+   * Returns the midpoint (MIDPOINT) values. MIDPOINT = (highest value + lowest value)/2.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link MIDPOINT} indicator data.
+   */
+  public MIDPOINT midpoint(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.MIDPOINT, timePeriod, interval, seriesType);
+    return MIDPOINT.from(json);
+  }
+
+  /**
+   * Returns the midpoint price (MIDPRICE) values. MIDPRICE = (highest high + lowest low)/2.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link MIDPRICE} indicator data.
+   */
+  public MIDPRICE midprice(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.MIDPRICE, interval, timePeriod);
+    return MIDPRICE.from(json);
+  }
+
+  /**
+   * Returns the minus directional indicator (MINUS_DI) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link MINUS_DI} indicator data.
+   */
+  public MINUS_DI minus_di(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.MINUS_DI, interval, timePeriod);
+    return MINUS_DI.from(json);
+  }
+
+  /**
+   * Returns the minus directional movement (MINUS_DM) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link MINUS_DM} indicator data.
+   */
+  public MINUS_DM minus_dm(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.MINUS_DM, interval, timePeriod);
+    return MINUS_DM.from(json);
+  }
+
+  /**
+   * Returns the momentum (MOM) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link MOM} indicator data.
+   */
+  public MOM mom(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.MOM, timePeriod, interval, seriesType);
+    return MOM.from(json);
+  }
+
+  /**
+   * Returns the normalized average true range (NATR) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link NATR} indicator data.
+   */
+  public NATR natr(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.NATR, interval, timePeriod);
+    return NATR.from(json);
+  }
+
+  /**
+   * Returns the on balance volume (OBV) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @return {@link OBV} indicator data.
+   */
+  public OBV obv(String symbol, Interval interval) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.OBV, interval);
+    return OBV.from(json);
+  }
+
+  /**
+   * Returns the plus directional indicator (PLUS_DI) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link PLUS_DI} indicator data.
+   */
+  public PLUS_DI plus_di(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.PLUS_DI, interval, timePeriod);
+    return PLUS_DI.from(json);
+  }
+
+  /**
+   * Returns the plus directional movement (PLUS_DM) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @return {@link PLUS_DM} indicator data.
+   */
+  public PLUS_DM plus_dm(String symbol, Interval interval, TimePeriod timePeriod) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.PLUS_DM, interval, timePeriod);
+    return PLUS_DM.from(json);
+  }
+
+  /**
+   * Returns the percentage price oscillator (PPO) values values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @param fastPeriod default 12 {@link FastPeriod}.
+   * @param slowPeriod default 26 {@link SlowPeriod}.
+   * @param maType     Moving average type, default SMA {@link MaType}.
+   * @return {@link PPO} indicator data.
+   */
+  public PPO ppo(String symbol,
+                 Interval interval,
+                 SeriesType seriesType,
+                 @Nullable FastPeriod fastPeriod,
+                 @Nullable SlowPeriod slowPeriod,
+                 @Nullable MaType maType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.PPO, interval, seriesType, fastPeriod, slowPeriod, maType);
+    return PPO.from(json);
+  }
+
+  /**
+   * Returns the rate of change (ROC) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link ROC} indicator data.
+   */
+  public ROC roc(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.ROC, timePeriod, interval, seriesType);
+    return ROC.from(json);
+  }
+
+  /**
+   * Returns the rate of change ratio (ROCR) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link ROCR} indicator data.
+   */
+  public ROCR rocr(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.ROCR, timePeriod, interval, seriesType);
+    return ROCR.from(json);
+  }
+
+  /**
    * Returns the relative strength index (RSI) values.
    *
    * @param symbol     the stock symbol to lookup.
@@ -171,6 +634,23 @@ public class TechnicalIndicators {
   public RSI rsi(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.RSI, timePeriod, interval, seriesType);
     return RSI.from(json);
+  }
+
+  /**
+   * Returns the parabolic SAR (SAR) values.
+   *
+   * @param symbol       the stock symbol to lookup.
+   * @param interval     the interval between two consecutive data points in the time series {@link Interval}.
+   * @param acceleration the acceleration factor. Positive floats are accepted, by default 0.01 {@link Acceleration}.
+   * @param maximum      the acceleration factor maximum value. Positive floats are accepted, by default 0.20 {@link Maximum}.
+   * @return {@link SAR} indicator data.
+   */
+  public SAR sar(String symbol,
+                 Interval interval,
+                 @Nullable Acceleration acceleration,
+                 @Nullable Maximum maximum) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.SAR, interval, acceleration, maximum);
+    return SAR.from(json);
   }
 
   /**
@@ -224,6 +704,7 @@ public class TechnicalIndicators {
     return STOCH.from(json);
   }
 
+
   /**
    * Returns the stochastic fast (STOCHF) values.
    *
@@ -254,6 +735,7 @@ public class TechnicalIndicators {
             fastDMaType);
     return STOCHF.from(json);
   }
+
 
   /**
    * Returns the stochastic relative strength index (STOCHRSI) values.
@@ -315,6 +797,18 @@ public class TechnicalIndicators {
   }
 
   /**
+   * Returns the true range (TRANGE) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @return {@link TRANGE} indicator data.
+   */
+  public TRANGE trange(String symbol, Interval interval) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TRANGE, interval);
+    return TRANGE.from(json);
+  }
+
+  /**
    * Returns the triangular moving average (TRIMA) values.
    *
    * @param symbol     the stock symbol to lookup.
@@ -326,6 +820,39 @@ public class TechnicalIndicators {
   public TRIMA trima(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.TRIMA, timePeriod, interval, seriesType);
     return TRIMA.from(json);
+  }
+
+  /**
+   * Returns the 1-day rate of change of a triple smooth exponential moving average (TRIX) values.
+   *
+   * @param symbol     the stock symbol to lookup.
+   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @return {@link TRIX} indicator data.
+   */
+  public TRIX trix(String symbol, Interval interval, TimePeriod timePeriod, SeriesType seriesType) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.TRIX, timePeriod, interval, seriesType);
+    return TRIX.from(json);
+  }
+
+  /**
+   * Returns the 1-day rate of change of a triple smooth exponential moving average (TRIX) values.
+   *
+   * @param symbol      the stock symbol to lookup.
+   * @param interval    the interval between two consecutive data points in the time series {@link Interval}.
+   * @param timePeriod1 the first time period for the indicator. Positive integers are accepted, by default 7 {@link TimePeriod1}.
+   * @param timePeriod2 the second time period for the indicator. Positive integers are accepted, by default 14 {@link TimePeriod2}.
+   * @param timePeriod3 the third time period for the indicator. Positive integers are accepted, by default 28 {@link TimePeriod3}.
+   * @return {@link ULTOSC} indicator data.
+   */
+  public ULTOSC ultosc(String symbol,
+                       Interval interval,
+                       @Nullable TimePeriod1 timePeriod1,
+                       @Nullable TimePeriod2 timePeriod2,
+                       @Nullable TimePeriod3 timePeriod3) {
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.ULTOSC, timePeriod1, timePeriod2, timePeriod3);
+    return ULTOSC.from(json);
   }
 
   /**
@@ -355,7 +882,5 @@ public class TechnicalIndicators {
     String json = apiConnector.getRequest(new Symbol(symbol), Function.WMA, timePeriod, interval, seriesType);
     return WMA.from(json);
   }
-
-
 
 }
