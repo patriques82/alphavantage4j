@@ -1,4 +1,3 @@
-gradle.properties
 build/
 target/
 out/
@@ -6,3 +5,4 @@ out/
 .gradle/
 .idea
 *.iml
+gradle.properties

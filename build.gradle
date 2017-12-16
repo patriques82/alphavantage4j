@@ -6,8 +6,8 @@ repositories {
 buildscript {
     ext {
         project_name = project.name
-        project_group = project.version
-        project_version = 0.1
+        project_group = 'com.patriques'
+        project_version = 1.0
     }
     repositories {
         jcenter()
@@ -56,6 +56,8 @@ publishing {
 }
 
 bintray {
+    user = bintray_user
+    key = bintray_key
     publications = ['publish']
     pkg {
         repo = 'maven'
