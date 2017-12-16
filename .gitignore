@@ -1,7 +1,8 @@
-.DS_Store*
-.gradle/
-.idea
+gradle.properties
 build/
 target/
 out/
+.DS_Store
+.gradle/
+.idea
 *.iml
