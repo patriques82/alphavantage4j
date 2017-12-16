@@ -23,6 +23,7 @@ version project_version
 
 apply plugin: 'java'
 apply plugin: 'java-library'
+apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 apply plugin: 'eclipse'
