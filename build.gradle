@@ -6,7 +6,7 @@ repositories {
 buildscript {
     ext {
         project_name = project.name
-        project_group = 'com.patriques'
+        project_group = 'org.patriques'
         project_version = 1.0
     }
     repositories {
