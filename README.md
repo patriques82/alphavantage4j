@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/patriques82/alphavantage4j.svg?branch=master)](https://travis-ci.org/patriques82/alphavantage4j)
+[![license](https://img.shields.io/github/license/patriques82/alphavantage4j.svg)](https://github.com/patriques82/alphavantage4j/blob/master/LICENSE)
 
 # alphavantage4j
 
