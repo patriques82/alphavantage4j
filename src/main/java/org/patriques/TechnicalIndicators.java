@@ -60,7 +60,6 @@ public class TechnicalIndicators {
    * @param symbol     the stock symbol to lookup.
    * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
    * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
-   * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link ADX} indicator data.
    */
   public ADX adx(String symbol, Interval interval, TimePeriod timePeriod) {
@@ -74,7 +73,6 @@ public class TechnicalIndicators {
    * @param symbol     the stock symbol to lookup.
    * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
    * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
-   * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link ADX} indicator data.
    */
   public ADXR adxr(String symbol, Interval interval, TimePeriod timePeriod) {
@@ -256,7 +254,6 @@ public class TechnicalIndicators {
    *
    * @param symbol     the stock symbol to lookup.
    * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
-   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_DCPERIOD} indicator data.
    */
@@ -270,7 +267,6 @@ public class TechnicalIndicators {
    *
    * @param symbol     the stock symbol to lookup.
    * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
-   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_DCPERIOD} indicator data.
    */
@@ -284,7 +280,6 @@ public class TechnicalIndicators {
    *
    * @param symbol     the stock symbol to lookup.
    * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
-   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_PHASOR} indicator data.
    */
@@ -298,7 +293,6 @@ public class TechnicalIndicators {
    *
    * @param symbol     the stock symbol to lookup.
    * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
-   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_SINE} indicator data.
    */
@@ -312,7 +306,6 @@ public class TechnicalIndicators {
    *
    * @param symbol     the stock symbol to lookup.
    * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
-   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_TRENDLINE} indicator data.
    */
@@ -326,7 +319,6 @@ public class TechnicalIndicators {
    *
    * @param symbol     the stock symbol to lookup.
    * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
-   * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
    * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link HT_TRENDMODE} indicator data.
    */
@@ -354,6 +346,7 @@ public class TechnicalIndicators {
    *
    * @param symbol       the stock symbol to lookup.
    * @param interval     the interval between two consecutive data points in the time series {@link Interval}.
+   * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @param timePeriod   Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
    * @param fastPeriod   Positive integers are accepted, by default 12 {@link FastPeriod}
    * @param slowPeriod   Positive integers are accepted, by default 26 {@link SlowPeriod}
@@ -363,6 +356,7 @@ public class TechnicalIndicators {
   public MACD macd(String symbol,
                    Interval interval,
                    TimePeriod timePeriod,
+                   SeriesType seriesType,
                    @Nullable FastPeriod fastPeriod,
                    @Nullable SlowPeriod slowPeriod,
                    @Nullable SignalPeriod signalPeriod) {
@@ -370,6 +364,7 @@ public class TechnicalIndicators {
             new Symbol(symbol),
             Function.MACD,
             timePeriod,
+            seriesType,
             interval,
             fastPeriod,
             slowPeriod,
@@ -672,8 +667,6 @@ public class TechnicalIndicators {
    *
    * @param symbol      the stock symbol to lookup.
    * @param interval    the interval between two consecutive data points in the time series {@link Interval}.
-   * @param timePeriod  Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
-   * @param seriesType  The desired price type in the time series {@link SeriesType}.
    * @param fastKPeriod The time period of the fastk moving average {@link FastKPeriod}.
    * @param slowKPeriod The desired price type in the time series {@link SlowKPeriod}.
    * @param slowDPeriod The desired price type in the time series {@link SlowDPeriod}.
@@ -706,8 +699,6 @@ public class TechnicalIndicators {
    *
    * @param symbol      the stock symbol to lookup.
    * @param interval    the interval between two consecutive data points in the time series {@link Interval}.
-   * @param timePeriod  Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
-   * @param seriesType  The desired price type in the time series {@link SeriesType}.
    * @param fastKPeriod The time period of the fastk moving average, positive integers are accepted, by default 5 {@link FastKPeriod}.
    * @param fastDPeriod The time period of the fastd moving average, positive integers are accepted, by default 3 {@link FastDPeriod}.
    * @param fastDMaType Moving average type for the fastd moving average, by default SMA {@link FastDMaType}.
@@ -853,7 +844,6 @@ public class TechnicalIndicators {
    * @param symbol     the stock symbol to lookup.
    * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
    * @param timePeriod Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
-   * @param seriesType The desired price type in the time series {@link SeriesType}.
    * @return {@link WILLR} indicator data.
    */
   public WILLR willr(String symbol, Interval interval, TimePeriod timePeriod) {
