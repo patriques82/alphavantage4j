@@ -191,6 +191,7 @@ public class TechnicalIndicatorsTest {
     MACD resp = technicalIndicators.macd("DUMMY",
             Interval.FIFTEEN_MIN,
             TimePeriod.of(10),
+            SeriesType.CLOSE,
             FastPeriod.of(10),
             SlowPeriod.of(26),
             null);
