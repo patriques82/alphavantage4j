@@ -25,6 +25,7 @@ apply plugin: 'java'
 apply plugin: 'java-library'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
+apply plugin: 'jacoco'
 
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -54,6 +55,15 @@ publishing {
         }
     }
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
+
+check.dependsOn jacocoTestReport
 
 bintray {
     user = System.getenv('bintray_user') ?: bintray_user
