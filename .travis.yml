@@ -1,13 +1,16 @@
 language: java
-
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
+notifications:
+  email: false
+env:
+  global:
+  - secure: NBvhjxOaP9Bc2B3knDDSfO0GGO6vlSL6hvI4Sx3RgsrXbMqmRqb4WIunLOajWYOP2hAeLp9yOuOXhIz4D3Md8dgXqksl8j7lvPvO0zQ9IhF3qurzqPAlRJ0FqQtuYqBINRn8PVGtSafGLwcCfS79ffIV8DCUq5c1WRyzxNRfRHzlX7uXH5WtQqDnTXZxuVNfT447x7qKnJJisC+n6fRm8+Hx9nck58/e+pQpk1UcCML0umngtpDoVac+lubTcXYjCpVXgi/M1oixjQ6v2/sv66z8k4j3KIAUJTJJpe/Oadn4gnrCBAYm3fkL8GTJoQnE6MaCupjlCn8rGJ6nSmZHvQZ8I/dlayKOOp5YRkcw+oG+FxArIt657h1tXF/uqHRGZKBkYfkj6I/Vsjbo0DXIeV8cZAzIs2Qqr6b7cLarREpOfbNfAPH/0xFVUG4aQF0c7k+bRV6umaEmD7HtTwtsS4xmlixmdZjTZtuvPGBW925okg0Kd61SSY+90xdvs9EAxY5V/aXZTJjHA0piQkpgNcukB0FFx6LZk7SPBL8TxKFWppLd4vIHNNqQ76pKQ4YytU/kXgz6e9Sx5TKZ1E8cVNTRoZE0DmT2HN7coAMNVyre4fLyJL8BsPXrSDKwxchgBg1oqD3pJ8PlQvuXsArgFNKyhvvHojxbn2LoY7PSjW4=
+  - secure: R9OdWMZd7zgojch4Hiv8xgmWxia4VWOwQhjlDw78Dd3otUfQG7Yn8a/4tSWhskvRiNdZdSX8YwxmeUUgY7NQzEDqjigjkUJAn/Gywl+XoQ40pfJy3j7pSzcZJrAF+4cZ7adezlsj1FgkF+FU7RaEwNSzmI7qnyNoUGqLauPNspJwqdfPhzM/lZS37khmhHEVHrJJy3YqMsfCDnVAtGaBp+bpRlKDvGNCHEBVP6pdDrqqK+2XzLS4D4FmLx/GsVPLH7EU5eDHS8jBihzGZVyQU6SB/x0QCxN3UHOvqofElle8/g8wc9+ayXwYMdxmF6Dg0/tIEjtLVJdiIl8PzmliXGUSh9pv3m+ZJU1Ct6Z5RzlYusckvPwmxV3yePXGqfxuTKmH00Zkq0tlvW3ijNvYi1lOwBQchv4mUrAm7HOB5KBpahp+uPui5H2ln3y22wR9Cs+4G7kfLxMNJOlXqI13G4B0HbZDp+j/zCJiRBX4S7sMAJh7Mr3W4WWvHXoADnYGZXidy9UAWA8yJgrhATFYMDoZubHe5QPSQPSMlQ6JN/7AVhmOQagtv6iAHnLBEZSVTYtvaCpFR4jAtRGYX1c45V0nNxixI5GTkYFQfcvW0noxy4Ncf80i/pRJcxK2yrhzkokWesL1SXsQzwYdKYnkHfCVQrsfIGs4WjgEMPgvst0=
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"

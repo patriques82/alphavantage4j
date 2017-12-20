@@ -47,40 +47,41 @@ jar {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            from components.java
             groupId project_group
             artifactId project_name
             version project_version
-            from components.java
         }
     }
 }
 
-//bintray {
-//    user = bintray_user
-//    key = bintray_key
-//    publications = ['publish']
-//    pkg {
-//        repo = 'maven'
-//        name = project_name
-//        websiteUrl = "https://github.com/patriques82/$project_name"
-//
-//        githubRepo = "patriques82/$project_name"
-//        githubReleaseNotesFile = 'README.md'
-//        issueTrackerUrl = "https://github.com/patriques82/$project_name/issues"
-//
-//        licenses = ['Apache-2.0']
-//        vcsUrl = "https://github.com/patriques82/{$project_name}.git"
-//        version {
-//            name = project_version
-//            vcsTag = project_version
-//            desc = 'A Java wrapper to get stock data and stock indicators from the Alpha Vantage API'
-//            released = new Date()
-//            gpg {
-//                sign = true
-//            }
-//        }
-//    }
-//}
+bintray {
+    user = System.getenv('bintray_user') ?: bintray_user
+    key = System.getenv('bintray_key') ?: bintray_key
+    publish = true //If version should be auto published after an upload
+    publications = ['mavenJava']
+    pkg {
+        repo = 'maven'
+        name = project_name
+        websiteUrl = "https://github.com/patriques82/$project_name"
+        vcsUrl = "https://github.com/patriques82/$project_name" + ".git"
+
+        githubRepo = "patriques82/$project_name"
+        githubReleaseNotesFile = 'README.md'
+        issueTrackerUrl = "https://github.com/patriques82/$project_name/issues"
+
+        licenses = ['Apache-2.0']
+        version {
+            name = project_version
+            vcsTag = project_version
+            desc = 'A Java wrapper to get stock data and stock indicators from the Alpha Vantage API'
+            released = new Date()
+            gpg {
+                sign = true
+            }
+        }
+    }
+}
 
 
 
