@@ -75,6 +75,8 @@ dependencies {
 
 ## Usage
 
+Now that you set up your project and have your api key you can start using the service. Here are a few examples of how you can use the service.
+
 #### Time Series example
 ```java
 public class App {
