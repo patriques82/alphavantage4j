@@ -4,10 +4,9 @@ import org.junit.Test;
 import org.patriques.input.digitalcurrencies.Market;
 import org.patriques.input.exchange.FromCurrency;
 import org.patriques.input.exchange.ToCurrency;
-import org.patriques.input.technicalindicators.Acceleration;
-import org.patriques.input.technicalindicators.FastDMaType;
-import org.patriques.input.technicalindicators.FastDPeriod;
 import org.patriques.input.technicalindicators.Interval;
+import org.patriques.input.technicalindicators.SeriesType;
+import org.patriques.input.technicalindicators.TimePeriod;
 import org.patriques.input.timeseries.OutputSize;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -40,13 +39,13 @@ public class ApiParameterBuilderTest {
   @Test
   public void technicalIndicators() {
     ApiParameterBuilder apiParameterBuilder = new ApiParameterBuilder();
-    apiParameterBuilder.append(Acceleration.of(1.0f));
-    apiParameterBuilder.append(FastDMaType.SMA);
-    apiParameterBuilder.append(FastDPeriod.of(2));
+    apiParameterBuilder.append(Interval.FIFTEEN_MIN);
+    apiParameterBuilder.append(SeriesType.HIGH);
+    apiParameterBuilder.append(TimePeriod.of(2));
 
     String url = apiParameterBuilder.getUrl();
 
-    assertThat(url, equalTo("&acceleration=1,00&fastdmatype=0&fastdperiod=2"));
+    assertThat(url, equalTo("&interval=15min&series_type=high&time_period=2"));
   }
 
   @Test
