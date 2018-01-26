@@ -12,55 +12,6 @@ Alpha Vantage delivers a free API for real time financial data and most used fin
 Vantage (http://www.alphavantage.co/). It requires an api key, that can be requested on http://www.alphavantage.co/support/#api-key. You can have a look at all the api 
 calls available in their documentation http://www.alphavantage.co/documentation.
 
-## Maven installation
-
-#### Settings
-
-```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-<settings xsi:schemaLocation='http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd'
-          xmlns='http://maven.apache.org/SETTINGS/1.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
-    <profiles>
-        <profile>
-            <repositories>
-                <repository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>bintray-patriques82-maven</id>
-                    <name>bintray</name>
-                    <url>https://dl.bintray.com/patriques82/maven</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>bintray-patriques82-maven</id>
-                    <name>bintray-plugins</name>
-                    <url>https://dl.bintray.com/patriques82/maven</url>
-                </pluginRepository>
-            </pluginRepositories>
-            <id>bintray</id>
-        </profile>
-    </profiles>
-    <activeProfiles>
-        <activeProfile>bintray</activeProfile>
-    </activeProfiles>
-</settings>
-```
-#### Dependency
-
-```xml
-<dependency>
-  <groupId>org.patriques</groupId>
-  <artifactId>alphavantage4j</artifactId>
-  <version>1.1</version>
-  <type>pom</type>
-</dependency>
-```
-
 ## Gradle installation
 
 ```groovy
