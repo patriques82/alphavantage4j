@@ -21,7 +21,7 @@ repositories {
     }
 }
 dependencies {
-    compile 'org.patriques:alphavantage4j:1.1'
+    compile 'org.patriques:alphavantage4j:1.2'
 }
 ```
 
