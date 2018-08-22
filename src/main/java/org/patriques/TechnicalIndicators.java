@@ -389,6 +389,7 @@ public class TechnicalIndicators {
   public MACDEXT macdext(String symbol,
                       Interval interval,
                       TimePeriod timePeriod,
+                      SeriesType seriesType,
                       @Nullable FastPeriod fastPeriod,
                       @Nullable SlowPeriod slowPeriod,
                       @Nullable SignalPeriod signalPeriod,
@@ -399,6 +400,7 @@ public class TechnicalIndicators {
             new Symbol(symbol),
             Function.MACDEXT,
             timePeriod,
+            seriesType,
             interval,
             fastPeriod,
             slowPeriod,
@@ -834,7 +836,7 @@ public class TechnicalIndicators {
                        @Nullable TimePeriod1 timePeriod1,
                        @Nullable TimePeriod2 timePeriod2,
                        @Nullable TimePeriod3 timePeriod3) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.ULTOSC, timePeriod1, timePeriod2, timePeriod3);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.ULTOSC, timePeriod1, timePeriod2, timePeriod3, interval);
     return ULTOSC.from(interval, json);
   }
 

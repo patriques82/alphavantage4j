@@ -247,6 +247,7 @@ public class TechnicalIndicatorsTest {
     MACDEXT resp = technicalIndicators.macdext("DUMMY",
             Interval.FIFTEEN_MIN,
             TimePeriod.of(10),
+            SeriesType.CLOSE,
             null,
             null,
             null,
