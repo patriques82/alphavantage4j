@@ -28,8 +28,8 @@ public class TechnicalIndicators {
   /**
    * Returns the Chaikin A/D line (AD) values.
    *
-   * @param symbol     the stock symbol to lookup.
-   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param symbol   the stock symbol to lookup.
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}.
    * @return {@link AD} indicator data.
    */
   public AD ad(String symbol, Interval interval) {
@@ -172,8 +172,8 @@ public class TechnicalIndicators {
   /**
    * Returns the balance of power (BOP) values.
    *
-   * @param symbol     the stock symbol to lookup.
-   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param symbol   the stock symbol to lookup.
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}.
    * @return {@link BOP} indicator data.
    */
   public BOP bop(String symbol, Interval interval) {
@@ -346,7 +346,7 @@ public class TechnicalIndicators {
    *
    * @param symbol       the stock symbol to lookup.
    * @param interval     the interval between two consecutive data points in the time series {@link Interval}.
-   * @param seriesType The desired price type in the time series {@link SeriesType}.
+   * @param seriesType   The desired price type in the time series {@link SeriesType}.
    * @param timePeriod   Number of data points used to calculate each moving average value. Positive integers are accepted {@link TimePeriod}.
    * @param fastPeriod   Positive integers are accepted, by default 12 {@link FastPeriod}
    * @param slowPeriod   Positive integers are accepted, by default 26 {@link SlowPeriod}
@@ -387,18 +387,20 @@ public class TechnicalIndicators {
    * @return {@link MACDEXT} indicator data.
    */
   public MACDEXT macdext(String symbol,
-                      Interval interval,
-                      TimePeriod timePeriod,
-                      @Nullable FastPeriod fastPeriod,
-                      @Nullable SlowPeriod slowPeriod,
-                      @Nullable SignalPeriod signalPeriod,
-                      @Nullable FastMaType fastMaType,
-                      @Nullable SlowMaType slowMaType,
-                      @Nullable SignalMaType signalMaType) {
+                         Interval interval,
+                         TimePeriod timePeriod,
+                         SeriesType seriesType,
+                         @Nullable FastPeriod fastPeriod,
+                         @Nullable SlowPeriod slowPeriod,
+                         @Nullable SignalPeriod signalPeriod,
+                         @Nullable FastMaType fastMaType,
+                         @Nullable SlowMaType slowMaType,
+                         @Nullable SignalMaType signalMaType) {
     String json = apiConnector.getRequest(
             new Symbol(symbol),
             Function.MACDEXT,
             timePeriod,
+            seriesType,
             interval,
             fastPeriod,
             slowPeriod,
@@ -533,8 +535,8 @@ public class TechnicalIndicators {
   /**
    * Returns the on balance volume (OBV) values.
    *
-   * @param symbol     the stock symbol to lookup.
-   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param symbol   the stock symbol to lookup.
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}.
    * @return {@link OBV} indicator data.
    */
   public OBV obv(String symbol, Interval interval) {
@@ -782,8 +784,8 @@ public class TechnicalIndicators {
   /**
    * Returns the true range (TRANGE) values.
    *
-   * @param symbol     the stock symbol to lookup.
-   * @param interval   the interval between two consecutive data points in the time series {@link Interval}.
+   * @param symbol   the stock symbol to lookup.
+   * @param interval the interval between two consecutive data points in the time series {@link Interval}.
    * @return {@link TRANGE} indicator data.
    */
   public TRANGE trange(String symbol, Interval interval) {
@@ -834,7 +836,7 @@ public class TechnicalIndicators {
                        @Nullable TimePeriod1 timePeriod1,
                        @Nullable TimePeriod2 timePeriod2,
                        @Nullable TimePeriod3 timePeriod3) {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.ULTOSC, timePeriod1, timePeriod2, timePeriod3);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.ULTOSC, timePeriod1, timePeriod2, timePeriod3, interval);
     return ULTOSC.from(interval, json);
   }
 
