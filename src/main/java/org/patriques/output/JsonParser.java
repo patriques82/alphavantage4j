@@ -23,6 +23,10 @@ public abstract class JsonParser<Data> {
   protected final DateTimeFormatter DATE_WITH_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
   protected final DateTimeFormatter DATE_WITH_SIMPLE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+  protected final String SIMPLE_DATE_PATTERN = "^\\d{4}-[01]\\d-[0-3]\\d";
+  protected final String DATE_WITH_SIMPLE_TIME_PATTERN = "^\\d{4}-[01]\\d-[0-3]\\d\\s+[0-2]\\d:[0-5]\\d:[0-5]\\d";
+  protected final String DATE_WITH_TIME_PATTERN = "^\\d{4}-[01]\\d-[0-3]\\d\\s+[0-2]\\d:[0-5]\\d:[0-5]\\d";
+
   private static com.google.gson.JsonParser PARSER = new com.google.gson.JsonParser();
 
   /**

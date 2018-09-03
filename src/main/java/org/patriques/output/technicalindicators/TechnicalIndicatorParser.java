@@ -58,7 +58,15 @@ public abstract class TechnicalIndicatorParser<Data> extends JsonParser<Data> {
       case MONTHLY:
       case WEEKLY:
       case DAILY:
-        return LocalDate.parse(key, SIMPLE_DATE_FORMAT).atStartOfDay();
+    		if(key.matches(DATE_WITH_TIME_PATTERN)) {
+    			return LocalDate.parse(key, DATE_WITH_TIME_FORMAT).atStartOfDay();
+    		}
+    		else if (key.matches(DATE_WITH_SIMPLE_TIME_PATTERN)) {
+    			return LocalDate.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT).atStartOfDay();
+    		}
+    		else if (key.matches(SIMPLE_DATE_PATTERN)) {
+    			return LocalDate.parse(key, SIMPLE_DATE_FORMAT).atStartOfDay();
+    		}
       default:
         return LocalDateTime.parse(key, DATE_WITH_SIMPLE_TIME_FORMAT);
     }
