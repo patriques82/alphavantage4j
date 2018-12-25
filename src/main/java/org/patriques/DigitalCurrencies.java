@@ -3,7 +3,6 @@ package org.patriques;
 import org.patriques.input.Function;
 import org.patriques.input.Symbol;
 import org.patriques.input.digitalcurrencies.Market;
-import org.patriques.input.timeseries.Interval;
 import org.patriques.output.digitalcurrencies.Daily;
 import org.patriques.output.digitalcurrencies.IntraDay;
 import org.patriques.output.digitalcurrencies.Monthly;
@@ -35,7 +34,7 @@ public class DigitalCurrencies {
    * @return {@link IntraDay} time series data.
    */
   public IntraDay intraDay(String symbol, Market market)  {
-    String json = apiConnector.getRequest(new Symbol(symbol), Function.DIGITAL_CURRENCY_INTRADAY, market, Interval.ONE_MIN);
+    String json = apiConnector.getRequest(new Symbol(symbol), Function.DIGITAL_CURRENCY_INTRADAY, market);
     return IntraDay.from(market, json);
   }
 
