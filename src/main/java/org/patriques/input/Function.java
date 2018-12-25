@@ -19,6 +19,8 @@ public enum Function implements ApiParameter {
 
   // Foreign Exchange function
   CURRENCY_EXCHANGE_RATE("CURRENCY_EXCHANGE_RATE"),
+  FX_INTRADAY("FX_INTRADAY"),
+  FX_DAILY("FX_DAILY"),
 
   // Digital Currencies functions
   DIGITAL_CURRENCY_INTRADAY("DIGITAL_CURRENCY_INTRADAY"),
