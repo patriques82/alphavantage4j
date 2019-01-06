@@ -16,7 +16,7 @@ public class SignalPeriod implements ApiParameter {
 
   @Override
   public String getKey() {
-    return null;
+    return "signalperiod";
   }
 
   @Override
