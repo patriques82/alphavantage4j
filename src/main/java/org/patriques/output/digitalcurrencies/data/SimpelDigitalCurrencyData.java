@@ -1,5 +1,6 @@
 package org.patriques.output.digitalcurrencies.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
@@ -12,7 +13,8 @@ import java.time.LocalDateTime;
  *   "3. market cap (USD)": "2596155.69911398"
  * }
  */
-public class SimpelDigitalCurrencyData {
+public class SimpelDigitalCurrencyData implements Serializable {
+  private static final long serialVersionUID = 1402263285558555924L;
 
   private final LocalDateTime parse;
   private final double priceA;

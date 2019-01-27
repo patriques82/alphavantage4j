@@ -1,5 +1,6 @@
 package org.patriques.output.technicalindicators.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -9,7 +10,9 @@ import java.time.LocalDateTime;
  *   "SINE": "-0.9737"
  * }
  */
-public class HT_SINEData {
+public class HT_SINEData implements Serializable {
+  private static final long serialVersionUID = -258302238854507201L;
+
   private final LocalDateTime datetime;
   private final double leadSine;
   private final double sine;

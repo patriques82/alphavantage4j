@@ -16,8 +16,10 @@ import java.util.Map;
  */
 public class RSI extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private RSI(final Map<String, String> metaData,
-              final List<IndicatorData> indicatorData) {
+    private static final long serialVersionUID = 3955575188567089953L;
+
+    private RSI(final Map<String, String> metaData,
+                final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 

@@ -1,5 +1,6 @@
 package org.patriques.output.exchange.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -13,7 +14,9 @@ import java.time.LocalDateTime;
  *
  * @author ilker Kopan
  */
-public class ForexData {
+public class ForexData implements Serializable {
+    private static final long serialVersionUID = -1402948379421305726L;
+
     private final LocalDateTime dateTime;
     private final double open;
     private final double high;

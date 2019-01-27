@@ -8,6 +8,7 @@ import org.patriques.output.AlphaVantageException;
 import org.patriques.output.JsonParser;
 import org.patriques.output.quote.data.StockQuote;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ import java.util.Map;
  *
  * @see BatchStockQuotes
  */
-public class BatchStockQuotesResponse {
+public class BatchStockQuotesResponse implements Serializable {
+  private static final long serialVersionUID = 7209813769646990087L;
+
   private final Map<String, String> metaData;
   private final List<StockQuote> stockQuotes;
 

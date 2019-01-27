@@ -1,5 +1,6 @@
 package org.patriques.output.technicalindicators;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +10,8 @@ import java.util.Map;
  *
  * @param <Data> the data contained in the response
  */
-public class TechnicalIndicatorResponse<Data> {
+public class TechnicalIndicatorResponse<Data> implements Serializable {
+  private static final long serialVersionUID = -8166251999653236976L;
 
   private final Map<String, String> metaData;
   private final List<Data> indicatorData;

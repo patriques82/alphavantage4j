@@ -1,9 +1,11 @@
 package org.patriques.output.digitalcurrencies;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class DigitalCurrencyResponse<Data> {
+public class DigitalCurrencyResponse<Data extends Serializable> implements Serializable {
+  private static final long serialVersionUID = 6530825128585084114L;
 
   private final Map<String, String> metaData;
   private final List<Data> digitalData;

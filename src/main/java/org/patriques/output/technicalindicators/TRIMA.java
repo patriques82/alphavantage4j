@@ -16,6 +16,8 @@ import java.util.Map;
  */
 public class TRIMA extends TechnicalIndicatorResponse<IndicatorData> {
 
+  private static final long serialVersionUID = -2741344821467886628L;
+
   private TRIMA(final Map<String, String> metaData,
                 final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);

@@ -17,8 +17,10 @@ import java.util.Map;
  */
 public class IntraDay extends TimeSeriesResponse {
 
-  private IntraDay(final Map<String, String> metaData,
-                   final List<StockData> stocks) {
+    private static final long serialVersionUID = 3710229009536851783L;
+
+    private IntraDay(final Map<String, String> metaData,
+                     final List<StockData> stocks) {
     super(metaData, stocks);
   }
 

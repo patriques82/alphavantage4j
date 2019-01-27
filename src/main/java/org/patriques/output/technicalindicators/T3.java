@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class T3 extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private T3(final Map<String, String> metaData,
-             final List<IndicatorData> indicatorData) {
+    private static final long serialVersionUID = -4646925214164225872L;
+
+    private T3(final Map<String, String> metaData,
+               final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 

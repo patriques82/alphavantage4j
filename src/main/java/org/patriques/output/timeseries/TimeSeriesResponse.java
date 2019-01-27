@@ -2,6 +2,7 @@ package org.patriques.output.timeseries;
 
 import org.patriques.output.timeseries.data.StockData;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +10,8 @@ import java.util.Map;
  * Response from time series call. Each specific response, i.e IntraDay, Daily, etc, extends this class.
  * This class simply acts as a container of metadata and stockdata.
  */
-public class TimeSeriesResponse {
+public class TimeSeriesResponse implements Serializable {
+  private static final long serialVersionUID = -5596188699053850698L;
 
   private final Map<String, String> metaData;
   private final List<StockData> stockData;

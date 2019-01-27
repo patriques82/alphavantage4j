@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class APO extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private APO(final Map<String, String> metaData,
-              final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = 562982873016723625L;
+
+    private APO(final Map<String, String> metaData,
+                final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

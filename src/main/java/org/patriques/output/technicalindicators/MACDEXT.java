@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class MACDEXT extends TechnicalIndicatorResponse<MACDData> {
 
-  private MACDEXT(final Map<String, String> metaData,
-                  final List<MACDData> indicatorData) {
+    private static final long serialVersionUID = -1900658021447657763L;
+
+    private MACDEXT(final Map<String, String> metaData,
+                    final List<MACDData> indicatorData) {
     super(metaData, indicatorData);
   }
 

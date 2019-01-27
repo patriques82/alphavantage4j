@@ -3,6 +3,7 @@ package org.patriques.input.technicalindicators;
 import org.patriques.input.ApiParameter;
 
 public class SignalPeriod implements ApiParameter {
+  private static final long serialVersionUID = -5984620555052944541L;
   private final String period;
 
   private SignalPeriod(String period) {

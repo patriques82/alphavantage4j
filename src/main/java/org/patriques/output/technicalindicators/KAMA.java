@@ -16,8 +16,10 @@ import java.util.Map;
  */
 public class KAMA extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private KAMA(final Map<String, String> metaData,
-               final List<IndicatorData> indicatorData) {
+    private static final long serialVersionUID = 2200029088561785766L;
+
+    private KAMA(final Map<String, String> metaData,
+                 final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 

@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class ULTOSC extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private ULTOSC(final Map<String, String> metaData,
-                 final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -6505360140768666516L;
+
+    private ULTOSC(final Map<String, String> metaData,
+                   final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

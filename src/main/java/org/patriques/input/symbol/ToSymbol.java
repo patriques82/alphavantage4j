@@ -6,6 +6,7 @@ import org.patriques.input.ApiParameter;
  * @author ilker Kopan
  */
 public class ToSymbol implements ApiParameter {
+    private static final long serialVersionUID = 853212800553276580L;
     String toSymbol;
 
     public ToSymbol(String toSymbol) {

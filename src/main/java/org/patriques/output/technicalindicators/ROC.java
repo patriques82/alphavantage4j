@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class ROC extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private ROC(final Map<String, String> metaData,
-              final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -4366598146316044761L;
+
+    private ROC(final Map<String, String> metaData,
+                final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

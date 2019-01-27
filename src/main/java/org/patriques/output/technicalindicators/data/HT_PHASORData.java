@@ -1,5 +1,6 @@
 package org.patriques.output.technicalindicators.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -9,7 +10,9 @@ import java.time.LocalDateTime;
  *   "QUADRATURE": "-10.8250"
  * }
  */
-public class HT_PHASORData {
+public class HT_PHASORData implements Serializable {
+  private static final long serialVersionUID = 3393923406474517694L;
+
   private final LocalDateTime datetime;
   private final double phase;
   private final double quadrature;

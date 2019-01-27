@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class MINUS_DM extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private MINUS_DM(final Map<String, String> metaData,
-                   final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -252984380735203581L;
+
+    private MINUS_DM(final Map<String, String> metaData,
+                     final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

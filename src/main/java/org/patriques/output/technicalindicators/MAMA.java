@@ -16,8 +16,10 @@ import java.util.Map;
  */
 public class MAMA extends TechnicalIndicatorResponse<MAMAData> {
 
-  private MAMA(final Map<String, String> metaData,
-               final List<MAMAData> indicatorData) {
+    private static final long serialVersionUID = -8728058087873166115L;
+
+    private MAMA(final Map<String, String> metaData,
+                 final List<MAMAData> indicatorData) {
     super(metaData, indicatorData);
   }
 

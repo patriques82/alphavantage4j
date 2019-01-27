@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class STOCH extends TechnicalIndicatorResponse<STOCHDataSlow> {
 
-  private STOCH(final Map<String, String> metaData,
-                final List<STOCHDataSlow> indicatorData) {
+    private static final long serialVersionUID = 4872247212155718333L;
+
+    private STOCH(final Map<String, String> metaData,
+                  final List<STOCHDataSlow> indicatorData) {
     super(metaData, indicatorData);
   }
 

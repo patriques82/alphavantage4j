@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class ADXR extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private ADXR(final Map<String, String> metaData,
-               final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -1425963033436369197L;
+
+    private ADXR(final Map<String, String> metaData,
+                 final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

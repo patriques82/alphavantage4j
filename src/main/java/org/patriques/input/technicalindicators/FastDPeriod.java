@@ -3,6 +3,7 @@ package org.patriques.input.technicalindicators;
 import org.patriques.input.ApiParameter;
 
 public class FastDPeriod implements ApiParameter {
+  private static final long serialVersionUID = -5159663505858925458L;
   private final String period;
 
   private FastDPeriod(String period) {

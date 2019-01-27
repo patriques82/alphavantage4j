@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class HT_SINE extends TechnicalIndicatorResponse<HT_SINEData> {
 
-  private HT_SINE(final Map<String, String> metaData,
-                  final List<HT_SINEData> indicators) {
+    private static final long serialVersionUID = 5486193898520313635L;
+
+    private HT_SINE(final Map<String, String> metaData,
+                    final List<HT_SINEData> indicators) {
     super(metaData, indicators);
   }
 

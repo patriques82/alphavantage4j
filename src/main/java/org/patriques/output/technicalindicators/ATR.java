@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class ATR extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private ATR(final Map<String, String> metaData,
-              final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -4158459043202421309L;
+
+    private ATR(final Map<String, String> metaData,
+                final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

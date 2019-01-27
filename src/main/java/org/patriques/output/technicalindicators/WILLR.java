@@ -16,8 +16,10 @@ import java.util.Map;
  */
 public class WILLR extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private WILLR(final Map<String, String> metaData,
-                final List<IndicatorData> indicatorData) {
+    private static final long serialVersionUID = -6064790614881389141L;
+
+    private WILLR(final Map<String, String> metaData,
+                  final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 

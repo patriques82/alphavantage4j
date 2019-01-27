@@ -16,6 +16,8 @@ import java.util.Map;
  */
 public class Weekly extends TimeSeriesResponse {
 
+  private static final long serialVersionUID = -6117577480893516900L;
+
   private Weekly(final Map<String, String> metaData,
                  final List<StockData> stocks) {
     super(metaData, stocks);

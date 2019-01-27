@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class CCI extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private CCI(final Map<String, String> metaData,
-              final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = 7303378982654187910L;
+
+    private CCI(final Map<String, String> metaData,
+                final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

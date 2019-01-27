@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class PLUS_DM extends TechnicalIndicatorResponse<IndicatorData> {
 
+  private static final long serialVersionUID = 2623020962775144371L;
+
   private PLUS_DM(final Map<String, String> metaData,
                   final List<IndicatorData> indicators) {
     super(metaData, indicators);

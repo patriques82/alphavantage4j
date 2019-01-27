@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class STOCHRSI extends TechnicalIndicatorResponse<STOCHDataFast> {
 
-  private STOCHRSI(final Map<String, String> metaData,
-                   final List<STOCHDataFast> indicatorData) {
+    private static final long serialVersionUID = 3944878825999522388L;
+
+    private STOCHRSI(final Map<String, String> metaData,
+                     final List<STOCHDataFast> indicatorData) {
     super(metaData, indicatorData);
   }
 

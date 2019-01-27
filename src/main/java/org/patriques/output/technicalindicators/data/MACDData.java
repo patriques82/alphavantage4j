@@ -1,5 +1,6 @@
 package org.patriques.output.technicalindicators.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -10,7 +11,9 @@ import java.time.LocalDateTime;
  *   "MACD": "-0.0339"
  * }
  */
-public class MACDData {
+public class MACDData implements Serializable {
+  private static final long serialVersionUID = 5481970097721304836L;
+
   private final LocalDateTime datetime;
   private final double signal;
   private final double hist;

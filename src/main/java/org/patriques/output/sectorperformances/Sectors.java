@@ -7,6 +7,7 @@ import org.patriques.output.AlphaVantageException;
 import org.patriques.output.JsonParser;
 import org.patriques.output.sectorperformances.data.SectorData;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -16,7 +17,9 @@ import java.util.Map;
 /**
  * Representation of sectors percentual change over different timeperiods
  */
-public class Sectors {
+public class Sectors implements Serializable {
+  private static final long serialVersionUID = 2319288846127276354L;
+
   private final Map<String, String> metadata;
   private final List<SectorData> sectors;
 

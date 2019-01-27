@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class NATR extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private NATR(final Map<String, String> metaData,
-               final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -6501205582674361993L;
+
+    private NATR(final Map<String, String> metaData,
+                 final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class HT_DCPHASE extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private HT_DCPHASE(final Map<String, String> metaData,
-                     final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = 705299612732492070L;
+
+    private HT_DCPHASE(final Map<String, String> metaData,
+                       final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

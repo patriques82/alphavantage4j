@@ -15,6 +15,7 @@ import java.util.Map;
  * @see DigitalCurrencyResponse
  */
 public class Weekly extends DigitalCurrencyResponse<DigitalCurrencyData> {
+  private static final long serialVersionUID = -2925309654494557290L;
 
   private Weekly(final Map<String, String> metaData, final List<DigitalCurrencyData> digitalData) {
     super(metaData, digitalData);

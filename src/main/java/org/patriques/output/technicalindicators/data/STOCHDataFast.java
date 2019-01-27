@@ -1,5 +1,6 @@
 package org.patriques.output.technicalindicators.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -9,7 +10,9 @@ import java.time.LocalDateTime;
  *   "FastK": "18.4211"
  * }
  */
-public class STOCHDataFast {
+public class STOCHDataFast implements Serializable {
+  private static final long serialVersionUID = -3395664982637806915L;
+
   private final LocalDateTime datetime;
   private final double fastK;
   private final double fastD;

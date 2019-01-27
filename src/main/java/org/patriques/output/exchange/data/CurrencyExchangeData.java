@@ -1,11 +1,13 @@
 package org.patriques.output.exchange.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * CurrencyExchangeData class used to register the rate of a conversion between to currencies.
  */
-public class CurrencyExchangeData {
+public class CurrencyExchangeData implements Serializable {
+  private static final long serialVersionUID = 1769016854602887579L;
 
   private final String fromCurrencyCode;
   private final String fromCurrencyName;

@@ -7,6 +7,7 @@ import org.patriques.output.AlphaVantageException;
 import org.patriques.output.JsonParser;
 import org.patriques.output.exchange.data.CurrencyExchangeData;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -15,7 +16,8 @@ import java.util.Map;
 /**
  * Representation of currency exchange.
  */
-public class CurrencyExchange {
+public class CurrencyExchange implements Serializable {
+  private static final long serialVersionUID = 7171945883885171736L;
 
   private CurrencyExchangeData data;
 

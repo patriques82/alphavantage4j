@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class BBANDS extends TechnicalIndicatorResponse<BBANDSData> {
 
+  private static final long serialVersionUID = -1374747014253850555L;
+
   private BBANDS(final Map<String, String> metaData,
                  final List<BBANDSData> indicatorData) {
     super(metaData, indicatorData);

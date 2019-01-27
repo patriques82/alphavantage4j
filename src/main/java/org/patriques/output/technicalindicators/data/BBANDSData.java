@@ -1,5 +1,6 @@
 package org.patriques.output.technicalindicators.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -10,7 +11,9 @@ import java.time.LocalDateTime;
  * "Real Middle Band": "104.1500"
  * }
  */
-public class BBANDSData {
+public class BBANDSData implements Serializable {
+  private static final long serialVersionUID = 6500139697281506728L;
+
   private final LocalDateTime datetime;
   private final double lowerBand;
   private final double upperBand;

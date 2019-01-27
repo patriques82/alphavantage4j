@@ -3,6 +3,7 @@ package org.patriques.input.technicalindicators;
 import org.patriques.input.ApiParameter;
 
 public class NBDevUp implements ApiParameter {
+  private static final long serialVersionUID = -2410284103684776005L;
   private final String multiplier;
 
   private NBDevUp(String period) {

@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class ADOSC extends TechnicalIndicatorResponse<IndicatorData> {
 
+  private static final long serialVersionUID = 4380784317707543514L;
+
   private ADOSC(final Map<String, String> metaData,
                 final List<IndicatorData> indicators) {
     super(metaData, indicators);

@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class ROCR extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private ROCR(final Map<String, String> metaData,
-               final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = 977954600768631027L;
+
+    private ROCR(final Map<String, String> metaData,
+                 final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

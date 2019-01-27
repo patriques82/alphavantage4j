@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class DX extends TechnicalIndicatorResponse<IndicatorData> {
 
+  private static final long serialVersionUID = -8715852870740136299L;
+
   private DX(final Map<String, String> metaData,
              final List<IndicatorData> indicators) {
     super(metaData, indicators);
