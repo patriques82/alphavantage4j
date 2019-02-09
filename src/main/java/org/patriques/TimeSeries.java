@@ -1,10 +1,12 @@
 package org.patriques;
 
 import org.patriques.input.Function;
+import org.patriques.input.Keywords;
 import org.patriques.input.Symbol;
 import org.patriques.input.timeseries.Interval;
 import org.patriques.input.timeseries.OutputSize;
 import org.patriques.output.JsonParser;
+import org.patriques.output.search.SearchResultsResponse;
 import org.patriques.output.timeseries.*;
 
 /**
@@ -138,5 +140,15 @@ public class TimeSeries {
     return MonthlyAdjusted.from(json);
   }
 
+  /**
+   * The Search Endpoint returns the best-matching symbols and market information based on keywords of your choice. The search results also contain match scores that provide you with the full flexibility to develop your own search and filtering logic.
+   *
+   * @param keywords A text string of your choice.
+   * @return {@link SearchResultsResponse} search results data
+   */
+  public SearchResultsResponse searchEndpoint(String keywords) {
+    String json = apiConnector.getRequest(new Keywords(keywords), Function.TIME_SERIES_SYMBOL_SEARCH);
+    return SearchResultsResponse.from(json);
+  }
 }
 
