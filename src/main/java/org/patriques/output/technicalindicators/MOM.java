@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class MOM extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private MOM(final Map<String, String> metaData,
-              final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = 7655040978082655563L;
+
+    private MOM(final Map<String, String> metaData,
+                final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

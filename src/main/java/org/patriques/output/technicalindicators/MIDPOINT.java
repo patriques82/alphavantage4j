@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class MIDPOINT extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private MIDPOINT(final Map<String, String> metaData,
-                   final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -143273081949657297L;
+
+    private MIDPOINT(final Map<String, String> metaData,
+                     final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class PPO extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private PPO(final Map<String, String> metaData,
-              final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = 7981268305247949721L;
+
+    private PPO(final Map<String, String> metaData,
+                final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

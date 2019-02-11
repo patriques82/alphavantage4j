@@ -1,5 +1,6 @@
 package org.patriques.output.technicalindicators.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -8,7 +9,9 @@ import java.time.LocalDateTime;
  *   "EMA": "84.0203"
  * }
  */
-public class IndicatorData {
+public class IndicatorData implements Serializable {
+  private static final long serialVersionUID = -3991704823060208730L;
+
   private final LocalDateTime datetime;
   private final double data;
 

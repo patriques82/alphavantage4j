@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class BOP extends TechnicalIndicatorResponse<IndicatorData> {
 
+  private static final long serialVersionUID = 3902583037124028751L;
+
   private BOP(final Map<String, String> metaData,
               final List<IndicatorData> indicators) {
     super(metaData, indicators);

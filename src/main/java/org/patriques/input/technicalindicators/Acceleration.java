@@ -3,6 +3,7 @@ package org.patriques.input.technicalindicators;
 import org.patriques.input.ApiParameter;
 
 public class Acceleration implements ApiParameter {
+  private static final long serialVersionUID = 8874421337081596582L;
   private final String acceleration;
 
   private Acceleration(String acceleration) {

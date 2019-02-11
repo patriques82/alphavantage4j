@@ -1,5 +1,6 @@
 package org.patriques.output.quote.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -11,7 +12,9 @@ import java.time.LocalDateTime;
  *   "4. timestamp": "2018-05-18 15:59:48"
  * }
  */
-public class StockQuote {
+public class StockQuote implements Serializable {
+  private static final long serialVersionUID = -495582765805908032L;
+
   private final String symbol;
   private final double price;
   private final long volume;

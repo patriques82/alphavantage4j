@@ -15,6 +15,7 @@ import java.util.Map;
  * @see DigitalCurrencyResponse
  */
 public class IntraDay extends DigitalCurrencyResponse<SimpelDigitalCurrencyData> {
+  private static final long serialVersionUID = 6907375837629242615L;
 
   public IntraDay(final Map<String, String> metaData,
                   final List<SimpelDigitalCurrencyData> digitalData) {

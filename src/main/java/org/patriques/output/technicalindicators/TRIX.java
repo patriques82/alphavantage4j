@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class TRIX extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private TRIX(final Map<String, String> metaData,
-               final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -3554573932106438965L;
+
+    private TRIX(final Map<String, String> metaData,
+                 final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

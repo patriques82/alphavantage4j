@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class AROON extends TechnicalIndicatorResponse<AROONData> {
 
-  private AROON(final Map<String, String> metaData,
-                final List<AROONData> indicators) {
+    private static final long serialVersionUID = 1419524371421235463L;
+
+    private AROON(final Map<String, String> metaData,
+                  final List<AROONData> indicators) {
     super(metaData, indicators);
   }
 

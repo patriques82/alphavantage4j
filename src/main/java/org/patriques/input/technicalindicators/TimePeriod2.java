@@ -6,6 +6,7 @@ import org.patriques.input.ApiParameter;
  * Series type parameter for the technical indicators api call.
  */
 public class TimePeriod2 implements ApiParameter {
+  private static final long serialVersionUID = -4212036260646815503L;
   private final String timePeriod;
 
   private TimePeriod2(String timePeriod) {

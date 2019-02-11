@@ -17,8 +17,10 @@ import java.util.Map;
  */
 public class WMA extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private WMA(final Map<String, String> metaData,
-              final List<IndicatorData> indicatorData) {
+    private static final long serialVersionUID = -2580237783494702637L;
+
+    private WMA(final Map<String, String> metaData,
+                final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 

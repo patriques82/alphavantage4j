@@ -1,5 +1,6 @@
 package org.patriques.output.technicalindicators.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -9,7 +10,9 @@ import java.time.LocalDateTime;
  *   "Aroon Down": "100.0000"
  * }
  */
-public class AROONData {
+public class AROONData implements Serializable {
+  private static final long serialVersionUID = -5669423485992836617L;
+
   private final LocalDateTime datetime;
   private final double aroonUp;
   private final double aroonDown;

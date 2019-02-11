@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class HT_TRENDMODE extends TechnicalIndicatorResponse<IndicatorData> {
 
+  private static final long serialVersionUID = 552813120300611812L;
+
   private HT_TRENDMODE(final Map<String, String> metaData,
                        final List<IndicatorData> indicators) {
     super(metaData, indicators);

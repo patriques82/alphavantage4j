@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class SAR extends TechnicalIndicatorResponse<IndicatorData> {
 
+  private static final long serialVersionUID = -167713753794099191L;
+
   private SAR(final Map<String, String> metaData,
               final List<IndicatorData> indicators) {
     super(metaData, indicators);

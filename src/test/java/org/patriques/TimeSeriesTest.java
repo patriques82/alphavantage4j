@@ -4,10 +4,19 @@ import org.junit.Test;
 import org.patriques.input.timeseries.Interval;
 import org.patriques.input.timeseries.OutputSize;
 import org.patriques.output.AlphaVantageException;
-import org.patriques.output.timeseries.*;
+import org.patriques.output.search.SearchResultsResponse;
+import org.patriques.output.search.data.SearchResult;
+import org.patriques.output.timeseries.Daily;
+import org.patriques.output.timeseries.DailyAdjusted;
+import org.patriques.output.timeseries.IntraDay;
+import org.patriques.output.timeseries.Monthly;
+import org.patriques.output.timeseries.MonthlyAdjusted;
+import org.patriques.output.timeseries.Weekly;
+import org.patriques.output.timeseries.WeeklyAdjusted;
 import org.patriques.output.timeseries.data.StockData;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -473,5 +482,53 @@ public class TimeSeriesTest {
     assertThat(stock.getClose(), is(equalTo(83.26)));
     assertThat(stock.getVolume(), is(equalTo(317028976L)));
     assertThat(stock.getDividendAmount(), is(equalTo(0.42)));
+  }
+
+  @Test
+  public void searchEndpoint() {
+    String json = "{\n" +
+            "    \"bestMatches\": [\n" +
+            "        {\n" +
+            "            \"1. symbol\": \"BA\",\n" +
+            "            \"2. name\": \"The Boeing Company\",\n" +
+            "            \"3. type\": \"Equity\",\n" +
+            "            \"4. region\": \"United States\",\n" +
+            "            \"5. marketOpen\": \"09:30\",\n" +
+            "            \"6. marketClose\": \"16:00\",\n" +
+            "            \"7. timezone\": \"UTC-05\",\n" +
+            "            \"8. currency\": \"USD\",\n" +
+            "            \"9. matchScore\": \"1.0000\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"1. symbol\": \"SAN\",\n" +
+            "            \"2. name\": \"Banco Santander, S.A.\",\n" +
+            "            \"3. type\": \"Equity\",\n" +
+            "            \"4. region\": \"United States\",\n" +
+            "            \"5. marketOpen\": \"09:30\",\n" +
+            "            \"6. marketClose\": \"16:00\",\n" +
+            "            \"7. timezone\": \"UTC-05\",\n" +
+            "            \"8. currency\": \"USD\",\n" +
+            "            \"9. matchScore\": \"0.1538\"\n" +
+            "        }\n" +
+            "    ]\n" +
+            "}";
+
+    timeSeries = new TimeSeries(parameters -> json);
+
+    SearchResultsResponse resp = timeSeries.searchEndpoint("BA");
+
+    List<SearchResult> searchData = resp.getBestMatches();
+    assertThat(searchData.size(), is(equalTo(2)));
+
+    SearchResult searchResult = searchData.get(0);
+    assertThat(searchResult.getSymbol(), is(equalTo("BA")));
+    assertThat(searchResult.getName(), is(equalTo("The Boeing Company")));
+    assertThat(searchResult.getType(), is(equalTo("Equity")));
+    assertThat(searchResult.getRegion(), is(equalTo("United States")));
+    assertThat(searchResult.getMarketOpen(), is(equalTo(LocalTime.of(9,30))));
+    assertThat(searchResult.getMarketClose(), is(equalTo(LocalTime.of(16,0))));
+    assertThat(searchResult.getTimezone(), is(equalTo("UTC-05")));
+    assertThat(searchResult.getCurrency(), is(equalTo("USD")));
+    assertThat(searchResult.getMatchScore(), is(equalTo(1F)));
   }
 }

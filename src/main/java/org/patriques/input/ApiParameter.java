@@ -1,10 +1,12 @@
 package org.patriques.input;
 
+import java.io.Serializable;
+
 /**
  * Parameters for api call. Ex: interval=15min&outputsize=full;
  * 'interval' is key, and '15min' is value.
  */
-public interface ApiParameter {
+public interface ApiParameter extends Serializable {
 
   /**
    * Get key for parameter.

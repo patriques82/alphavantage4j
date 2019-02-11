@@ -16,8 +16,10 @@ import java.util.Map;
  */
 public class MonthlyAdjusted extends TimeSeriesResponse {
 
-  private MonthlyAdjusted(final Map<String, String> metaData,
-                          final List<StockData> stocks) {
+    private static final long serialVersionUID = 5407143750902642610L;
+
+    private MonthlyAdjusted(final Map<String, String> metaData,
+                            final List<StockData> stocks) {
     super(metaData, stocks);
   }
 

@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class CMO extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private CMO(final Map<String, String> metaData,
-              final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -5244025751824485528L;
+
+    private CMO(final Map<String, String> metaData,
+                final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

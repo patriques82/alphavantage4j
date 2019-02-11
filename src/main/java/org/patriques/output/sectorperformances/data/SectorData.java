@@ -1,5 +1,7 @@
 package org.patriques.output.sectorperformances.data;
 
+import java.io.Serializable;
+
 /**
  * Representation of a json object, i.e:
  * "Rank A: Real-Time Performance": {
@@ -16,7 +18,8 @@ package org.patriques.output.sectorperformances.data;
  *  "Materials": "-0.02%"
  * }
  */
-public class SectorData {
+public class SectorData implements Serializable {
+  private static final long serialVersionUID = -4210402953266215160L;
 
   private final String key;
   private final double information_technology;

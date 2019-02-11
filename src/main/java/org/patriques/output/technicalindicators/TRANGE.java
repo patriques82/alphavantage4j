@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class TRANGE extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private TRANGE(final Map<String, String> metaData,
-                 final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -6907295505340725962L;
+
+    private TRANGE(final Map<String, String> metaData,
+                   final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

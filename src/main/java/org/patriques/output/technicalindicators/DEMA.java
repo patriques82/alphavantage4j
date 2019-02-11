@@ -16,6 +16,8 @@ import java.util.Map;
  */
 public class DEMA extends TechnicalIndicatorResponse<IndicatorData> {
 
+  private static final long serialVersionUID = 5086790359988303411L;
+
   private DEMA(final Map<String, String> metaData,
                final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);

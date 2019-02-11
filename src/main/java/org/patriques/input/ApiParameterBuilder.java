@@ -1,11 +1,13 @@
 package org.patriques.input;
 
 import javax.annotation.Nullable;
+import java.io.Serializable;
 
 /**
  * Builder for api parameters.
  */
-public class ApiParameterBuilder {
+public class ApiParameterBuilder implements Serializable {
+  private static final long serialVersionUID = -1269491868484735349L;
   private StringBuilder urlBuilder;
 
   public ApiParameterBuilder() {

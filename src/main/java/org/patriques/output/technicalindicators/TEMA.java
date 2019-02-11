@@ -16,8 +16,10 @@ import java.util.Map;
  */
 public class TEMA extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private TEMA(final Map<String, String> metaData,
-               final List<IndicatorData> indicatorData) {
+    private static final long serialVersionUID = -2749715331138647453L;
+
+    private TEMA(final Map<String, String> metaData,
+                 final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 

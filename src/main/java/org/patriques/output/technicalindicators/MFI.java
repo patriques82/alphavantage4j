@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class MFI extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private MFI(final Map<String, String> metaData,
-              final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -4344227976518791952L;
+
+    private MFI(final Map<String, String> metaData,
+                final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

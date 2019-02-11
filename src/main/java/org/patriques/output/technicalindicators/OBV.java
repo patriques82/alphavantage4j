@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class OBV extends TechnicalIndicatorResponse<IndicatorData> {
 
+  private static final long serialVersionUID = -7090512442588175784L;
+
   private OBV(final Map<String, String> metaData,
               final List<IndicatorData> indicators) {
     super(metaData, indicators);

@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class AD extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private AD(final Map<String, String> metaData,
-             final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = -9187110055328554915L;
+
+    private AD(final Map<String, String> metaData,
+               final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

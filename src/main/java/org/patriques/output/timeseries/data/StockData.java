@@ -1,5 +1,6 @@
 package org.patriques.output.timeseries.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -15,7 +16,9 @@ import java.time.LocalDateTime;
  *   "8. split coefficient": "1.0000"
  * }
  */
-public class StockData {
+public class StockData implements Serializable {
+  private static final long serialVersionUID = -9065827248580025512L;
+
   private final LocalDateTime dateTime;
   private final double open;
   private final double high;

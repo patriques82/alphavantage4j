@@ -15,6 +15,7 @@ import java.util.Map;
  * @see DigitalCurrencyResponse
  */
 public class Monthly extends DigitalCurrencyResponse<DigitalCurrencyData> {
+  private static final long serialVersionUID = -8231986484758089427L;
 
   public Monthly(final Map<String, String> metaData,
                  final List<DigitalCurrencyData> digitalData) {

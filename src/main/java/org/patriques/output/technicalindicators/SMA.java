@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class SMA extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private SMA(final Map<String, String> metaData,
-              final List<IndicatorData> indicatorData) {
+    private static final long serialVersionUID = -7765410214854359186L;
+
+    private SMA(final Map<String, String> metaData,
+                final List<IndicatorData> indicatorData) {
     super(metaData, indicatorData);
   }
 

@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class HT_PHASOR extends TechnicalIndicatorResponse<HT_PHASORData> {
 
-  private HT_PHASOR(final Map<String, String> metaData,
-                    final List<HT_PHASORData> indicators) {
+    private static final long serialVersionUID = 4063145395381894223L;
+
+    private HT_PHASOR(final Map<String, String> metaData,
+                      final List<HT_PHASORData> indicators) {
     super(metaData, indicators);
   }
 

@@ -3,6 +3,7 @@ package org.patriques.input.technicalindicators;
 import org.patriques.input.ApiParameter;
 
 public class FastLimit implements ApiParameter {
+  private static final long serialVersionUID = 5824257066086393001L;
   private final String limit;
 
   private FastLimit(String limit) {

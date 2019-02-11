@@ -1,5 +1,6 @@
 package org.patriques.output.technicalindicators.data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -9,7 +10,9 @@ import java.time.LocalDateTime;
  *   "MAMA": "80.9751"
  * }
  */
-public class MAMAData {
+public class MAMAData implements Serializable {
+  private static final long serialVersionUID = 9133794864788594804L;
+
   private final LocalDateTime datetime;
   private final double fama;
   private final double mama;

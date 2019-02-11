@@ -16,6 +16,7 @@ import java.util.Map;
  * @author ilker Kopan
  */
 public class Daily extends ForexResponse<ForexData> {
+    private static final long serialVersionUID = -2526511372812137221L;
 
     private Daily(final Map<String, String> metaData,
                   final List<ForexData> digitalData) {

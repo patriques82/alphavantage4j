@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class HT_TRENDLINE extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private HT_TRENDLINE(final Map<String, String> metaData,
-                       final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = 8909025091641401487L;
+
+    private HT_TRENDLINE(final Map<String, String> metaData,
+                         final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

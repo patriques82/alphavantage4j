@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class AROONOSC extends TechnicalIndicatorResponse<IndicatorData> {
 
-  private AROONOSC(final Map<String, String> metaData,
-                   final List<IndicatorData> indicators) {
+    private static final long serialVersionUID = 949741090139134428L;
+
+    private AROONOSC(final Map<String, String> metaData,
+                     final List<IndicatorData> indicators) {
     super(metaData, indicators);
   }
 

@@ -3,6 +3,7 @@ package org.patriques.input.technicalindicators;
 import org.patriques.input.ApiParameter;
 
 public class Maximum implements ApiParameter {
+  private static final long serialVersionUID = 8710351270994318801L;
   private final String maximum;
 
   private Maximum(String maximum) {

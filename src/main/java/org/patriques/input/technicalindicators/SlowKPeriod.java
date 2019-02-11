@@ -3,6 +3,7 @@ package org.patriques.input.technicalindicators;
 import org.patriques.input.ApiParameter;
 
 public class SlowKPeriod implements ApiParameter {
+  private static final long serialVersionUID = -1663684251958734688L;
   private final String period;
 
   private SlowKPeriod(String period) {
