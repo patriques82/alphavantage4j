@@ -1,9 +1,11 @@
 package org.patriques;
 
 import org.junit.Test;
+import org.patriques.input.timeseries.Interval;
 import org.patriques.input.timeseries.OutputSize;
 import org.patriques.output.exchange.CurrencyExchange;
 import org.patriques.output.exchange.Daily;
+import org.patriques.output.exchange.IntraDay;
 import org.patriques.output.exchange.data.CurrencyExchangeData;
 import org.patriques.output.exchange.data.ForexData;
 
@@ -42,6 +44,45 @@ public class CurrencyExchangeTest {
     assertThat(data.getExchangeRate(), equalTo(115369.98857500f));
     assertThat(data.getTime().toString(), equalTo("2017-12-12T20:06:05"));
     assertThat(data.getTimezone(), equalTo("UTC"));
+  }
+
+  @Test
+  public void intradayForexEURToUSD() {
+    String json = "" +
+            "{\n" +
+            "    \"Meta Data\": {\n" +
+            "        \"1. Information\": \"FX Intraday (5min) Time Series\",\n" +
+            "        \"2. From Symbol\": \"EUR\",\n" +
+            "        \"3. To Symbol\": \"USD\",\n" +
+            "        \"4. Last Refreshed\": \"2019-06-04 16:50:00\",\n" +
+            "        \"5. Interval\": \"5min\",\n" +
+            "        \"6. Output Size\": \"Compact\",\n" +
+            "        \"7. Time Zone\": \"UTC\"\n" +
+            "    },\n" +
+            "    \"Time Series FX (5min)\": {\n" +
+            "        \"2019-06-04 16:50:00\": {\n" +
+            "            \"1. open\": \"1.1242\",\n" +
+            "            \"2. high\": \"1.1244\",\n" +
+            "            \"3. low\": \"1.1240\",\n" +
+            "            \"4. close\": \"1.1243\"\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
+    foreignExchange = new ForeignExchange(apiParameters -> json);
+    IntraDay intraDayForex = foreignExchange.intraDay("EUR", "USD", Interval.FIVE_MIN, OutputSize.COMPACT);
+
+    Map<String, String> metaData = intraDayForex.getMetaData();
+    List<ForexData> data = intraDayForex.getForexData();
+
+    assertThat(metaData.get("2. From Symbol"), equalTo("EUR"));
+    assertThat(metaData.get("3. To Symbol"), equalTo("USD"));
+    assertThat(metaData.get("7. Time Zone"), equalTo("UTC"));
+    assertThat(data.size(), equalTo(1));
+    assertThat(data.get(0).getOpen(), equalTo(1.1242));
+    assertThat(data.get(0).getClose(), equalTo(1.1243));
+    assertThat(data.get(0).getLow(), equalTo(1.1240));
+    assertThat(data.get(0).getHigh(), equalTo(1.1244));
+    assertThat(data.get(0).getDateTime(), equalTo(LocalDateTime.of(2019,6,4,16,50)));
   }
 
   @Test
